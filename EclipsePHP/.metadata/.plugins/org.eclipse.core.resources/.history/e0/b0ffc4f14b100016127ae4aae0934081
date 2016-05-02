@@ -1,0 +1,23 @@
+<?php
+/*
+ * Projet 2ème Année 3iL
+ * CIULLI - MATEOS - ROUX
+ */
+ 
+ /**
+  * Classe outil.
+  */
+class Outils {
+	
+	/**
+	 * Connexion à la base de données Oracle.
+	 */
+	public static function connexion_base() {
+		$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+		if (!$conn) {
+		    $e = oci_error();
+		    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+		}
+	}
+}
+php?>
