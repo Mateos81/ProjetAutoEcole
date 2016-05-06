@@ -9,9 +9,6 @@
   */
 class HistoKm {
     
-    /** Date à laquelle l'historique a été enregistré. */
-    private $histoKm_date;
-    
     /** Nombre de kilomètres. */
     private $histoKm_nbKm;
     
@@ -19,16 +16,7 @@ class HistoKm {
      * Constructeur par défaut.
      */
     public function __construct() {
-        $this->histoKm_date = date("d/m/Y");
         $this->histoKm_nbKm = 0;
-    }
-    
-    /**
-     * Accesseur sur la date de l'historique courant.
-     */
-    public function getHistoKm_date()
-    {
-        return $this->histoKm_date;
     }
     
     /**
@@ -40,19 +28,12 @@ class HistoKm {
     }
     
     /**
-     * Modifieur sur la date de l'historique courant.
-     */
-    public function setHistoKm_date($valeur)
-    {
-        $this->histoKm_date = $valeur;
-    }
-    
-    /**
      * Modifieur sur le nombre de kilomètres de l'historique courant.
+     * TODO @param + BDD (second param $id)
      */
     public function setHistoKm_nbKm($valeur)
     {
         $this->histoKm_nbKm = $valeur;
     }
 }
-php?>
+?>

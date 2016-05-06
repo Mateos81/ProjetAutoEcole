@@ -1,0 +1,132 @@
+<?php
+/*
+ * Projet 2ème Année 3iL
+ * CIULLI - MATEOS - ROUX
+ */
+ 
+ /**
+  * Classe représentant un salarié.
+  */
+class Salarie {
+    
+    /** */
+    private $salarie_id;
+    
+    /** */
+    private $salarie_nom;
+    
+    /** */
+    private $salarie_prenom;
+    
+    /** */
+    private $salarie_adr;
+    
+    /** */
+    private $salarie_tel;
+    
+    /** TODO */
+    private $salarie_poste;
+    
+    /** */
+    private $salarie_surnom;
+    
+    /** TODO */
+    private $salarie_ville;
+    
+    /** TODO */
+    private $salarie_vehicule;
+    
+    /**
+     * Constructeur basé sur le surnom d'un salarié,
+     * car c'est l'information que l'on connait.
+     */
+    public function __construct($surnom) {
+        // TODO Recherche du salarié dans la base
+        
+        // TODO Renseignement des champs
+    }
+    
+    // TODO Constructeur pour l'ajout d'un nouveau salarié :
+    // paramètres + insertion en base
+    
+    /**
+     * Accesseur sur l'identifiant du salarié.
+     */
+    public function getSalarie_id() {
+        $this->salarie_id;
+    }
+    
+    /**
+     * Accesseur sur le nom du salarié.
+     */
+    public function getSalarie_nom() {
+        $this->$salarie_nom;
+    }
+    
+    /**
+     * Accesseur sur le prénom du salarié.
+     */
+    public function getSalarie_prenom() {
+        $this->$salarie_prenom;
+    }
+    
+    /**
+     * Accesseur sur l'adresse du salarié.
+     */
+    public function getSalarie_adr() {
+        $this->salarie_adr;
+    }
+    
+    /**
+     * Accesseur sur le téléphone du salarié.
+     */
+    public function getSalarie_tel() {
+        $this->salarie_tel;
+    }
+    
+    /**
+     * Accesseur sur le poste du salarié.
+     */
+    public function getSalarie_poste() {
+        $this->salarie_poste;
+    }
+    
+    /**
+     * Accesseur sur le surnom du salarié.
+     */
+    public function getSalarie_surnom() {
+        $this->salarie_surnom;
+    }
+    
+    /**
+     * Accesseur sur la ville du salarié.
+     */
+    public function getSalarie_ville() {
+        $this->salarie_ville;
+    }
+    
+    /**
+     * Accesseur sur le véhicule du salarié.
+     */
+    public function getSalarie_vehicule() {
+        $this->salarie_vehicule;
+    }
+    
+    // TODO Modifieurs + BDD
+    
+    /**
+     * Récupère et renvoie la liste de tous les élèves.
+     * @return La liste des élèves.
+     */
+    public function listeEleves() {
+        $listeEleves = array();
+        
+        // Récupération des données
+        DAL.listeEleves($this->salarie_id);
+        
+        // TODO Remplissage du tableau
+        
+        return $listeEleves;
+    }
+}
+?>

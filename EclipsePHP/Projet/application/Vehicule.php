@@ -72,16 +72,16 @@ class Vehicule {
     
     /**
      * Ajout d'une nouvelle entrée à l'historique du véhicule courant.
-     * @param HistoKm $histo Nouvelle entrée à ajouter pour l'historique du véhicule courant.
+     * @param HistoKm $histo Nouvelle entrée à ajouter pour l'historique
+     *        du véhicule courant.
      */
     public function addHisto_Km(HistoKm $histo) {
-    	// TODO Ajout en base
-    	$conn = Outils.connexion();
-    	
-    	Outils.deconnexion_base($conn);
+    	// Ajout en base
+    	DAL.addHisto_Km($this->vehicule_num, $histo);
     	
     	// Mise à jour de l'objet
-    	$this->vehicule_historique[count($this->vehicule_historique.count)] = $histo;
+    	$this->vehicule_historique[count($this->vehicule_historique.count)]
+    	    = $histo;
     }
 }
-php?>
+?>

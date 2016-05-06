@@ -1,0 +1,14 @@
+<?php
+/*
+ * Projet 2ème Année 3iL
+ * CIULLI - MATEOS - ROUX
+ */
+ 
+ /**
+  * Classe représentant les divers types d'examen et de leçon.
+  * TODO Faire de même pour la classe Ville
+  */
+class TypeL {
+    
+}
+?>

@@ -1,14 +1,17 @@
-#Mon May 02 11:57:57 CEST 2016
+#Tue May 03 11:03:33 CEST 2016
 useQuickDiffPrefPage=true
 proposalOrderMigrated=true
 tabWidthPropagated=true
 content_assist_proposals_background=255,255,255
 org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.exception.name=e
 useAnnotationsPrefPage=true
+org.eclipse.jdt.ui.overrideannotation=true
 org.eclipse.jface.textfont=1|Courier New|10.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Courier New;
 org.eclipse.jdt.ui.editor.tab.width=
 org.eclipse.jdt.ui.formatterprofiles.version=11
 spelling_locale_initialized=true
+org.eclipse.jdt.ui.gettersetter.use.is=true
 eclipse.preferences.version=1
 content_assist_proposals_foreground=0,0,0
 fontPropagated=true

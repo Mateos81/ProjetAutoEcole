@@ -1,0 +1,24 @@
+<?php
+/*
+ * Projet 2ème Année 3iL
+ * CIULLI - MATEOS - ROUX
+ */
+ 
+ /**
+  * Classe représentant une formule.
+  */
+class Formule {
+    
+    /** */
+    private $formule_num;
+    
+    /** */
+    private $formule_nbLeconConduite;
+    
+    /** */
+    private $formule_prix;
+    
+    /** */
+    private $formule_ticketPrix;
+}
+?>

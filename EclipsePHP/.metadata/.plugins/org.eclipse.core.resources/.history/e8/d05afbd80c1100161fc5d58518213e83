@@ -1,0 +1,22 @@
+<?php
+/*
+ * Projet 2ème Année 3iL
+ * CIULLI - MATEOS - ROUX
+ */
+ 
+ /**
+  * Classe d'accès aux données.
+  */
+class DAL {
+	
+	/**
+	 * Ajout d'une entrée à l'historique d'une voiture.
+	 * @param HistoKm $histo Nouvelle entrée à ajouter pour l'historique d'un véhicule.
+	 */
+	public static function addHisto_Km(HistoKm $histo) {
+		$conn = Outils.connexion();
+    	
+    	Outils.deconnexion_base($conn);
+	}
+}
+php?>

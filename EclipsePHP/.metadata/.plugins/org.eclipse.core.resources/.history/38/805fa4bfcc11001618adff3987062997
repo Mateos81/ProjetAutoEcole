@@ -1,0 +1,38 @@
+<?php
+/*
+ * Projet 2ème Année 3iL
+ * CIULLI - MATEOS - ROUX
+ */
+ 
+ /**
+  * Classe représentant un item de l'historique d'un véhicule.
+  */
+class HistoKm {
+    
+    /** Nombre de kilomètres. */
+    private $histoKm_nbKm;
+    
+    /**
+     * Constructeur par défaut.
+     */
+    public function __construct() {
+        $this->histoKm_nbKm = 0;
+    }
+    
+    /**
+     * Accesseur sur le nombre de kilomètres de l'historique courant.
+     */
+    public function getHistoKm_nbKm()
+    {
+        return $this->histoKm_nbKm;
+    }
+    
+    /**
+     * Modifieur sur le nombre de kilomètres de l'historique courant.
+     */
+    public function setHistoKm_nbKm($valeur)
+    {
+        $this->histoKm_nbKm = $valeur;
+    }
+}
+php?>
