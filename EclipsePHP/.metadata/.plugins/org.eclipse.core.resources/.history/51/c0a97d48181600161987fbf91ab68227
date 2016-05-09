@@ -1,0 +1,176 @@
+<?php
+/*
+ * Projet 2ème Année 3iL
+ * CIULLI - MATEOS - ROUX
+ */
+ 
+ /**
+  * Classe représentant un salarié.
+  */
+class Salarie extends Personne {
+    
+    /** TODO Poste du salarié courant. */
+    private $salarie_poste;
+    
+    /** Surnom du salarié courant. */
+    private $salarie_surnom;
+    
+    /** TODO Véhicule dont est responsable le salarié courant. */
+    private $salarie_vehicule;
+    
+    /**
+     * Constructeur basé sur le surnom d'un salarié,
+     * car c'est l'information que l'on connait.
+     */
+    public function __construct($surnom) {
+        $data = array();
+        
+        // TODO Recherche du salarié dans la base (PL/SQL V.ROUX)
+        
+        // TODO Renseignement des champs
+    }
+    
+    /**
+     * Constructeur complet.
+     * @param string $nom Nom du salarié.
+     * @param string $prenom Prénom du salarié.
+     * @param string $adr Adresse du salarié.
+     * @param Ville $ville Ville du salarié.
+     * @param string $tel Téléphone du salarié.
+     * @param Poste $poste Poste du salarié.
+     * @param string $surnom Surnom du salarié.
+     * @param Vehicule $vehicule
+     */
+    public function __construct(
+    		$nom,
+    		$prenom,
+    		$adr,
+    		$ville,
+    		$tel,
+    		$poste,
+    		$surnom,
+    		$vehicule) {
+    	$this->personne_nom = $nom;
+    	$this->personne_prenom = $prenom;
+    	$this->personne_adr = $adr;
+    	$this->personne_ville = $ville;
+    	$this->personne_tel = $tel;
+    	
+    	$this->salarie_poste = $poste; // TODO Classe Poste
+    	$this->salarie_surnom = $surnom;
+    	$this->salarie_vehicule = $vehicule;
+    }
+    
+    /**
+     * Accesseur sur le poste du salarié.
+     */
+    public function getSalarie_poste() {
+        return $this->salarie_poste;
+    }
+    
+    /**
+     * Accesseur sur le surnom du salarié.
+     */
+    public function getSalarie_surnom() {
+        return $this->salarie_surnom;
+    }
+    
+    /**
+     * Accesseur sur le véhicule du salarié.
+     */
+    public function getSalarie_vehicule() {
+        return $this->salarie_vehicule;
+    }
+    
+    /**
+     * Modifieur sur le poste du salarié courant.
+     * @param Poste $valeur Le nouveau poste du salarié.
+     */
+    public function setSalarie_poste(Poste $valeur) {
+    	$this->salarie_poste = $valeur;
+    }
+    
+    /**
+     * Modifieur sur le surnom du salarié courant.
+     * @param string $valeur Le nouveau surnom du salarié.
+     */
+    public function setSalarie_surnom(string $valeur) {
+    	$this->salarie_surnom = $valeur;
+    }
+    
+    /**
+     * Modifieur sur le véhicule du salarié courant.
+     * @param Vehicule $valeur Le nouveau véhicule du salarié.
+     */
+    public function setSalarie_poste(Vehicule $valeur) {
+    	$this->salarie_vehicule = $valeur;
+    }
+    
+    /**
+     * Création d'un nouveau salarié en base de données.
+     */
+    public function creerSalarie() {
+    	// TODO PL/SQL
+    }
+    
+    /**
+     * Mise en jour en base d'un salarié
+     * suivant les informations de l'objet courant.
+     */
+    public function modifierSalarie() {
+    	// TODO PL/SQL
+    }
+    
+    /**
+     * Suppression en base du salarié courant.
+     */
+    public function suppressionSalarie() {
+    	// TODO PL/SQL + Destructeur (?)
+    }
+    
+    /**
+     * Récupère et renvoie la liste de tous les élèves du salarié courant.
+     * @return La liste des élèves.
+     */
+    public function listeEleves() {
+        $listeEleves = array();
+        
+        // Récupération des données
+        DAL.listeEleves($this->salarie_id);
+        
+        // TODO Remplissage du tableau
+        
+        return $listeEleves;
+    }
+    
+    /**
+     * Récupère et renvoie la liste de toutes les leçons du salarié courant.
+     * @return La liste des leçons.
+     */
+    public function listeLecons() {
+        $listeLecons = array();
+        
+        // Récupération des données
+        DAL.listeLecons($this->salarie_id);
+        
+        // TODO Remplissage du tableau
+        
+        return $listeLecons;
+    }
+    
+    /**
+     * Récupère et renvoie la liste des salariés.
+     * @return La liste des salariés.
+     */
+    public static function listeSalaries() {
+    	$listeSalaries = array();
+    	
+    	// Récupération des données
+    	DAL.listeSalaries();
+    	
+    	// TODO Remplissage du tableau
+    	
+    	return $listeSalaries;
+    }
+}
+?>

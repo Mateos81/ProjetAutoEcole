@@ -1,0 +1,64 @@
+<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package DAL
+ */
+ 
+ /**
+  * Classe d'accès aux données pour la classe Salarie.
+  * DAL pour Data Access Layer.
+  */
+class DAL_Salarie {
+	
+	/**
+	 * Création d'un nouveau salarié.
+	 * @param string $nom
+	 * @param string $prenom
+	 * @param string $surnom
+	 * @param string $adr
+	 * @param string $ville
+	 * @param string $cp
+	 * @param string $tel
+	 * @param integer $vehicule
+	 * @param integer $poste
+	 * @return integer Le numéro unique en base identifiant le salarié.
+	 */
+	public static function creerSalarie(
+			string $nom,
+			string $prenom,
+			string $surnom,
+			string $adr,
+			string $ville,
+			string $cp,
+			string $tel,
+			integer $vehicule,
+			integer $poste) {
+		// TODO
+	}
+	
+	/**
+	 * Liste les élèves d'un salarié.
+	 * @param integer $id Identifiant d'un salarié.
+	 */
+	public static function listeEleves($id) {
+	    // TODO
+	}
+	
+	/**
+	 * Liste les leçons d'un salarié.
+	 * @param integer $id Identifiant d'un salarié.
+	 */
+	public static function listeLecons($id) {
+	    // TODO
+	}
+	
+	/**
+	 * Liste les salariés.
+	 */
+	public static function listeSalaries() {
+	    // TODO
+	}
+}
+?>

@@ -1,0 +1,28 @@
+<?php
+/*
+ * Projet 2ème Année 3iL
+ * CIULLI - MATEOS - ROUX
+ */
+
+/**
+ * Classe représentant une ville.
+ */
+class Ville {
+	
+	/** Nom de la ville courante. */
+	private $ville_nom;
+	
+	/** Code postal de la ville courante. */
+	private $ville_cp;
+	
+	/**
+	 * Constructeur.
+	 * @param string $nom Nom de la ville.
+	 * @param string $cp Code postal de la ville.
+	 */
+	public function __construct($nom, $cp) {
+		$this->ville_nom = $nom;
+		$this->ville_cp = $cp;
+	}
+}
+?>

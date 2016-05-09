@@ -1,0 +1,40 @@
+<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ */
+ 
+ /**
+  * Classe outil.
+  */
+class Outils {
+    
+    /**
+	 * Connexion à la base de données Oracle.
+	 * @return Un objet de connexion.
+	 */
+	public static function connexion_base() {
+	    // TODO Identifiants de connexion
+		$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+		if (!$conn) {
+		    $e = oci_error();
+		    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+		}
+		
+		return $conn;
+	}
+	
+	/**
+	 * Déconnexion de la base de données.
+	 */
+	public static function deconnexion_base($conn) {
+		$res = oci_close($conn);
+		if (!$res) {
+		    $e = oci_error();
+		    trigger_error(
+		        htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+		}
+	}
+}
+?>
