@@ -1,0 +1,32 @@
+<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package DAL
+ */
+
+/**
+ * Classe d'accès aux données pour la classe Poste.
+ * DAL pour Data Access Layer.
+ */
+class DAL_Poste {
+	
+	public static function listePostes() {
+		$conn = Outils.connexion();
+			
+		$stid = oci_parse($conn, 'SELECT * FROM POSTE');
+		oci_execute($stid);
+		
+		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			foreach ($row as $item) {
+				echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "") . "</td>\n";
+			}
+		}
+		
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+	}
+}
+?>

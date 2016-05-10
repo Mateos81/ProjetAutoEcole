@@ -45,8 +45,6 @@ class DAL_Salarie {
 		 
 		$stid = oci_parse($conn, $cmd);
 		
-		oci_bind_by_name($stid, ':resultat', $resultat);
-		
 		oci_bind_by_name($stid, ':nom', $nom);
 		oci_bind_by_name($stid, ':prenom', $prenom);
 		oci_bind_by_name($stid, ':surnom', $surnom);
@@ -62,7 +60,7 @@ class DAL_Salarie {
 		
 		Outils.deconnexion_base($conn);
 		
-		return $resultat;
+		// TODO Le @return
 	}
 	
 /**

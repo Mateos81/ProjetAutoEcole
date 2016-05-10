@@ -142,7 +142,7 @@ class Salarie extends Personne {
     				$this->personne_ville->getVille_cp(),
     				$this->personne_tel,
     				$this->salarie_vehicule->getVehicule_num(),
-    				$this->salarie_poste);
+    				Poste::getInstance()->);
     }
     
     /**

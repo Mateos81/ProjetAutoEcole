@@ -39,13 +39,11 @@ class DAL_Salarie {
 		$conn = Outils.connexion();
 		
 		// Construction de la commande d'accès à la procédure PL/SQL
-		$cmd = 'BEGIN :resultat := ajoutSalarie(';
+		$cmd = 'BEGIN ajoutSalarie(';
 		$cmd .= ':nom, :prenom, :surnom, :adr, :ville, :cp, ';
 		$cmd .= ':tel, :vehicule, :poste); END;';
 		 
 		$stid = oci_parse($conn, $cmd);
-		
-		oci_bind_by_name($stid, ':resultat', $resultat);
 		
 		oci_bind_by_name($stid, ':nom', $nom);
 		oci_bind_by_name($stid, ':prenom', $prenom);
@@ -62,7 +60,7 @@ class DAL_Salarie {
 		
 		Outils.deconnexion_base($conn);
 		
-		return $resultat;
+		// TODO Le @return
 	}
 	
 /**

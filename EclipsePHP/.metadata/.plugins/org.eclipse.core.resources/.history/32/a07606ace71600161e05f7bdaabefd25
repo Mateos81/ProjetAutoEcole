@@ -105,9 +105,9 @@ class Salarie extends Personne {
     
     /**
      * Modifieur sur le poste du salarié courant.
-     * @param integer $valeur Le nouveau poste du salarié.
+     * @param Poste $valeur Le nouveau poste du salarié.
      */
-    public function setSalarie_poste(integer $valeur) {
+    public function setSalarie_poste(Poste $valeur) {
     	$this->salarie_poste = $valeur;
     }
     
@@ -142,7 +142,7 @@ class Salarie extends Personne {
     				$this->personne_ville->getVille_cp(),
     				$this->personne_tel,
     				$this->salarie_vehicule->getVehicule_num(),
-    				$this->salarie_poste);
+    				Poste::getInstance()->);
     }
     
     /**
