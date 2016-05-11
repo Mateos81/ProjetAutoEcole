@@ -132,7 +132,7 @@ CREATE TABLE HISTO_KM
 
 CREATE TABLE TYPEL
 (
-	typel_id INT PRIMARY KEY,
+	typel_num INT PRIMARY KEY,
 	typel_nom VARCHAR(20) NOT NULL
 );
 
@@ -157,8 +157,6 @@ CREATE TABLE EXAMEN
 (
 	examen_date DATE,
 	examen_type INT,
-	lecon_salarie INT NOT NULL,
-	lecon_eleve INT NOT NULL,
 	PRIMARY KEY(examen_date, examen_type),
 
 	CONSTRAINT fk_typeExam FOREIGN KEY(examen_type) REFERENCES TYPEL(typel_id) ON DELETE CASCADE
