@@ -59,7 +59,6 @@ CREATE OR REPLACE PACKAGE autoEcole IS
 	-- Examen
 	PROCEDURE ajoutExamen(laDate IN EXAMEN.examen_date%TYPE, leType IN EXAMEN.examen_type%TYPE);
 	PROCEDURE suppressionExamen(laDate IN EXAMEN.examen_date%TYPE, leType IN EXAMEN.examen_type%TYPE);
-	PROCEDURE modifExamen(laDate IN EXAMEN.examen_date%TYPE, leType IN EXAMEN.examen_type%TYPE);
 							
 	-- Formule
 	PROCEDURE ajoutFormule(leNbLecon IN FORMULE.formule_nbLeconConduite%TYPE, lePrix IN FORMULE.formule_prix%TYPE, 
@@ -67,47 +66,48 @@ CREATE OR REPLACE PACKAGE autoEcole IS
 	PROCEDURE suppressionFormule(leNum IN FORMULE.formule_num%TYPE);
 	PROCEDURE modifFormule(leNum IN FORMULE.formule_num%TYPE, leNbLecon IN FORMULE.formule_nbLeconConduite%TYPE, 
 						   lePrix IN FORMULE.formule_prix%TYPE, lePrixTicket IN FORMULE.formule_ticketPrix%TYPE);
-							
+					
+	-- autre
+    PROCEDURE ajoutVille(laVille IN VILLE.ville_nom%TYPE, leCp IN VILLE.ville_cp%TYPE);
+	PROCEDURE suppressionVille(laVille IN VILLE.ville_nom%TYPE, leCp IN VILLE.ville_cp%TYPE);
+	
+	PROCEDURE ajoutPoste(leNom IN POSTE.poste_nom%TYPE);
+	PROCEDURE suppressionPoste(leNum IN POSTE.poste_num%TYPE);
+	
+	PROCEDURE ajoutType(leNom IN TYPEL.typel_nom%TYPE);
+	PROCEDURE suppressionType(leNum IN TYPEL.typel_num%TYPE);
+    					
 	PROCEDURE print(message IN VARCHAR);
 	
 	-- Vehicule
-	FUNCTION listeVehicule RETURN OBJECT;
-	FUNCTION listeKmVehicule(leNum IN VEHICULE.vehicule_num%TYPE) RETURN OBJECT;
+	FUNCTION getCurVehicule RETURN VEHICULE.vehicule_num%TYPE;
 	
 	-- Lecon
-	FUNCTION listeLecon(leType IN LECON.lecon_type%TYPE, laDateDebut IN LECON.lecon_date%TYPE,
-					    laDateFin IN LECON.lecon_date%TYPE, leSalarie IN LECON.lecon_salarie%TYPE, 
-						lEleve IN LECON.lecon_eleve%TYPE) RETURN OBJECT;
-						
+    FUNCTION getCurLecon RETURN LECON.lecon_num%TYPE;
+	
 	-- Salarie		
-	FUNCTION listeSalarie(lId IN SALARIE.salarie_id%TYPE) RETURN OBJECT;
-	FUNCTION listeEleveSalarie(lId IN SALARIE.salarie_id%TYPE) RETURN OBJECT;
-	FUNCTION listeLeconSalarie(lId IN SALARIE.salarie_id%TYPE) RETURN OBJECT;
+	FUNCTION getCurSalarie RETURN SALARIE.salarie_id%TYPE;
 		
 	-- Eleve
-	FUNCTION listeEleve RETURN OBJECT;
+	FUNCTION getCurEleve RETURN ELEVE.eleve_id%TYPE;
 	FUNCTION sommeLeconEleve(lId IN ELEVE.eleve_id%TYPE) RETURN FLOAT;
 	FUNCTION dateCodeEleve(lId IN ELEVE.eleve_id%TYPE) RETURN DATE;
 	
 	-- Client
-	FUNCTION listeClient RETURN OBJECT;
-	FUNCTION listeEleveClient(lId IN CLIENT.client_id%TYPE) RETURN OBJECT;
+	FUNCTION getCurCli RETURN CLIENT.client_id%TYPE;
 	FUNCTION verifPaiementClient(lId IN CLIENT.client_id%TYPE) RETURN FLOAT;
-	FUNCTION listeFactureClient(lId IN CLIENT.client_id%TYPE, paye INT, 
-								laDateDebut IN ACHAT.achat_date%TYPE, laDateFin IN ACHAT.achat_date%TYPE)
-								RETURN OBJECT;
+
 	FUNCTION sommeAPayerClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT;
 	FUNCTION sommeAchatClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT;
 	
-	-- Examen
-	FUNCTION listeExamen RETURN OBJECT;
-	
 	-- Formule
-	FUNCTION listeFormule RETURN OBJECT;
+	FUNCTION getCurFormule RETURN FORMULE.formule_num%TYPE;
+		
+	-- Poste
+	FUNCTION getCurPoste RETURN POSTE.poste_num%TYPE;
 	
-	-- Ville
-	FUNCTION listeVille(leCp IN VILLE.ville_cp%TYPE, laVille IN VILLE.ville_nom%TYPE) RETURN OBJECT;
-	
+	-- Type
+	FUNCTION getCurType RETURN TYPEL.typel_num%TYPE;
 	
 END autoEcole;
 
@@ -158,24 +158,28 @@ END suppressionVehicule;
 PROCEDURE modifVehicule(leNum IN VEHICULE.vehicule_num%TYPE, lImmatriculation IN VEHICULE.vehicule_immatriculation%TYPE,
 							laMarque IN VEHICULE.vehicule_marque%TYPE, leModele IN VEHICULE.vehicule_modele%TYPE)
 IS
-DECLARE
-  req CLOB;
 BEGIN
-	if (lImmatriculation is not NULL)
-		req = req || 'vehicule_immatriculation = ' || lImmatriculation;
-	if (laMarque is not NULL)
-		req = req || 'AND vehicule_marque = ' || laMarque;
-	if (leModele is not NULL)
-		req = req || 'AND vehicule_modele = ' || leModele;
-
-  ALTER TABLE VEHICULE 
-  MODIFY SET || req ||
+	
+  UPDATE VEHICULE SET 
+  vehicule_immatriculation = lImmatriculation,
+  vehicule_marque = laMarque,
+  vehicule_modele = lemodele
   WHERE vehicule_num = leNum;
   print('Le véhicule a bien été modifié');
 
 -- EXCEPTION
   -- WHEN DUP_VAL_ON_INDEX THEN print('Le login est déjà existant.');
 END modifVehicule;
+
+FUNCTION getCurVehicule RETURN VEHICULE.vehicule_num%TYPE
+IS
+   idVehicule VEHICULE.vehicule_num%TYPE;
+ BEGIN
+   SELECT seq_vehicule.currval INTO idVehicule FROM dual;
+   
+ RETURN idVehicule;
+ 
+END getCurVehicule;
 
 
 ------------------------------------HistoKm --------------------------------------------
@@ -245,22 +249,15 @@ PROCEDURE modifLecon(leNum IN LECON.lecon_num%TYPE, laDate IN LECON.lecon_date%T
 						 leVehicule IN LECON.lecon_vehicule%TYPE, leSalarie IN LECON.lecon_salarie%TYPE, 
 						 lEleve IN LECON.lecon_eleve%TYPE, leType IN LECON.lecon_type%TYPE)
 IS
-DECLARE
-  req CLOB;
 BEGIN
-	if (laDate is not NULL)
-		req = req || 'lecon_date = ' || laDate;
-	if (leVehicule is not NULL)
-		req = req || 'AND lecon_vehicule = ' || leVehicule;
-	if (leSalarie is not NULL)
-		req = req || 'AND lecon_salarie = ' || leSalarie;
-	if (lEleve is not NULL)
-		req = req || 'AND lecon_eleve = ' || lEleve;
-	if (leType is not NULL)
-		req = req || 'AND lecon_type = ' || leType;
-
-  ALTER TABLE LECON 
-  MODIFY SET || req ||
+	
+  UPDATE LECON SET 
+  lecon_num = leNum,
+  lecon_date = laDate,
+  lecon_vehicule = leVehicule,
+  lecon_salarie = leSalarie,
+  lecon_eleve = lEleve,
+  lecon_type = leType
   WHERE lecon_num = leNum;
   print('La leçon a bien été modifié');
 
@@ -268,6 +265,15 @@ BEGIN
   -- WHEN DUP_VAL_ON_INDEX THEN print('Le login est déjà existant.');
 END modifLecon;
 
+FUNCTION getCurLecon RETURN LECON.lecon_id%TYPE
+IS
+   idLecon LECON.lecon_id%TYPE;
+ BEGIN
+   SELECT seq_lecon.currval INTO idLecon FROM dual;
+   
+ RETURN idLecon;
+ 
+END getCurLecon;
 
 ----------------------------------- Salarié ---------------------------------
 
@@ -330,36 +336,33 @@ PROCEDURE modifSalarie(lId IN SALARIE.salarie_id%TYPE, leNom IN SALARIE.salarie_
 				       leCp IN SALARIE.salarie_cp%TYPE, leTel IN SALARIE.salarie_tel%TYPE, 
 				       leVehicule IN SALARIE.salarie_vehicule%TYPE, lePoste IN SALARIE.salarie_poste%TYPE)
 IS
-DECLARE
-  req CLOB;
 BEGIN
-	if (leNom is not NULL)
-		req = req || 'salarie_nom = ' || leNom;
-	if (lePrenom is not NULL)
-		req = req || 'AND salarie_prenom = ' || lePrenom;
-	if (leSurnom is not NULL)
-		req = req || 'AND salarie_surnom = ' || leSurnom;
-	if (lAdr is not NULL)
-		req = req || 'AND salarie_adr = ' || lAdr;
-	if (laVille is not NULL)
-		req = req || 'AND salarie_ville = ' || laVille;
-	if (leCp is not NULL)
-		req = req || 'AND salarie_cp = ' || leCp;
-	if (leTel is not NULL)
-		req = req || 'AND salarie_tel = ' || leTel;
-	if (leVehicule is not NULL)
-		req = req || 'AND salarie_vehicule = ' || leVehicule;
-	if (lePoste is not NULL)
-		req = req || 'AND salarie_poste = ' || lePoste;
-
-  ALTER TABLE SALARIE 
-  MODIFY SET || req ||
+  
+  UPDATE SALARIE SET 
+  salarie_nom = leNom,
+  salarie_prenom = lePrenom,
+  salarie_surnom = leSurnom,
+  salarie_adr = lAdr,
+  salarie_ville = laVille,
+  salarie_cp = leCp,
+  salarie_tel = leTel,
+  salarie_vehicule = leVehicule,
+  salarie_poste = lePoste
   WHERE salarie_id = lId;
-  print('Le salarié a bien été modifié');
-
--- EXCEPTION
-  -- WHEN DUP_VAL_ON_INDEX THEN print('Le login est déjà existant.');
+  
+  print('Salarié modifié');
+  
 END modifSalarie;
+
+FUNCTION getCurSalarie RETURN SALARIE.salarie_id%TYPE
+IS
+   idSalarie SALARIE.salarie_id%TYPE;
+ BEGIN
+   SELECT seq_salarie.currval INTO idSalarie FROM dual;
+   
+ RETURN idSalarie;
+ 
+END getCurSalarie;
 
 --------------------------------- Eleve ---------------------------------------
 
@@ -425,36 +428,52 @@ PROCEDURE modifEleve(lId IN ELEVE.eleve_id, leNom IN ELEVE.eleve_nom%TYPE,
 					 leTel IN ELEVE.eleve_tel%TYPE, laDateNaiss IN ELEVE.eleve_dateNaiss%TYPE, 
 					 leSalarie IN ELEVE.eleve_salarie%TYPE, leCli IN ELEVE.eleve_cli%TYPE)
 IS
-DECLARE
-  req CLOB;
 BEGIN
-	if (leNom is not NULL)
-		req = req || 'eleve_nom = ' || leNom;
-	if (lePrenom is not NULL)
-		req = req || 'AND eleve_prenom = ' || lePrenom;	
-	if (lAdr is not NULL)
-		req = req || 'AND eleve_adr = ' || lAdr;
-	if (laVille is not NULL)
-		req = req || 'AND eleve_ville = ' || laVille;
-	if (leCp is not NULL)
-		req = req || 'AND eleve_cp = ' || leCp;
-	if (leTel is not NULL)
-		req = req || 'AND eleve_tel = ' || leTel;
-	if (laDateNaiss is not NULL)
-		req = req || 'AND eleve_dateNaiss = ' || laDateNaiss;
-	if (leSalarie is not NULL)
-		req = req || 'AND eleve_salarie = ' || leSalarie;
-	if (leCli is not NULL)
-		req = req || 'AND eleve_cli = ' || leCli;
+	
 
-  ALTER TABLE ELEVE 
-  MODIFY SET || req ||
+  UPDATE ELEVE SET 
+  eleve_nom = leNom,
+  eleve_prenom = lePrenom,
+  eleve_surnom = leSurnom,
+  eleve_adr = lAdr,
+  eleve_ville = laVille,
+  eleve_cp = leCp,
+  eleve_tel = leTel,
+  eleve_dateNaiss = laDateNaiss,
+  eleve_salarie = leSalarie,
+  eleve_cli = leCli
   WHERE eleve_id = lId;
   print('L''eleve a bien été modifié');
 
 -- EXCEPTION
   -- WHEN DUP_VAL_ON_INDEX THEN print('Le login est déjà existant.');
 END modifEleve;
+
+FUNCTION getCurEleve RETURN ELEVE.eleve_id%TYPE
+IS
+   idEleve ELEVE.eleve_id%TYPE;
+ BEGIN
+   SELECT seq_eleve.currval INTO idEleve FROM dual;
+   
+ RETURN idEleve;
+ 
+END getCurEleve;
+
+FUNCTION sommeLeconEleve(lId IN ELEVE.eleve_id%TYPE) RETURN FLOAT
+IS
+BEGIN
+
+RETURN 0;
+
+END sommeLeconEleve;
+
+FUNCTION dateCodeEleve(lId IN ELEVE.eleve_id%TYPE) RETURN DATE
+IS
+BEGIN
+
+RETURN '10/10/2016';
+
+END dateCodeEleve;
 
 ---------------------------------- Client ----------------------------------
 
@@ -516,26 +535,17 @@ PROCEDURE modifCli(lId IN CLIENT.client_id, leNom IN CLIENT.client_nom%TYPE,
 				   leTel IN CLIENT.client_tel%TYPE, laDateNaiss IN CLIENT.client_dateNaiss%TYPE) 
 				   
 IS
-DECLARE
-  req CLOB;
 BEGIN
-	if (leNom is not NULL)
-		req = req || 'client_nom = ' || leNom;
-	if (lePrenom is not NULL)
-		req = req || 'AND client_prenom = ' || lePrenom;	
-	if (lAdr is not NULL)
-		req = req || 'AND client_adr = ' || lAdr;
-	if (laVille is not NULL)
-		req = req || 'AND client_ville = ' || laVille;
-	if (leCp is not NULL)
-		req = req || 'AND client_cp = ' || leCp;
-	if (leTel is not NULL)
-		req = req || 'AND client_tel = ' || leTel;
-	if (laDateNaiss is not NULL)
-		req = req || 'AND client_dateNaiss = ' || laDateNaiss;	
-
-  ALTER TABLE CLIENT 
-  MODIFY SET || req ||
+	
+  UPDATE CLIENT SET 
+  client_nom = leNom,
+  client_prenom = lePrenom,
+  client_surnom = leSurnom,
+  client_adr = lAdr,
+  client_ville = laVille,
+  client_cp = leCp,
+  client_tel = leTel,
+  client_dateNaiss = laDateNaiss
   WHERE client_id = lId;
   print('Le client a bien été modifié');
 
@@ -543,6 +553,40 @@ BEGIN
   -- WHEN DUP_VAL_ON_INDEX THEN print('Le login est déjà existant.');
 END modifCli;
 
+FUNCTION getCurCli RETURN CLIENT.client_id%TYPE
+IS
+   idCli CLIENT.client_id%TYPE;
+ BEGIN
+   SELECT seq_client.currval INTO idCli FROM dual;
+   
+ RETURN idCli;
+ 
+END getCurCli;
+
+
+FUNCTION sommeAPayerClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT
+IS 
+BEGIN
+
+RETURN 0;
+
+END sommeAPayerClient;
+
+FUNCTION sommeAchatClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT
+IS 
+BEGIN
+
+RETURN 0;
+
+END sommeAchatClient;
+
+FUNCTION verifPaiementClient(lId IN CLIENT.client_id%TYPE) RETURN FLOAT
+IS 
+BEGIN
+
+RETURN 0.0;
+
+END verifPaiementClient;	
 
 ---------------------------------- Examen ------------------------------------
 
@@ -573,8 +617,6 @@ BEGIN
   print('Suppression effectuée avec succès');
 
 END suppressionExamen;
-
-
 
 --------------------------------- Formule ------------------------------------------
 
@@ -621,15 +663,11 @@ IS
 DECLARE
   req CLOB;
 BEGIN
-	if (leNbLecon is not NULL)
-		req = req || 'formule_nbLeconConduite = ' || leNbLecon;
-	if (lePrix is not NULL)
-		req = req || 'AND lecon_prix = ' || lePrix;
-	if (lePrixTicket is not NULL)
-		req = req || 'AND lecon_ticketPrix = ' || lePrixTicket;
-
-  ALTER TABLE FORMULE 
-  MODIFY SET || req ||
+	
+  UPDATE FORMULE SET 
+  formule_nbLeconConduite = leNbLecon,
+  formule_prix = lePrix,
+  formule_ticketPrix
   WHERE formule_num = leNum;
   print('La formule a bien été modifiée');
 
@@ -637,6 +675,97 @@ BEGIN
   -- WHEN DUP_VAL_ON_INDEX THEN print('Le login est déjà existant.');
 END modifFormule;
 
+FUNCTION getCurFormule RETURN FORMULE.formule_num%TYPE
+IS
+   idFormule FORMULE.formule_num%TYPE;
+ BEGIN
+   SELECT seq_formule.currval INTO idFormule FROM dual;
+   
+ RETURN idFormule;
+ 
+END getCurFormule;
+
+----------------------------------- Ville ----------------------------------------
+
+PROCEDURE ajoutVille(laVille IN VILLE.ville_nom%TYPE, leCp IN VILLE.ville_cp%TYPE)
+ IS 
+ BEGIN
+   INSERT INTO VILLE VALUES(laVille, leCp);
+   
+   print('ville ajoutée');
+   
+ END ajoutVille;
+ 
+ PROCEDURE suppressionVille(laVille IN VILLE.ville_nom%TYPE, leCp IN VILLE.ville_cp%TYPE)
+ IS
+ BEGIN
+   DELETE FROM VILLE WHERE ville_nom = laVille AND ville_cp = leCp;
+   
+   print('ville supprimée');
+   
+ END suppressionVille;
+ 
+----------------------------------- Poste ----------------------------------------
+
+PROCEDURE ajoutPoste(leNom IN POSTE.poste_nom%TYPE)
+ IS 
+ BEGIN
+   INSERT INTO POSTE VALUES(seq_poste.nextval, leNom);
+   
+   print('poste ajouté');
+   
+ END ajoutPoste;
+ 
+ PROCEDURE suppressionPoste(leNum IN POSTE.poste_num%TYPE)
+ IS
+ BEGIN
+   DELETE FROM POSTE WHERE poste_num = leNum;
+   
+   print('poste supprimé');
+   
+ END suppressionPoste;
+
+FUNCTION getCurPoste RETURN POSTE.poste_num%TYPE
+IS
+   idPoste POSTE.poste_num%TYPE;
+ BEGIN
+   SELECT seq_poste.currval INTO idPoste FROM dual;
+   
+ RETURN idPoste;
+ 
+END getCurPoste;
+
+----------------------------------- Type -------------------------------------------
+
+PROCEDURE ajoutType(leNom IN TYPEL.typel_nom%TYPE)
+ IS 
+ BEGIN
+   INSERT INTO TYPEL VALUES(seq_typel.nextval, leNom);
+   
+   print('type ajouté');
+   
+ END ajoutType;
+ 
+PROCEDURE suppressionType(leNum IN TYPEL.typel_num%TYPE)
+ IS
+ BEGIN
+   DELETE FROM TYPEL WHERE typel_num = leNum;
+   
+   print('type supprimé');
+   
+ END suppressionType;	
+	
+	
+FUNCTION getCurType RETURN TYPEL.typel_num%TYPE
+IS
+   idType TYPEL.typel_num%TYPE;
+ BEGIN
+   SELECT seq_type.currval INTO idType FROM dual;
+   
+ RETURN idType;
+ 
+END getCurType;
+ 
 ----------------------------------- Autre ----------------------------------------
 
 /**
@@ -648,32 +777,6 @@ IS
 BEGIN
   dbms_output.put_line(message);
 END print;
-
------------------------------------ FONCTIONS ------------------------------------
-
------------------------------------ Véhicule -------------------------------------
-
-/**
- * Liste des véhicules de la base de données
- * @return Tableau des véhicules de la base de données.
- */
-FUNCTION listeVehicule RETURN OBJECT
-IS
-DECLARE
-  -- Déclarations de types
-  
-  BEGIN
-  -- Remontée des données
-  SELECT vehicule_num, vehicule_immatriculation, vehicule_marque, vehicule_modele
-  BULK COLLECT INTO vehicules
-  FROM VEHICULE
-  ORDER BY vehicule_num;
-
-  RETURN vehicules
-
- END listeVehicule;
-
-
 
 
 END autoEcole;
