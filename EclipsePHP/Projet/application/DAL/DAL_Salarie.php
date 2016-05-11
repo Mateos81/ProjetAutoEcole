@@ -35,7 +35,6 @@ class DAL_Salarie {
 			string $tel,
 			integer $vehicule,
 			integer $poste) {
-		// TODO A tester
 		$conn = Outils.connexion();
 		
 		// Construction de la commande d'accès à la procédure PL/SQL
@@ -89,7 +88,6 @@ class DAL_Salarie {
 			string $tel,
 			integer $vehicule,
 			integer $poste) {
-		// TODO A tester
 		$conn = Outils.connexion();
 		
 		// Construction de la commande d'accès à la procédure PL/SQL
@@ -132,26 +130,107 @@ class DAL_Salarie {
 	}
 	
 	/**
+	 * Récupère et renvoie les informations du salarié via son surnom.
+	 * @param string $surnom Le surnom du salarié recherché.
+	 * @return array Un tableau à une ligne
+	 * 				 contenant les informations du salarié recherché.
+	 */
+	public static function getSalarieBySurnom($surnom) {
+		$conn = Outils.connexion();
+		
+		$req = 'SELECT * FROM SALARIE ';
+		$req .= 'WHERE salarie_surnom LIKE %' . $surnom . '%';
+			
+		$stid =	oci_parse($conn, $req);
+		oci_execute($stid);
+		
+		$tab = array();
+		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$tab[] = $row;
+		}
+		
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+		
+		return $tab;
+	}
+	
+	/**
 	 * Liste les élèves d'un salarié.
 	 * @param integer $id Identifiant d'un salarié.
+	 * @return array La liste des élèves.
 	 */
 	public static function listeEleves($id) {
-	    // TODO
+	    $conn = Outils.connexion();
+			
+		$stid =
+			oci_parse(
+				$conn,
+				'SELECT * FROM ELEVE WHERE eleve_salarie = ' . $id);
+		oci_execute($stid);
+		
+		$tab = array();
+		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$tab[] = $row;
+		}
+		
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+		
+		return $tab;
 	}
 	
 	/**
 	 * Liste les leçons d'un salarié.
 	 * @param integer $id Identifiant d'un salarié.
+	 * @return array La liste des leçons.
 	 */
 	public static function listeLecons($id) {
-	    // TODO
+	    $conn = Outils.connexion();
+			
+		$stid =
+			oci_parse(
+				$conn,
+				'SELECT * FROM LECON WHERE lecon_salarie = ' . $id);
+		oci_execute($stid);
+		
+		$tab = array();
+		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$tab[] = $row;
+		}
+		
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+		
+		return $tab;
 	}
 	
 	/**
 	 * Liste les salariés.
+	 * @return array La liste des salariés.
 	 */
 	public static function listeSalaries() {
-	    // TODO
+	    $conn = Outils.connexion();
+			
+		$stid =
+			oci_parse(
+				$conn,
+				'SELECT * FROM SALARIE');
+		oci_execute($stid);
+		
+		$tab = array();
+		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$tab[] = $row;
+		}
+		
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+		
+		return $tab;
 	}
 }
 ?>

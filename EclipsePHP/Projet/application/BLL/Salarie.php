@@ -3,6 +3,7 @@
  * Projet 2ème Année 3iL
  * @author CIULLI - MATEOS - ROUX
  * @version 1.0
+ * @package BLL
  */
  
  /**
@@ -41,11 +42,23 @@ class Salarie extends Personne {
      * car c'est l'information que l'on connait.
      */
     public function __construct($surnom) {
-        $data = array();
+        $salarie = array();
         
-        // TODO Recherche du salarié dans la base (PL/SQL V.ROUX)
+        // Recherche du salarié dans la base
+        $salarie = DAL_Salarie::getSalarieBySurnom($surnom);
         
-        // TODO Renseignement des champs
+        // Renseignement des champs
+        $this->personne_id = $salarie[0]['salarie_id'];
+        $this->personne_nom = $salarie[0]['salarie_nom'];
+        $this->personne_prenom = $salarie[0]['salarie_prenom'];
+        $this->salarie_surnom = $salarie[0]['salarie_surnom'];
+        $this->personne_adr = $salarie[0]['salarie_adr'];
+        $this->personne_ville =
+        	new Ville(
+        		$salarie[0]['salarie_ville'],
+        		$salarie[0]['salarie_cp']);
+        $this->salarie_poste = $salarie[0]['salarie_poste'];
+        $this->salarie_vehicule = new Vehicule($salarie[0]['salarie_vehicule']);
     }
     
     /**
@@ -131,18 +144,17 @@ class Salarie extends Personne {
      * Création d'un nouveau salarié en base de données.
      */
     public function creerSalarie() {
-    	// TODO PL/SQL
     	$this->personne_id = 
     		DAL_Salarie::creerSalarie(
-    				$this->personne_nom,
-    				$this->personne_prenom,
-    				$this->salarie_surnom,
-    				$this->personne_adr,
-    				$this->personne_ville->getVille_nom(),
-    				$this->personne_ville->getVille_cp(),
-    				$this->personne_tel,
-    				$this->salarie_vehicule->getVehicule_num(),
-    				$this->salarie_poste);
+    			$this->personne_nom,
+    			$this->personne_prenom,
+    			$this->salarie_surnom,
+    			$this->personne_adr,
+    			$this->personne_ville->getVille_nom(),
+    			$this->personne_ville->getVille_cp(),
+    			$this->personne_tel,
+    			$this->salarie_vehicule->getVehicule_num(),
+    			$this->salarie_poste);
     }
     
     /**
@@ -150,7 +162,17 @@ class Salarie extends Personne {
      * suivant les informations de l'objet courant.
      */
     public function modifierSalarie() {
-    	// TODO PL/SQL
+    	DAL_Salarie::modifierSalarie(
+    		$this->personne_id,
+    		$this->personne_nom,
+    		$this->personne_prenom,
+    		$this->salarie_surnom,
+    		$this->personne_adr,
+    		$this->personne_ville->getVille_nom(),
+    		$this->personne_ville->getVille_cp(),
+    		$this->personne_tel,
+    		$this->salarie_vehicule->getVehicule_num(),
+    		$this->salarie_poste);
     }
     
     /**
@@ -161,33 +183,21 @@ class Salarie extends Personne {
     }
     
     /**
-     * Récupère et renvoie la liste de tous les élèves du salarié courant.
+     * Récupère et renvoie la liste de tous les élèves
+     * associés au salarié courant.
      * @return La liste des élèves.
      */
     public function listeEleves() {
-        $listeEleves = array();
-        
-        // Récupération des données
-        DAL.listeEleves($this->salarie_id);
-        
-        // TODO Remplissage du tableau
-        
-        return $listeEleves;
+        return DAL_Salarie::listeEleves($this->salarie_id);
     }
     
     /**
-     * Récupère et renvoie la liste de toutes les leçons du salarié courant.
+     * Récupère et renvoie la liste de toutes les leçons
+     * dispensées par salarié courant.
      * @return La liste des leçons.
      */
     public function listeLecons() {
-        $listeLecons = array();
-        
-        // Récupération des données
-        DAL.listeLecons($this->salarie_id);
-        
-        // TODO Remplissage du tableau
-        
-        return $listeLecons;
+        return DAL_Salarie::listeLecons($this->salarie_id);
     }
     
     /**
@@ -195,14 +205,7 @@ class Salarie extends Personne {
      * @return La liste des salariés.
      */
     public static function listeSalaries() {
-    	$listeSalaries = array();
-    	
-    	// Récupération des données
-    	DAL.listeSalaries();
-    	
-    	// TODO Remplissage du tableau
-    	
-    	return $listeSalaries;
+    	return DAL_Salarie::listeSalaries();
     }
 }
 ?>

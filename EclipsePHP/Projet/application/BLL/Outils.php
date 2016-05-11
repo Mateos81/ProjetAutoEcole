@@ -3,23 +3,30 @@
  * Projet 2ème Année 3iL
  * @author CIULLI - MATEOS - ROUX
  * @version 1.0
+ * @package BLL
  */
  
  /**
   * Classe outil.
   */
-class Outils {
+abstract class Outils {
     
     /**
 	 * Connexion à la base de données Oracle.
 	 * @return Un objet de connexion.
 	 */
 	public static function connexion_base() {
-	    // TODO Identifiants de connexion
-		$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+	    $conn = 
+			oci_connect(
+				'ROUX_MATEOS_CIULLI',
+				'ROUX_MATEOS_CIULLI');/*,
+				'localhost/XE');*/
+		
 		if (!$conn) {
 		    $e = oci_error();
-		    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+		    trigger_error(
+		    	htmlentities($e['message'], ENT_QUOTES), 
+		    	E_USER_ERROR);
 		}
 		
 		return $conn;

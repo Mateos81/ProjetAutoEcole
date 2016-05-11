@@ -3,6 +3,7 @@
  * Projet 2ème Année 3iL
  * @author CIULLI - MATEOS - ROUX
  * @version 1.0
+ * @package BLL
  */
 
 /**
@@ -58,6 +59,12 @@ class Ville {
 		$this->ville_cp = $valeur;
 	}
 	
-	// TODO Voir avec les autres le prototype de la fonction statique listeVille
+	/**
+	 * Récupère et renvoie la liste des villes sous forme de tableau.
+	 * @return array La liste des villes.
+	 */
+	public static function listeVilles() {
+		return DAL_Ville::listeVilles();
+	}
 }
 ?>

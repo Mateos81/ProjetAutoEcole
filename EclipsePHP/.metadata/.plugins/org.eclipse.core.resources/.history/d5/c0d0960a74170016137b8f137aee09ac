@@ -1,0 +1,214 @@
+<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package DAL
+ */
+ 
+ /**
+  * Classe d'accès aux données pour la classe Salarie.
+  * DAL pour Data Access Layer.
+  */
+class DAL_Salarie {
+	
+	/**
+	 * Création d'un nouveau salarié.
+	 * @param string $nom Le nom du nouveau salarié.
+	 * @param string $prenom Le prénom du nouveau salarié.
+	 * @param string $surnom Le surnom du nouveau salarié.
+	 * @param string $adr L'adresse du nouveau salarié.
+	 * @param string $ville La ville du nouveau salarié.
+	 * @param string $cp Le code postal du nouveau salarié.
+	 * @param string $tel Le numéro de téléphone du nouveau salarié.
+	 * @param integer $vehicule Le numéro du véhicule du nouveau salarié.
+	 * @param integer $poste Le poste du nouveau salarié.
+	 * @return integer Le numéro unique en base identifiant le salarié.
+	 */
+	public static function creerSalarie(
+			string $nom,
+			string $prenom,
+			string $surnom,
+			string $adr,
+			string $ville,
+			string $cp,
+			string $tel,
+			integer $vehicule,
+			integer $poste) {
+		// TODO A tester
+		$conn = Outils.connexion();
+		
+		// Construction de la commande d'accès à la procédure PL/SQL
+		$cmd = 'BEGIN :resultat := ajoutSalarie(';
+		$cmd .= ':nom, :prenom, :surnom, :adr, :ville, :cp, ';
+		$cmd .= ':tel, :vehicule, :poste); END;';
+		 
+		$stid = oci_parse($conn, $cmd);
+		
+		oci_bind_by_name($stid, ':resultat', $resultat);
+		
+		oci_bind_by_name($stid, ':nom', $nom);
+		oci_bind_by_name($stid, ':prenom', $prenom);
+		oci_bind_by_name($stid, ':surnom', $surnom);
+		oci_bind_by_name($stid, ':adr', $adr);
+		oci_bind_by_name($stid, ':ville', $ville);
+		oci_bind_by_name($stid, ':cp', $cp);
+		oci_bind_by_name($stid, ':tel', $tel);
+		oci_bind_by_name($stid, ':vehicule', $vehicule);
+		oci_bind_by_name($stid, ':poste', $poste);
+		
+		oci_execute($stid);
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+		
+		return $resultat;
+	}
+	
+/**
+	 * Mise à jour d'un salarié existant.
+	 * @param integer $id L'identifiant du salarié.
+	 * @param string $nom Le nom du salarié.
+	 * @param string $prenom Le prénom du salarié.
+	 * @param string $surnom Le surnom du salarié.
+	 * @param string $adr L'adresse du salarié.
+	 * @param string $ville La ville du salarié.
+	 * @param string $cp Le code postal du salarié.
+	 * @param string $tel Le numéro de téléphone du salarié.
+	 * @param integer $vehicule Le numéro du véhicule du salarié.
+	 * @param integer $poste Le poste du salarié.
+	 */
+	public static function modifierSalarie(
+			integer $id,
+			string $nom,
+			string $prenom,
+			string $surnom,
+			string $adr,
+			string $ville,
+			string $cp,
+			string $tel,
+			integer $vehicule,
+			integer $poste) {
+		$conn = Outils.connexion();
+		
+		// Construction de la commande d'accès à la procédure PL/SQL
+		$cmd = 'BEGIN modifSalarie(';
+		$cmd .= ':nom, :prenom, :surnom, :adr, :ville, :cp, ';
+		$cmd .= ':tel, :vehicule, :poste); END;';
+		 
+		$stid = oci_parse($conn, $cmd);
+		
+		oci_bind_by_name($stid, ':nom', $nom);
+		oci_bind_by_name($stid, ':prenom', $prenom);
+		oci_bind_by_name($stid, ':surnom', $surnom);
+		oci_bind_by_name($stid, ':adr', $adr);
+		oci_bind_by_name($stid, ':ville', $ville);
+		oci_bind_by_name($stid, ':cp', $cp);
+		oci_bind_by_name($stid, ':tel', $tel);
+		oci_bind_by_name($stid, ':vehicule', $vehicule);
+		oci_bind_by_name($stid, ':poste', $poste);
+		
+		oci_execute($stid);
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+	}
+	
+	/**
+	 * Suppression d'un salarié.
+	 * @param integer $id Identifiant unique du salarié à supprimer.
+	 */
+	public static function suppressionSalarie(integer $id) {
+		$conn = Outils.connexion();
+		 
+		$stid = oci_parse($conn, 'BEGIN suppressionSalarie(:id); END;');
+		oci_bind_by_name($stid, ':id', $id);
+		
+		oci_execute($stid);
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+	}
+	
+	public static function getSalarieBySurnom($surnom) {
+		
+	}
+	
+	/**
+	 * Liste les élèves d'un salarié.
+	 * @param integer $id Identifiant d'un salarié.
+	 * @return array La liste des élèves.
+	 */
+	public static function listeEleves($id) {
+	    $conn = Outils.connexion();
+			
+		$stid =
+			oci_parse(
+				$conn,
+				'SELECT * FROM ELEVE WHERE ELEVE.eleve_salarie = ' . $id);
+		oci_execute($stid);
+		
+		$tab = array();
+		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$tab[] = $row;
+		}
+		
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+		
+		return $tab;
+	}
+	
+	/**
+	 * Liste les leçons d'un salarié.
+	 * @param integer $id Identifiant d'un salarié.
+	 * @return array La liste des leçons.
+	 */
+	public static function listeLecons($id) {
+	    $conn = Outils.connexion();
+			
+		$stid =
+			oci_parse(
+				$conn,
+				'SELECT * FROM LECON WHERE LECON.lecon_salarie = ' . $id);
+		oci_execute($stid);
+		
+		$tab = array();
+		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$tab[] = $row;
+		}
+		
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+		
+		return $tab;
+	}
+	
+	/**
+	 * Liste les salariés.
+	 * @return array La liste des salariés.
+	 */
+	public static function listeSalaries() {
+	    $conn = Outils.connexion();
+			
+		$stid =
+			oci_parse(
+				$conn,
+				'SELECT * FROM SALARIE');
+		oci_execute($stid);
+		
+		$tab = array();
+		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$tab[] = $row;
+		}
+		
+		oci_free_statement($stid);
+		
+		Outils.deconnexion_base($conn);
+		
+		return $tab;
+	}
+}
+?>

@@ -3,6 +3,7 @@
  * Projet 2ème Année 3iL
  * @author CIULLI - MATEOS - ROUX
  * @version 1.0
+ * @package BLL
  */
 
 /**
@@ -54,6 +55,7 @@ class Poste {
 	 * Fonction qui renvoie le poste depuis le numéro unique.
 	 * @param integer $id Le numéro identifiant le poste.
 	 * @return string La valeur du type de Poste.
+	 * @throws Exception Si le paramètre est invalide.
 	 */
 	public function getExamenType(integer $id) {
 		foreach ($this->tabPostes as $key => $value) {
@@ -62,7 +64,7 @@ class Poste {
 			}
 		}
 		
-		// TODO Impossible
+		throw new Exception("Identifiant de poste invalide.");
 	}
 }
 ?>

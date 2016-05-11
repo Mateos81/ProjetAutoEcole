@@ -3,6 +3,7 @@
  * Projet 2ème Année 3iL
  * @author CIULLI - MATEOS - ROUX
  * @version 1.0
+ * @package BLL
  */
  
  /**
@@ -21,20 +22,24 @@ class HistoKm {
     }
     
     /**
+     * Constructeur avec la valeur du kilométrage.
+     * @param integer $nbKm La valeur du kilométrage.
+     * @throws Exception Si le kilométrage est négatif.
+     */
+    public function __construct(integer $nbKm) {
+    	if ($nbKm < 0) {
+    		throw new Exception("Un kilométrage ne peut être négatif.");
+    	}
+    	
+    	$this->histoKm_nbKm = $nbKm;
+    }
+    
+    /**
      * Accesseur sur le nombre de kilomètres de l'historique courant.
      */
     public function getHistoKm_nbKm()
     {
         return $this->histoKm_nbKm;
-    }
-    
-    /**
-     * Modifieur sur le nombre de kilomètres de l'historique courant.
-     * TODO @param + BDD (second param $id)
-     */
-    public function setHistoKm_nbKm($valeur)
-    {
-        $this->histoKm_nbKm = $valeur;
     }
 }
 ?>
