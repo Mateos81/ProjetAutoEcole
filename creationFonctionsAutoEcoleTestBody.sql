@@ -345,17 +345,23 @@ END getCurEleve;
 
 FUNCTION sommeLeconEleve(lId IN ELEVE.eleve_id%TYPE) RETURN FLOAT
 IS
+   sommeLecon INT;
 BEGIN
+	SELECT COUNT(*) INTO sommeLecon FROM LECON 
+	WHERE lecon_date < SYSDATE AND lecon_eleve = lId;
 
-RETURN 0;
+RETURN sommeLecon;
 
 END sommeLeconEleve;
 
 FUNCTION dateCodeEleve(lId IN ELEVE.eleve_id%TYPE) RETURN DATE
 IS
+  dateCode DATE;
 BEGIN
+  SELECT passer_examenDate INTO dateCode FROM PASSER 
+  WHERE passer_examenType = 1 AND passer_eleve = lId;
 
-RETURN '10/10/2016';
+RETURN dateCode;
 
 END dateCodeEleve;
 
@@ -446,30 +452,17 @@ IS
  
 END getCurClient;
 
-
-FUNCTION sommeAPayerClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT
-IS 
-BEGIN
-
-RETURN 0;
-
-END sommeAPayerClient;
-
 FUNCTION sommeAchatClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT
 IS 
+  sommeAchat ACHETER.acheter_prix%TYPE;
 BEGIN
+  SELECT SUM(acheter_prix) INTO sommeAchat FROM ACHETER, ELEVE 
+  WHERE acheter_eleve = lIdE AND eleve_cli = lId;
 
-RETURN 0;
+RETURN sommeAchat;
 
 END sommeAchatClient;
 
-FUNCTION verifPaiementClient(lId IN CLIENT.client_id%TYPE) RETURN FLOAT
-IS 
-BEGIN
-
-RETURN 0.0;
-
-END verifPaiementClient;	
 
 ---------------------------------- Examen ------------------------------------
 

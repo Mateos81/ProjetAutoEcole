@@ -95,9 +95,7 @@ CREATE OR REPLACE PACKAGE autoEcole IS
 	
 	-- Client
 	FUNCTION getCurClient RETURN CLIENT.client_id%TYPE;
-	FUNCTION verifPaiementClient(lId IN CLIENT.client_id%TYPE) RETURN FLOAT;
 
-	FUNCTION sommeAPayerClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT;
 	FUNCTION sommeAchatClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT;
 	
 	-- Formule

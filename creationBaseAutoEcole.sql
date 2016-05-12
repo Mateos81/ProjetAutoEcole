@@ -13,9 +13,7 @@
 	ALTER TABLE ELEVE DROP CONSTRAINT fk_cliEleve;
 	ALTER TABLE PASSER DROP CONSTRAINT fk_elevePasser;
 	ALTER TABLE PASSER DROP CONSTRAINT fk_examenPasser;
-	ALTER TABLE CONCERNER DROP CONSTRAINT fk_eleveConcerner;
-	ALTER TABLE CONCERNER DROP CONSTRAINT fk_formuleConcerner;
-	ALTER TABLE ACHETER DROP CONSTRAINT fk_cliAcheter;
+	ALTER TABLE ACHETER DROP CONSTRAINT fk_eleveAcheter;
 	ALTER TABLE ACHETER DROP CONSTRAINT fk_formAcheter;
 	ALTER TABLE EXAMEN DROP CONSTRAINT fk_typeExam;
 	ALTER TABLE SUIVRE DROP CONSTRAINT fk_eleveSuivre;
@@ -23,7 +21,6 @@
 
 	DROP TABLE HISTO_KM;
 	DROP TABLE PASSER;
-	DROP TABLE CONCERNER;
 	DROP TABLE ACHETER;
 	DROP TABLE EXAMEN;
 	DROP TABLE FORMULE;
@@ -172,24 +169,15 @@
 	(
 		acheter_num INT PRIMARY KEY,
 		acheter_date DATE NOT NULL,
-		acheter_client INT NOT NULL,
+		acheter_eleve INT NOT NULL,
 		acheter_formule INT NOT NULL,
 		acheter_nbTicket INT,
-		acheter_paye FLOAT,
+		acheter_prix FLOAT,
 
-		CONSTRAINT fk_cliAcheter FOREIGN KEY(acheter_client) REFERENCES CLIENT(client_id) ON DELETE CASCADE,
+		CONSTRAINT fk_EleveAcheter FOREIGN KEY(acheter_eleve) REFERENCES ELEVE(eleve_id) ON DELETE CASCADE,
 		CONSTRAINT fk_formuleAcheter FOREIGN KEY(acheter_formule) REFERENCES FORMULE(formule_num) ON DELETE CASCADE
 	);
 
-	CREATE TABLE CONCERNER
-	(
-		concerner_num INT PRIMARY KEY,
-		concerner_eleve INT NOT NULL,
-		concerner_formule INT NOT NULL,
-
-		CONSTRAINT fk_eleveConcerner FOREIGN KEY(concerner_eleve) REFERENCES ELEVE(eleve_id) ON DELETE CASCADE,
-		CONSTRAINT fk_formuleConcerner FOREIGN KEY(concerner_formule) REFERENCES FORMULE(formule_num) ON DELETE CASCADE
-	);
 
 	CREATE TABLE PASSER
 	(
