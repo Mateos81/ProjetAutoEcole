@@ -1,0 +1,92 @@
+﻿<?php
+// session_start();
+// if((ISSET($_SESSION['USER']))){
+	// if(( ISSET($_POST['Deco']))||
+		// (time() - $_SESSION['LAST_ACTIVITY'] > 1200)){
+		// session_destroy();
+	// }else{
+		// $_SESSION['LAST_ACTIVITY']=time();
+	// }
+// }
+?> 
+<!DOCTYPE html>
+<html>
+<body>
+		<header>
+			<a href="index.php"><img src="images/Logo3syl.png" height="250" width="350" alt="Jus de Box" class="float" id="banner"/></a>
+		</header>
+	<?php include('head.php');?>
+	<?php include('menu.php');?>
+	<section>
+	<!-- Filter -->
+	<div Class="filter">		
+		<form  style="color:white;" action="action_formules.php">
+			<fieldset>
+				<legend>Filtres formules :</legend>
+				<input type="radio" name="typeExamen" value="all" checked> All 
+				<input type="radio" name="typeExamen" value="formuleA"> Formule A 
+				<input type="radio" name="typeExamen" value="formuleB"> Formule B
+				<input type="radio" name="typeExamen" value="formuleC"> Formule C
+				<input style="color:black;" type="submit" value="Rechercher">
+			</fieldset>
+		</form>
+	<br>
+	<!-- /Filter -->
+²	<!-- Fiche -->
+	<script language="JavaScript">
+		function toggle(source) {
+			checkboxes = document.getElementsByName('check');
+				for(var i=0, n=checkboxes.length;i<n;i++) {
+				checkboxes[i].checked = source.checked;
+				}
+		}
+	</script>
+	
+			<div class="table-container">
+			<table>
+				<thead>
+					<tr>
+						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
+						<th>Id Leçon</th>
+						<th>Nombre leçon</th>		
+						<th>Prix</th>
+						<th>Ticket prix</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+						$TAILLE = 20;
+						for ($x = 0; $x <= $TAILLE; $x++) {
+						echo "<tr>
+								<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
+								<td> </td>		
+								<td> </td>
+								<td> </td>
+								<td> </td>		
+							</tr>";
+						}
+					?>  
+				</tbody>
+			</table>
+			
+		</div>
+		<div style="margin-top:10px;">
+		<form style="display: inline;" action="action_consulter_lecon.php">
+			<input style="color:black;" type="submit" value="Consulter">
+		</form>
+		<form style="display: inline;" action="action_ajouter_lecon.php">
+			<input style="color:black;" type="submit" value="Ajouter">
+		</form>
+		<form style="display: inline;" action="action_modifier_lecon.php">
+			<input style="color:black;" type="submit" value="Modifier">
+		</form>
+		<form style="display: inline;" action="action_supprimer_lecon.php">
+			<input style="color:black;" type="submit" value="Supprimer">
+		</form>
+		</div>
+	<!-- Fiche -->
+	</div>
+	</section>
+	<?php include('footer.php');?>
+</body>
+</html>
