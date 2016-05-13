@@ -19,7 +19,7 @@ class DAL_HistoKM {
 	 *        Nouvelle entrée à ajouter pour l'historique d'un véhicule.
 	 */
 	public static function addHisto_Km($vehicule_num, HistoKm $histo) {
-		$conn = Outils.connexion();
+		$conn = Outils::connexion_base();
     	
 		$stid = oci_parse($conn, 'BEGIN ajoutHistoKm(:id, :nbKm); END;');
 		oci_bind_by_name($stid, ':id', $vehicule_num);
@@ -28,7 +28,7 @@ class DAL_HistoKM {
 		oci_execute($stid);
 		oci_free_statement($stid);
 		
-    	Outils.deconnexion_base($conn);
+    	Outils::deconnexion_base();
 	}
 }
 ?>

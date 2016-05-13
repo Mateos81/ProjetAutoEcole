@@ -5,6 +5,9 @@
  * @version 1.0
  * @package BLL
  */
+
+include "Personne.php";
+include __DIR__ . "/../DAL/DAL_Salarie.php";
  
  /**
   * Classe représentant un salarié.
@@ -36,29 +39,42 @@ class Salarie extends Personne {
     	$this->salarie_surnom = "";
     	$this->salarie_vehicule = new Vehicule();
     }
+
+    /**
+     * Static constructor / factory
+     */
+    public static function create() {
+        $instance = new self();
+        return $instance;
+    }
     
     /**
      * Constructeur basé sur le surnom d'un salarié,
      * car c'est l'information que l'on connait.
+     * @return Une nouvelle instance de Salarie.
      */
-    public function __construct($surnom) {
-        $salarie = array();
-        
+    public function SalarieSurnom($surnom) {
+    	$instance = new self();
+    	
         // Recherche du salarié dans la base
+        $salarie = array();        
         $salarie = DAL_Salarie::getSalarieBySurnom($surnom);
         
         // Renseignement des champs
-        $this->personne_id = $salarie[0]['salarie_id'];
-        $this->personne_nom = $salarie[0]['salarie_nom'];
-        $this->personne_prenom = $salarie[0]['salarie_prenom'];
-        $this->salarie_surnom = $salarie[0]['salarie_surnom'];
-        $this->personne_adr = $salarie[0]['salarie_adr'];
-        $this->personne_ville =
+        $instance->personne_id = $salarie[0]['salarie_id'];
+        $instance->personne_nom = $salarie[0]['salarie_nom'];
+        $instance->personne_prenom = $salarie[0]['salarie_prenom'];
+        $instance->salarie_surnom = $salarie[0]['salarie_surnom'];
+        $instance->personne_adr = $salarie[0]['salarie_adr'];
+        $instance->personne_ville =
         	new Ville(
         		$salarie[0]['salarie_ville'],
         		$salarie[0]['salarie_cp']);
-        $this->salarie_poste = $salarie[0]['salarie_poste'];
-        $this->salarie_vehicule = new Vehicule($salarie[0]['salarie_vehicule']);
+        $instance->salarie_poste = $salarie[0]['salarie_poste'];
+        $instance->salarie_vehicule =
+        	new Vehicule($salarie[0]['salarie_vehicule']);
+        
+        return $instance;
     }
     
     /**
@@ -71,8 +87,9 @@ class Salarie extends Personne {
      * @param Poste $poste Poste du salarié.
      * @param string $surnom Surnom du salarié.
      * @param Vehicule $vehicule
+     * @return Une nouvelle instance de Salarie.
      */
-    public function __construct(
+    public function Salarie(
     		$nom,
     		$prenom,
     		$adr,
@@ -81,20 +98,24 @@ class Salarie extends Personne {
     		$poste,
     		$surnom,
     		$vehicule) {
-    	$this->personne_nom = $nom;
-    	$this->personne_prenom = $prenom;
-    	$this->personne_adr = $adr;
-    	$this->personne_ville = $ville;
-    	$this->personne_tel = $tel;
+    	$instance = new self();
+    			
+    	$instance->personne_nom = $nom;
+    	$instance->personne_prenom = $prenom;
+    	$instance->personne_adr = $adr;
+    	$instance->personne_ville = $ville;
+    	$instance->personne_tel = $tel;
     	
-    	$this->salarie_poste = $poste;
-    	$this->salarie_surnom = $surnom;
-    	$this->salarie_vehicule = $vehicule;
+    	$instance->salarie_poste = $poste;
+    	$instance->salarie_surnom = $surnom;
+    	$instance->salarie_vehicule = $vehicule;
+    	
+    	return $instance;
     }
     
     /**
      * Accesseur sur le poste du salarié.
-     * @return integer Le numéro du poste du salarié.
+     * @return int Le numéro du poste du salarié.
      */
     public function getSalarie_poste() {
         return $this->salarie_poste;
@@ -118,9 +139,9 @@ class Salarie extends Personne {
     
     /**
      * Modifieur sur le poste du salarié courant.
-     * @param integer $valeur Le nouveau poste du salarié.
+     * @param int $valeur Le nouveau poste du salarié.
      */
-    public function setSalarie_poste(integer $valeur) {
+    public function setSalarie_poste(int $valeur) {
     	$this->salarie_poste = $valeur;
     }
     
@@ -136,7 +157,7 @@ class Salarie extends Personne {
      * Modifieur sur le véhicule du salarié courant.
      * @param Vehicule $valeur Le nouveau véhicule du salarié.
      */
-    public function setSalarie_poste(Vehicule $valeur) {
+    public function setSalarie_vehicule(Vehicule $valeur) {
     	$this->salarie_vehicule = $valeur;
     }
     
@@ -144,6 +165,7 @@ class Salarie extends Personne {
      * Création d'un nouveau salarié en base de données.
      */
     public function creerSalarie() {
+    	// TODO Peut changer, voir avec V. ROUX
     	$this->personne_id = 
     		DAL_Salarie::creerSalarie(
     			$this->personne_nom,

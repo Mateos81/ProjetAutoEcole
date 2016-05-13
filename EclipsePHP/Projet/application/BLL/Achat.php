@@ -11,14 +11,17 @@
   */
 class Achat {
     
-    /** */
+    /** Date d'achat. */
     private $achat_date;
     
-    /** */
+    /** Nombre de tickets supplémentaires achetés. */
     private $achat_nbTicket;
     
-    /** */
+    /** Indicateur de paiement de l'achat. */
     private $achat_paye;
+    
+    /** Formule sur laquelle est basée l'achat. */
+    private $achat_formule;
     
     /**
      * TODO
@@ -27,10 +30,11 @@ class Achat {
         
     }
     
-    // TODO Nouvelle formule : objet + BDD
+    // TODO Nouvelle formule : Constructeur
     
     /**
      * Accesseur sur la date de l'achat courant.
+     * @return string La date d'achat.
      */
     public function getAchat_date() {
         return $this->achat_date;
@@ -38,6 +42,7 @@ class Achat {
     
     /**
      * Accesseur sur le nombre de tickets de l'achat courant.
+     * @return int Le nombre de tickets achetés.
      */
     public function getAchat_nbTicket() {
         return $this->achat_nbTicket;
@@ -45,9 +50,18 @@ class Achat {
     
     /**
      * Accesseur sur le statut du paiement de l'achat courant.
+     * @return bool True si payé, False sinon.
      */
     public function getAchat_paye() {
         return $this->achat_paye;
+    }
+    
+    /**
+     * Accesseur sur la formule de l'achat courant.
+     * @return Formule La formule.
+     */
+    public function getAchat_formule() {
+        return $this->achat_formule;
     }
     
     /**
@@ -55,8 +69,6 @@ class Achat {
      * @param $valeur Nouvelle valeur.
      */
     public function setAchat_date($valeur) {
-        // TODO BDD
-        
         $this->achat_date = $valeur;
     }
     
@@ -65,8 +77,6 @@ class Achat {
      * @param $valeur Nouvelle valeur.
      */
     public function setAchat_nbTicket($valeur) {
-        // TODO BDD
-        
         $this->achat_nbTicket = $valeur;
     }
     
@@ -75,9 +85,9 @@ class Achat {
      * @param $valeur Nouvelle valeur.
      */
     public function setAchat_paye($valeur) {
-        // TODO BDD
-        
         $this->achat_paye = $valeur;
     }
+    
+    // TODO Ajouter/Modifier/Supprimer
 }
 ?>

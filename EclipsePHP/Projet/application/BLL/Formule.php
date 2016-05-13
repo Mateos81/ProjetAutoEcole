@@ -11,16 +11,16 @@
   */
 class Formule {
     
-    /** */
+    /** Numéro de la formule. */
     private $formule_num;
     
-    /** */
+    /** Nombre de leçons de conduite de la formule. */
     private $formule_nbLeconConduite;
     
-    /** */
+    /** Prix de la formule. */
     private $formule_prix;
     
-    /** */
+    /** Prix d'un ticket de la formule. */
     private $formule_ticketPrix;
     
     /**
@@ -36,6 +36,7 @@ class Formule {
     
     /**
      * Accesseur sur le numéro de la formule courante.
+     * @return int Le numéro de la formule.
      */
     public function getFormule_num() {
         return $this->formule_num;
@@ -43,6 +44,7 @@ class Formule {
     
     /**
      * Accesseur sur le nombre de leçons de conduite de la formule courante.
+     * @return Le nombre de leçons de conduite de la formule.
      */
     public function getFormule_nbLeconConduite() {
         return $this->formule_nbLeconConduite;
@@ -50,6 +52,7 @@ class Formule {
     
     /**
      * Accesseur sur le prix de la formule courante.
+     * @return Le prix de la formule.
      */
     public function getFormule_prix() {
         return $this->formule_prix;
@@ -57,6 +60,7 @@ class Formule {
     
     /**
      * Accesseur sur le prix unitaire d'un ticket de la formule courante.
+     * @return Le prix d'un ticket de la formule.
      */
     public function getFormule_ticketPrix() {
         return $this->formule_ticketPrix;
@@ -67,8 +71,6 @@ class Formule {
      * @param $valeur Nouvelle valeur.
      */
     public function setFormule_nbLeconConduite($valeur) {
-        // TODO BDD
-        
         $this->formule_nbLeconConduite = $valeur;
     }
     
@@ -77,8 +79,6 @@ class Formule {
      * @param $valeur Nouvelle valeur.
      */
     public function setFormule_prix($valeur) {
-        // TODO BDD
-        
         $this->formule_prix = $valeur;
     }
     
@@ -87,10 +87,10 @@ class Formule {
      * @param $valeur Nouvelle valeur.
      */
     public function setFormule_ticketPrix($valeur) {
-        // TODO BDD
-        
         $this->formule_ticketPrix = $valeur;
     }
+    
+    // TODO Ajouter/Modifier/Supprimer
     
     /**
      * Récupère et renvoie la liste de toutes les formules

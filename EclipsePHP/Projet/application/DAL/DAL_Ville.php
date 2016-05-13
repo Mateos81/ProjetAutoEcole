@@ -18,7 +18,7 @@ class DAL_Ville {
 	 * @return array La liste des villes.
 	 */
 	public static function listeVilles() {
-		$conn = Outils.connexion();
+		$conn = Outils::connexion_base();
 			
 		$stid = oci_parse($conn, 'SELECT * FROM VILLE');
 		oci_execute($stid);
@@ -30,7 +30,7 @@ class DAL_Ville {
 		
 		oci_free_statement($stid);
 		
-		Outils.deconnexion_base($conn);
+		Outils::deconnexion_base();
 		
 		return $tab;
 	}

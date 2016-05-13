@@ -17,7 +17,7 @@ class DAL_Poste {
 	 * @return La liste des postes sous forme d'un tableau indicé.
 	 */
 	public static function listePostes() {
-		$conn = Outils.connexion();
+		$conn = Outils::connexion_base();
 			
 		$stid = oci_parse($conn, 'SELECT * FROM POSTE');
 		oci_execute($stid);
@@ -29,7 +29,7 @@ class DAL_Poste {
 		
 		oci_free_statement($stid);
 		
-		Outils.deconnexion_base($conn);
+		Outils::deconnexion_base();
 		
 		return $tab;
 	}

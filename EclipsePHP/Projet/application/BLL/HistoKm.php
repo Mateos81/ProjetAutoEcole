@@ -23,10 +23,10 @@ class HistoKm {
     
     /**
      * Constructeur avec la valeur du kilométrage.
-     * @param integer $nbKm La valeur du kilométrage.
+     * @param int $nbKm La valeur du kilométrage.
      * @throws Exception Si le kilométrage est négatif.
      */
-    public function __construct(integer $nbKm) {
+    public function __construct(int $nbKm) {
     	if ($nbKm < 0) {
     		throw new Exception("Un kilométrage ne peut être négatif.");
     	}

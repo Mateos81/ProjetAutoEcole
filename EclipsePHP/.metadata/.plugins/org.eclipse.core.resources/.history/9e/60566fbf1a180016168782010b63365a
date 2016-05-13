@@ -1,0 +1,85 @@
+<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package BLL
+ */
+ 
+ /**
+  * Classe représentant un achat d'un client, dans les limites d'une formule.
+  */
+class Achat {
+    
+    /** Date d'achat. */
+    private $achat_date;
+    
+    /** Nombre de tickets supplémentaires achetés. */
+    private $achat_nbTicket;
+    
+    /** Indicateur de paiement de l'achat. */
+    private $achat_paye;
+    
+    /** Formule sur laquelle est basée l'achat. */
+    private $achat_formule;
+    
+    /**
+     * TODO
+     */
+    public function __construct($date) {
+        
+    }
+    
+    // TODO Nouvelle formule : Constructeur
+    
+    /**
+     * Accesseur sur la date de l'achat courant.
+     * @return La date d'achat.
+     */
+    public function getAchat_date() {
+        return $this->achat_date;
+    }
+    
+    /**
+     * Accesseur sur le nombre de tickets de l'achat courant.
+     * @return Le nombre de tickets achetés.
+     */
+    public function getAchat_nbTicket() {
+        return $this->achat_nbTicket;
+    }
+    
+    /**
+     * Accesseur sur le statut du paiement de l'achat courant.
+     * @return True si payé, False sinon.
+     */
+    public function getAchat_paye() {
+        return $this->achat_paye;
+    }
+    
+    /**
+     * Modifieur sur la date de l'achat courant.
+     * @param $valeur Nouvelle valeur.
+     */
+    public function setAchat_date($valeur) {
+        $this->achat_date = $valeur;
+    }
+    
+    /**
+     * Modifieur sur le nombre de tickets de l'achat courant.
+     * @param $valeur Nouvelle valeur.
+     */
+    public function setAchat_nbTicket($valeur) {
+        $this->achat_nbTicket = $valeur;
+    }
+    
+    /**
+     * Modifieur sur le statut du paiement de l'achat courant.
+     * @param $valeur Nouvelle valeur.
+     */
+    public function setAchat_paye($valeur) {
+        $this->achat_paye = $valeur;
+    }
+    
+    // TODO Ajouter/Modifier/Supprimer
+}
+?>
