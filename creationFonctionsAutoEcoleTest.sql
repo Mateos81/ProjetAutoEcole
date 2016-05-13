@@ -4,6 +4,7 @@
 
 CREATE OR REPLACE PACKAGE autoEcole IS
 
+    TYPE t_lstEleve IS VARRAY(10) OF ACHETER.acheter_eleve%TYPE;
 	-- Vehicule 
 	PROCEDURE ajoutVehicule(lImmatriculation IN VEHICULE.vehicule_immatriculation%TYPE,
 							laMarque IN VEHICULE.vehicule_marque%TYPE, leModele IN VEHICULE.vehicule_modele%TYPE);
@@ -32,6 +33,11 @@ CREATE OR REPLACE PACKAGE autoEcole IS
 						   lAdr IN SALARIE.salarie_adr%TYPE, laVille IN SALARIE.salarie_ville%TYPE, 
 						   leCp IN SALARIE.salarie_cp%TYPE, leTel IN SALARIE.salarie_tel%TYPE, 
 						   leVehicule IN SALARIE.salarie_vehicule%TYPE, lePoste IN SALARIE.salarie_poste%TYPE);
+						   
+	-- Login
+	PROCEDURE ajoutLogin(lId IN LOGIN.login_id%TYPE, lePassword IN LOGIN.login_password%TYPE);
+	PROCEDURE suppressionLogin(lId IN LOGIN.login_id%TYPE);
+	
 	-- Eleve
 	PROCEDURE ajoutEleve(leNom IN ELEVE.eleve_nom%TYPE, lePrenom IN ELEVE.eleve_prenom%TYPE,
 						 lAdr IN ELEVE.eleve_adr%TYPE, laVille IN ELEVE.eleve_ville%TYPE, 
@@ -76,6 +82,30 @@ CREATE OR REPLACE PACKAGE autoEcole IS
 	
 	PROCEDURE ajoutType(leNom IN TYPEL.typel_nom%TYPE);
 	PROCEDURE suppressionType(leNum IN TYPEL.typel_num%TYPE);
+	
+	PROCEDURE ajoutPasser(leType IN PASSER.passer_examenType%TYPE, 
+						  laDate IN PASSER.passer_examenDate%TYPE,
+						  lEleve IN PASSER.passer_eleve%TYPE,
+						  leResultat IN PASSER.passer_resultat%TYPE);
+	PROCEDURE suppressionPasser(leNum IN PASSER.passer_num%TYPE);	
+	PROCEDURE modifPasser(leNum IN PASSER.passer_num%TYPE,
+						  leType IN PASSER.passer_examenType%TYPE, 
+						  laDate IN PASSER.passer_examenDate%TYPE,
+						  lEleve IN PASSER.passer_eleve%TYPE,
+						  leResultat IN PASSER.passer_resultat%TYPE);	
+						  
+	PROCEDURE ajoutAcheter(laDate IN ACHETER.acheter_date%TYPE,
+						  lEleve IN ACHETER.acheter_eleve%TYPE,
+						  laFormule IN ACHETER.acheter_formule%TYPE,
+						  leNbTicket IN ACHETER.acheter_nbTicket%TYPE,
+						  lePrix IN ACHETER.acheter_prix%TYPE);
+	PROCEDURE suppressionAcheter(leNum IN ACHETER.acheter_num%TYPE);	
+	PROCEDURE modifAcheter(leNum IN ACHETER.acheter_num%TYPE,
+						  laDate IN ACHETER.acheter_date%TYPE,
+						  lEleve IN ACHETER.acheter_eleve%TYPE,
+						  laFormule IN ACHETER.acheter_formule%TYPE,
+						  leNbTicket IN ACHETER.acheter_nbTicket%TYPE,
+						  lePrix IN ACHETER.acheter_prix%TYPE);							  
     					
 	PROCEDURE print(message IN VARCHAR);
 	
@@ -107,4 +137,10 @@ CREATE OR REPLACE PACKAGE autoEcole IS
 	-- Type
 	FUNCTION getCurType RETURN TYPEL.typel_num%TYPE;
 	
+	-- Passer
+	FUNCTION getCurPasser RETURN PASSER.passer_num%TYPE;
+	
+	-- Acheter
+	FUNCTION getCurAcheter RETURN ACHETER.acheter_num%TYPE;
+		
 END autoEcole;

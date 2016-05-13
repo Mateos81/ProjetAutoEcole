@@ -249,6 +249,24 @@ IS
  
 END getCurSalarie;
 
+--------------------------------- Login ---------------------------------------
+
+PROCEDURE ajoutLogin(lId IN LOGIN.login_id%TYPE, lePassword IN LOGIN.login_password%TYPE)
+IS
+BEGIN
+  INSERT INTO LOGIN VALUES(lId, lePassword);
+  print('Le login a bien été rajouté');
+
+END ajoutLogin;
+
+
+PROCEDURE suppressionLogin(lId IN LOGIN.login_id%TYPE)
+IS
+BEGIN 
+  DELETE FROM LOGIN WHERE login_id = lId;
+  print('Suppression effectuée avec succès');
+
+END suppressionLogin;
 --------------------------------- Eleve ---------------------------------------
 
 
@@ -348,7 +366,8 @@ IS
    sommeLecon INT;
 BEGIN
 	SELECT COUNT(*) INTO sommeLecon FROM LECON 
-	WHERE lecon_date < SYSDATE AND lecon_eleve = lId;
+	WHERE lecon_date < SYSDATE AND lecon_eleve = lId
+	AND lecon_type = 2;
 
 RETURN sommeLecon;
 
@@ -359,7 +378,8 @@ IS
   dateCode DATE;
 BEGIN
   SELECT passer_examenDate INTO dateCode FROM PASSER 
-  WHERE passer_examenType = 1 AND passer_eleve = lId;
+  WHERE passer_examenType = 1 AND passer_eleve = lId
+  AND passer_resultat = 0;
 
 RETURN dateCode;
 
@@ -452,10 +472,22 @@ IS
  
 END getCurClient;
 
+/*   TODO Finir */
 FUNCTION sommeAchatClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT
-IS 
+IS
+  CURSOR cursorEleve IS SELECT eleve_id from ELEVE WHERE eleve_cli = lId;
   sommeAchat ACHETER.acheter_prix%TYPE;
+  lstEleve t_lstEleve;   
+  
 BEGIN
+  IF (lIdE = null) THEN
+	OPEN cursorEleve;
+	LOOP
+		FETCH cursorEleve BULK COLLECT INTO lstEleve LIMIT 10;
+		EXIT WHEN cursorEleve%NOTFOUND;
+	END LOOP;
+	CLOSE cursorEleve;
+  END IF;
   SELECT SUM(acheter_prix) INTO sommeAchat FROM ACHETER, ELEVE 
   WHERE acheter_eleve = lIdE AND eleve_cli = lId;
 
@@ -639,6 +671,111 @@ IS
  RETURN idType;
  
 END getCurType;
+
+
+----------------------------------- Passer ---------------------------------------
+
+PROCEDURE ajoutPasser(leType IN PASSER.passer_examenType%TYPE, 
+						  laDate IN PASSER.passer_examenDate%TYPE,
+						  lEleve IN PASSER.passer_eleve%TYPE,
+						  leResultat IN PASSER.passer_resultat%TYPE)
+IS
+BEGIN
+	INSERT INTO PASSER VALUES(seq_passer.nextval, leType, laDate, lEleve, leResultat);
+	print('résultat ajouté');
+	
+END ajoutPasser;
+	
+PROCEDURE suppressionPasser(leNum IN PASSER.passer_num%TYPE)
+IS
+BEGIN
+	DELETE FROM PASSER WHERE passer_num = leNum;
+	print('résultat supprimé');
+	
+END suppressionPasser;	
+
+PROCEDURE modifPasser(leNum IN PASSER.passer_num%TYPE,
+					  leType IN PASSER.passer_examenType%TYPE, 
+					  laDate IN PASSER.passer_examenDate%TYPE,
+					  lEleve IN PASSER.passer_eleve%TYPE,
+					  leResultat IN PASSER.passer_resultat%TYPE)
+IS
+BEGIN
+	
+  UPDATE PASSER SET 
+  passer_examenType = leType,
+  passer_examenDate = laDate,
+  passer_eleve = lEleve,
+  passer_resultat = leResultat
+  WHERE passer_num = leNum;
+  print('Le résultat a bien été modifié');
+
+END modifPasser;
+
+FUNCTION getCurPasser RETURN PASSER.passer_num%TYPE
+IS
+   numPasser PASSER.passer_num%TYPE;
+ BEGIN
+   SELECT seq_passer.currval INTO numPasser FROM dual;
+   
+ RETURN numPasser;
+ 
+END getCurPasser;
+
+------------------------------------ Acheter ------------------------------------
+
+PROCEDURE ajoutAcheter(laDate IN ACHETER.acheter_date%TYPE,
+						  lEleve IN ACHETER.acheter_eleve%TYPE,
+						  laFormule IN ACHETER.acheter_formule%TYPE,
+						  leNbTicket IN ACHETER.acheter_nbTicket%TYPE,
+						  lePrix IN ACHETER.acheter_prix%TYPE)
+	
+IS
+BEGIN
+	INSERT INTO ACHETER VALUES(seq_acheter.nextval, laDate, lEleve, laFormule, leNbTicket, lePrix);
+	print('facture ajoutée');
+	
+END ajoutAcheter;
+	
+PROCEDURE suppressionAcheter(leNum IN ACHETER.acheter_num%TYPE)
+IS
+BEGIN
+	DELETE FROM ACHETER WHERE acheter_num = leNum;
+	print('facture supprimée');
+	
+END suppressionAcheter;	
+
+PROCEDURE modifAcheter(leNum IN ACHETER.acheter_num%TYPE,
+					  laDate IN ACHETER.acheter_date%TYPE,
+					  lEleve IN ACHETER.acheter_eleve%TYPE,
+					  laFormule IN ACHETER.acheter_formule%TYPE,
+					  leNbTicket IN ACHETER.acheter_nbTicket%TYPE,
+					  lePrix IN ACHETER.acheter_prix%TYPE)
+IS
+BEGIN
+	
+  UPDATE ACHETER SET 
+  acheter_date = laDate,
+  acheter_eleve = lEleve,
+  acheter_formule = laFormule,
+  acheter_nbTicket = leNbTicket,
+  acheter_prix = lePrix
+  WHERE acheter_num = leNum;
+  print('La facture a bien été modifiée');
+
+END modifAcheter;		
+					
+					
+FUNCTION getCurAcheter RETURN ACHETER.acheter_num%TYPE
+IS
+   numAcheter ACHETER.acheter_num%TYPE;
+ BEGIN
+   SELECT seq_acheter.currval INTO numAcheter FROM dual;
+   
+ RETURN numAcheter;
+ 
+END getCurAcheter;		
+	
  
 ----------------------------------- Autre ----------------------------------------
 
