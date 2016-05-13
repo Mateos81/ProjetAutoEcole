@@ -63,21 +63,42 @@
 				</thead>
 				<tbody>
 					<?php
-						$TAILLE = 20;
-						for ($x = 0; $x <= $TAILLE; $x++) {
+						include 'BLL/Salarie.php';
+						$Tableau = Salarie::listeSalarie();
+						$MaxTab = 10;
+						$TAILLE = count($Tableau['salarie_id']);;
+						for ($x = 0; $x <= $TAILLE; $x++){
 						echo "<tr>
 								<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-								<td> </td>		
-								<td> </td>
-								<td> </td>
-								<td> </td>		
-								<td> </td>
-								<td> </td>
-								<td> </td>
-								<td> </td>
-								<td> </td>		
-								<td> </td>
+								<td>$Tableau[$x]['salarie_id']</td>	
+								<td>$Tableau[$x]['salarie_nom']</td>									
+								<td>$Tableau[$x]['salarie_prenom']</td>
+								<td>$Tableau[$x]['salarie_surnom']</td>
+								<td>$Tableau[$x]['salarie_adr']</td>		
+								<td>$Tableau[$x]['salarie_ville']</td>
+								<td>$Tableau[$x]['salarie_cp']</td>
+								<td>$Tableau[$x]['salarie_poste']</td>
+								<td>$Tableau[$x]['salarie_tel']</td>	
+								<td>$Tableau[$x]['salarie_vehicule']</td>
 							</tr>";
+						}
+						
+						if($TAILLE <= $MaxTab){
+							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++){
+								echo "<tr>
+										<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
+										<td></td>	
+										<td></td>									
+										<td></td>
+										<td></td>
+										<td></td>		
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>	
+										<td></td>
+									</tr>";
+								}	
 						}
 					?>  
 				</tbody>
