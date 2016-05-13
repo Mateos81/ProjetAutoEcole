@@ -24,7 +24,7 @@
 			<fieldset>
 				<legend>Filtres clients :</legend>
 				Nom client <input style="color:black;" type="text" name="clientNom"> 
-				<input style="color:black;" type="submit" value="Rechercher">
+				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
 		</form>
 	<br>

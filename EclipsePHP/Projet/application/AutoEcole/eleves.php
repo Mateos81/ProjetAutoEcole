@@ -25,7 +25,7 @@
 				<legend>Filtres eleves :</legend>
 				Nom eleve  <input style="color:black;" type="text" name="eleveNom"> 
 				prénom eleve <input style="color:black;"type="text" name="elevePrenom">
-				<input style="color:black;" type="submit" value="Rechercher">
+				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
 		</form>
 	<br>

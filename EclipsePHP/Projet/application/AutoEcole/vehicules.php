@@ -25,7 +25,7 @@
 				<legend>Filtres vehicules :</legend>
 				Modèle <input style="color:black;" type="text" name="model"> 
 				Marque<input style="color:black;"type="text" name="marque">
-				<input style="color:black;" type="submit" value="Rechercher">
+				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
 		</form>
 	<br>

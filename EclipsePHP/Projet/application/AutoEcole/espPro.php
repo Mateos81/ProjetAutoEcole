@@ -18,7 +18,7 @@ if(ISSET($_SESSION['USER'])){
 	-->
 	<section>
 	<div Class="filter" style="width:500px;">
-	     <h3 style="color:white;">Connexion Admin:</h3>
+	     <h4 style="color:white;">Connexion Admin:</h4>
 		       <form name="form1" id="form1" action="connexion.php" method="post">        
          <table>  
 			<tbody style="overflow-y:auto;">		 

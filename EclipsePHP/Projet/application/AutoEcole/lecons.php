@@ -25,10 +25,10 @@
 				<legend>Filtres leçons :</legend>
 				Eleve <input style="color:black;" type="text" name="eleve"> 
 				Salarié <input style="color:black;"type="text" name="salarie">
-				<input type="radio" name="typeLecon" value="all" checked> All 
+				<br><input type="radio" name="typeLecon" value="all" checked> All 
 				<input type="radio" name="typeLecon" value="conduite"> Conduite 
 				<input type="radio" name="typeLecon" value="code"> Code
-				<input style="color:black;" type="submit" value="Rechercher">
+				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
 		</form>
 	<br>

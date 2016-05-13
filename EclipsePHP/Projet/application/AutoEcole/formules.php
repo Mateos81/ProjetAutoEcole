@@ -27,7 +27,7 @@
 				<input type="radio" name="typeExamen" value="formuleA"> Formule A 
 				<input type="radio" name="typeExamen" value="formuleB"> Formule B
 				<input type="radio" name="typeExamen" value="formuleC"> Formule C
-				<input style="color:black;" type="submit" value="Rechercher">
+				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
 		</form>
 	<br>

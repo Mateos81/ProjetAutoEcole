@@ -49,32 +49,32 @@
 				<thead>
 					<tr>
 						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
-						<th>Id Salarie</th>
+						<th style="width:30px;">Id</th>
 						<th>Nom</th>		
 						<th>Prénom</th>
 						<th>Surnom</th>
-						<th>Adresse</th>
+						<th style="width:200px;">Adresse</th>
 						<th>Ville</th>
 						<th>Code Postal</th>
-						<th>telephone</th>
 						<th>Poste</th>
+						<th style="width:100px;">Telephone</th>
 						<th>Vehicule</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-						include 'BLL/Salarie.php';
+						/*include 'BLL/Salarie.php';
 						$Tableau = Salarie::listeSalaries();
 						$MaxTab = 10;
 						$TAILLE = count($Tableau['salarie_id']);;
 						for ($x = 0; $x <= $TAILLE; $x++){
 						echo "<tr>
 								<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-								<td>$Tableau[$x]['salarie_id']</td>	
+								<td style="width:30px;">$Tableau[$x]['salarie_id']</td>	
 								<td>$Tableau[$x]['salarie_nom']</td>									
 								<td>$Tableau[$x]['salarie_prenom']</td>
 								<td>$Tableau[$x]['salarie_surnom']</td>
-								<td>$Tableau[$x]['salarie_adr']</td>		
+								<td style="width:200px;">$Tableau[$x]['salarie_adr']</td>		
 								<td>$Tableau[$x]['salarie_ville']</td>
 								<td>$Tableau[$x]['salarie_cp']</td>
 								<td>$Tableau[$x]['salarie_poste']</td>
@@ -87,11 +87,11 @@
 							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++){
 								echo "<tr>
 										<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-										<td></td>	
+										<td style="width:30px;"></td>	
 										<td></td>									
 										<td></td>
 										<td></td>
-										<td></td>		
+										<td style="width:200px;"></td>		
 										<td></td>
 										<td></td>
 										<td></td>
@@ -99,7 +99,21 @@
 										<td></td>
 									</tr>";
 								}	
-						}
+						}*/
+						
+						echo "<tr>
+										<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
+										<td style=\"width:30px;\">1</td>
+										<td>Roux</td>									
+										<td>victor</td>
+										<td>Rourou</td>
+										<td style=\"width:200px;\">12 rue de je me la pète</td>		
+										<td>Rutardi</td>
+										<td>12000</td>
+										<td>Chieur</td>
+										<td style=\"width:100px;\">0620541564</td>	
+										<td>Citroën C5</td>
+									</tr>";
 					?>  
 				</tbody>
 			</table>
@@ -109,13 +123,13 @@
 		<form style="display: inline;" action="consulterSalarie.php">
 			<input style="color:black;" type="submit" value="Consulter">
 		</form>
-		<form style="display: inline;" action="action_ajouter_lecon.php">
+		<form style="display: inline;" action="ajouterSalarie.php">
 			<input style="color:black;" type="submit" value="Ajouter">
 		</form>
-		<form style="display: inline;" action="action_modifier_lecon.php">
+		<form style="display: inline;" action="modifierSalarie.php">
 			<input style="color:black;" type="submit" value="Modifier">
 		</form>
-		<form style="display: inline;" action="action_supprimer_lecon.php">
+		<form style="display: inline;" action="supprimerSalarie.php">
 			<input style="color:black;" type="submit" value="Supprimer">
 		</form>
 		</div>
