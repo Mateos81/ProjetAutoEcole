@@ -7,6 +7,7 @@
 		<li><a href='salaries.php'><span>Salaries</span></a></li>
 		<li><a href='examen.php'><span>Examen</span></a></li>
 		<li><a href='formules.php'><span>Formules</span></a></li>
-		<li class='last'><a href='clients.php'><span>Clients</span></a></li>
+		<li><a href='clients.php'><span>Clients</span></a></li>
+		<li class='last'><a href='espPro.php'><span>Connexion</span></a></li>
 	</ul>
 </nav>

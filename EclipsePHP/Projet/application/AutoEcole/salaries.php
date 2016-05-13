@@ -23,13 +23,13 @@
 		<form  style="color:white;" action="action_salaries.php">
 			<fieldset>
 				<legend>Filtres salariés :</legend>
+				surnom salarie<input style="color:black;"type="text" name="salarieSurnom">
 				nom salarie <input style="color:black;" type="text" name="salarieNom"> 
 				prenom salarie <input style="color:black;"type="text" name="salariePrenom">
-				surnom salarie<input style="color:black;"type="text" name="salarieSurnom">
-				<input type="radio" name="typeLecon" value="all" checked> All 
+				<br><input type="radio" name="typeSalarie" value="all" Checked> All 
 				<input type="radio" name="typeSalarie" value="moniteur"> Moniteur 
 				<input type="radio" name="typeSalarie" value="secretaire"> Secretaire
-				<input style="color:black;" type="submit" value="Rechercher">
+				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
 		</form>
 	<br>
@@ -45,7 +45,7 @@
 	</script>
 	
 			<div class="table-container">
-			<table>
+			<table >
 				<thead>
 					<tr>
 						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
@@ -64,7 +64,7 @@
 				<tbody>
 					<?php
 						include 'BLL/Salarie.php';
-						$Tableau = Salarie::listeSalarie();
+						$Tableau = Salarie::listeSalaries();
 						$MaxTab = 10;
 						$TAILLE = count($Tableau['salarie_id']);;
 						for ($x = 0; $x <= $TAILLE; $x++){
@@ -106,7 +106,7 @@
 			
 		</div>
 		<div style="margin-top:10px;">
-		<form style="display: inline;" action="action_consulter_lecon.php">
+		<form style="display: inline;" action="consulterSalarie.php">
 			<input style="color:black;" type="submit" value="Consulter">
 		</form>
 		<form style="display: inline;" action="action_ajouter_lecon.php">
