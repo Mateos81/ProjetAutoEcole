@@ -248,6 +248,7 @@ class Salarie extends Personne {
     	
 		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
 			$salarie = new Salarie();
+			$ville = new Ville();
 			$vehicule = new Vehicule();
 			
 			$salarie->Salarie(
@@ -255,7 +256,7 @@ class Salarie extends Personne {
 				$row['SALARIE_NOM'],
 				$row['SALARIE_PRENOM'],
 				$row['SALARIE_ADR'],
-				new Ville($row['SALARIE_VILLE'], $row['SALARIE_CP']),
+				$ville->Ville($row['SALARIE_VILLE'], $row['SALARIE_CP']),
 				$row['SALARIE_TEL'],
 				$row['SALARIE_POSTE'],
 				$row['SALARIE_SURNOM'],

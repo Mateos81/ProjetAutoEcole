@@ -21,7 +21,7 @@ class Ville {
 	 * Constructeur par défaut.
 	 */
 	public function __construct() {
-		$this->ville_nom = "-";
+		$this->ville_nom = "";
 		$this->ville_cp = "00000";
 	}
 	

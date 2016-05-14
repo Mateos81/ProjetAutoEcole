@@ -13,22 +13,22 @@
 abstract class Personne {
 	
 	/** Identifiant de la personne courante. */
-	private $personne_id;
+	protected $personne_id;
 	
 	/** Nom de la personne courante. */
-	private $personne_nom;
+	protected $personne_nom;
 	
 	/** Prénom de la personne courante. */
-	private $personne_prenom;
+	protected $personne_prenom;
 	
 	/** Adresse de la personne courante. */
-	private $personne_adr;
+	protected $personne_adr;
     
     /** Ville de la personne courante. */
-    private $salarie_ville;
+    protected $salarie_ville;
 	
 	/** Téléphone de la personne courante. */
-	private $personne_tel;
+	protected $personne_tel;
     
     /**
      * Accesseur sur l'identifiant de la personne.
