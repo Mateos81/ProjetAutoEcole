@@ -36,7 +36,7 @@ class Formule {
     
     /**
      * Accesseur sur le numéro de la formule courante.
-     * @return int Le numéro de la formule.
+     * @return Le numéro de la formule.
      */
     public function getFormule_num() {
         return $this->formule_num;

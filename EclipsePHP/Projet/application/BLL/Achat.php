@@ -34,7 +34,7 @@ class Achat {
     
     /**
      * Accesseur sur la date de l'achat courant.
-     * @return string La date d'achat.
+     * @return La date d'achat.
      */
     public function getAchat_date() {
         return $this->achat_date;
@@ -42,7 +42,7 @@ class Achat {
     
     /**
      * Accesseur sur le nombre de tickets de l'achat courant.
-     * @return int Le nombre de tickets achetés.
+     * @return Le nombre de tickets achetés.
      */
     public function getAchat_nbTicket() {
         return $this->achat_nbTicket;

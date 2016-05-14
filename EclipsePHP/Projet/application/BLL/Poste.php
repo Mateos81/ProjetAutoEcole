@@ -53,11 +53,11 @@ class Poste {
 	
 	/**
 	 * Fonction qui renvoie le poste depuis le numéro unique.
-	 * @param int $id Le numéro identifiant le poste.
-	 * @return string La valeur du type de Poste.
+	 * @param $id Le numéro identifiant le poste.
+	 * @return La valeur du type de Poste.
 	 * @throws Exception Si le paramètre est invalide.
 	 */
-	public function getExamenType(int $id) {
+	public function getExamenType($id) {
 		foreach ($this->tabPostes as $key => $value) {
 			if ($key == $id) {
 				return $value;

@@ -7,6 +7,9 @@
  */
 
 include "Personne.php";
+include "Vehicule.php";
+include "Ville.php";
+
 include __DIR__ . "/../DAL/DAL_Salarie.php";
  
  /**
@@ -29,6 +32,7 @@ class Salarie extends Personne {
      * Peut aussi être utilisé pour typer les champs.
      */
     public function __construct() {
+    	$this->personne_id = -1;
     	$this->personne_nom = "";
     	$this->personne_prenom = "";
     	$this->personne_adr = "";
@@ -41,7 +45,7 @@ class Salarie extends Personne {
     }
 
     /**
-     * Static constructor / factory
+     * Static constructor / factory.
      */
     public static function create() {
         $instance = new self();
@@ -51,6 +55,7 @@ class Salarie extends Personne {
     /**
      * Constructeur basé sur le surnom d'un salarié,
      * car c'est l'information que l'on connait.
+     * @param Le surnom du salarié.
      * @return Une nouvelle instance de Salarie.
      */
     public function SalarieSurnom($surnom) {
@@ -79,43 +84,46 @@ class Salarie extends Personne {
     
     /**
      * Constructeur complet.
-     * @param string $nom Nom du salarié.
-     * @param string $prenom Prénom du salarié.
-     * @param string $adr Adresse du salarié.
+     * @param $id Identifiant du salarié.
+     * @param $nom Nom du salarié.
+     * @param $prenom Prénom du salarié.
+     * @param $adr Adresse du salarié.
      * @param Ville $ville Ville du salarié.
-     * @param string $tel Téléphone du salarié.
-     * @param Poste $poste Poste du salarié.
-     * @param string $surnom Surnom du salarié.
+     * @param $tel Téléphone du salarié.
+     * @param $poste Poste du salarié.
+     * @param $surnom Surnom du salarié.
      * @param Vehicule $vehicule
      * @return Une nouvelle instance de Salarie.
      */
     public function Salarie(
+    		$id,
     		$nom,
     		$prenom,
     		$adr,
-    		$ville,
+    		Ville $ville,
     		$tel,
     		$poste,
     		$surnom,
-    		$vehicule) {
-    	$instance = new self();
-    			
-    	$instance->personne_nom = $nom;
-    	$instance->personne_prenom = $prenom;
-    	$instance->personne_adr = $adr;
-    	$instance->personne_ville = $ville;
-    	$instance->personne_tel = $tel;
+    		Vehicule $vehicule) {
+    	//$instance = new self();
     	
-    	$instance->salarie_poste = $poste;
-    	$instance->salarie_surnom = $surnom;
-    	$instance->salarie_vehicule = $vehicule;
+    	$this->personne_id = $id;
+    	$this->personne_nom = $nom;
+    	$this->personne_prenom = $prenom;
+    	$this->personne_adr = $adr;
+    	$this->personne_ville = $ville;
+    	$this->personne_tel = $tel;
     	
-    	return $instance;
+    	$this->salarie_poste = $poste;
+    	$this->salarie_surnom = $surnom;
+    	$this->salarie_vehicule = $vehicule;
+    	
+    	//return $instance;
     }
     
     /**
      * Accesseur sur le poste du salarié.
-     * @return int Le numéro du poste du salarié.
+     * @return Le numéro du poste du salarié.
      */
     public function getSalarie_poste() {
         return $this->salarie_poste;
@@ -123,7 +131,7 @@ class Salarie extends Personne {
     
     /**
      * Accesseur sur le surnom du salarié.
-     * @return string Le surnom du salarié.
+     * @return Le surnom du salarié.
      */
     public function getSalarie_surnom() {
         return $this->salarie_surnom;
@@ -139,17 +147,17 @@ class Salarie extends Personne {
     
     /**
      * Modifieur sur le poste du salarié courant.
-     * @param int $valeur Le nouveau poste du salarié.
+     * @param $valeur Le nouveau poste du salarié.
      */
-    public function setSalarie_poste(int $valeur) {
+    public function setSalarie_poste($valeur) {
     	$this->salarie_poste = $valeur;
     }
     
     /**
      * Modifieur sur le surnom du salarié courant.
-     * @param string $valeur Le nouveau surnom du salarié.
+     * @param $valeur Le nouveau surnom du salarié.
      */
-    public function setSalarie_surnom(string $valeur) {
+    public function setSalarie_surnom($valeur) {
     	$this->salarie_surnom = $valeur;
     }
     
@@ -224,10 +232,41 @@ class Salarie extends Personne {
     
     /**
      * Récupère et renvoie la liste des salariés.
+     * @param $nom Filtre optionnel sur le nom du salarié recherché.
+     * @param $prenom Filtre optionnel sur le prénom du salarié recherché.
+     * @param $surnom Filtre optionnel sur le surnom du salarié recherché.
+     * @param $poste Filtre optionnel sur le poste du salarié recherché.
      * @return La liste des salariés.
      */
-    public static function listeSalaries() {
-    	return DAL_Salarie::listeSalaries();
+    public static function listeSalaries(
+    		/*$nom,
+    		$prenom,
+    		$surnom,
+    		$poste*/) {
+    	$tabData = DAL_Salarie::listeSalaries();
+    	$tabSalaries = array();
+    	
+		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$salarie = new Salarie();
+			$vehicule = new Vehicule();
+			
+			$salarie->Salarie(
+				intval($row['SALARIE_ID']),
+				$row['SALARIE_NOM'],
+				$row['SALARIE_PRENOM'],
+				$row['SALARIE_ADR'],
+				new Ville($row['SALARIE_VILLE'], $row['SALARIE_CP']),
+				$row['SALARIE_TEL'],
+				$row['SALARIE_POSTE'],
+				$row['SALARIE_SURNOM'],
+				$vehicule->Vehicule(
+					intval(
+						$row['SALARIE_VEHICULE'])));
+			
+			$tabSalaries[] = $salarie;
+		}
+		
+		return $tabSalaries;
     }
 }
 ?>

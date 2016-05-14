@@ -19,8 +19,8 @@ abstract class Outils {
 	    $conn = 
 			oci_connect(
 				'ROUX_MATEOS_CIULLI',
-				'ROUX_MATEOS_CIULLI',
-				'BD10');
+				'ROUX_MATEOS_CIULLI'/*,
+				'BD10'*/);
 		
 		if (!$conn) {
 		    $e = oci_error();

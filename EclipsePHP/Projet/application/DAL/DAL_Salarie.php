@@ -16,27 +16,27 @@ class DAL_Salarie {
 	
 	/**
 	 * Création d'un nouveau salarié.
-	 * @param string $nom Le nom du nouveau salarié.
-	 * @param string $prenom Le prénom du nouveau salarié.
-	 * @param string $surnom Le surnom du nouveau salarié.
-	 * @param string $adr L'adresse du nouveau salarié.
-	 * @param string $ville La ville du nouveau salarié.
-	 * @param string $cp Le code postal du nouveau salarié.
-	 * @param string $tel Le numéro de téléphone du nouveau salarié.
-	 * @param int $vehicule Le numéro du véhicule du nouveau salarié.
-	 * @param int $poste Le poste du nouveau salarié.
-	 * @return int Le numéro unique en base identifiant le salarié.
+	 * @param $nom Le nom du nouveau salarié.
+	 * @param $prenom Le prénom du nouveau salarié.
+	 * @param $surnom Le surnom du nouveau salarié.
+	 * @param $adr L'adresse du nouveau salarié.
+	 * @param $ville La ville du nouveau salarié.
+	 * @param $cp Le code postal du nouveau salarié.
+	 * @param $tel Le numéro de téléphone du nouveau salarié.
+	 * @param $vehicule Le numéro du véhicule du nouveau salarié.
+	 * @param $poste Le poste du nouveau salarié.
+	 * @return Le numéro unique en base identifiant le salarié.
 	 */
 	public static function creerSalarie(
-			string $nom,
-			string $prenom,
-			string $surnom,
-			string $adr,
-			string $ville,
-			string $cp,
-			string $tel,
-			int $vehicule,
-			int $poste) {
+			$nom,
+			$prenom,
+			$surnom,
+			$adr,
+			$ville,
+			$cp,
+			$tel,
+			$vehicule,
+			$poste) {
 		$conn = Outils::connexion_base();
 		
 		// Construction de la commande d'accès à la procédure PL/SQL
@@ -68,28 +68,28 @@ class DAL_Salarie {
 	
 /**
 	 * Mise à jour d'un salarié existant.
-	 * @param int $id L'identifiant du salarié.
-	 * @param string $nom Le nom du salarié.
-	 * @param string $prenom Le prénom du salarié.
-	 * @param string $surnom Le surnom du salarié.
-	 * @param string $adr L'adresse du salarié.
-	 * @param string $ville La ville du salarié.
-	 * @param string $cp Le code postal du salarié.
-	 * @param string $tel Le numéro de téléphone du salarié.
-	 * @param int $vehicule Le numéro du véhicule du salarié.
-	 * @param int $poste Le poste du salarié.
+	 * @param $id L'identifiant du salarié.
+	 * @param $nom Le nom du salarié.
+	 * @param $prenom Le prénom du salarié.
+	 * @param $surnom Le surnom du salarié.
+	 * @param $adr L'adresse du salarié.
+	 * @param $ville La ville du salarié.
+	 * @param $cp Le code postal du salarié.
+	 * @param $tel Le numéro de téléphone du salarié.
+	 * @param $vehicule Le numéro du véhicule du salarié.
+	 * @param $poste Le poste du salarié.
 	 */
 	public static function modifierSalarie(
-			int $id,
-			string $nom,
-			string $prenom,
-			string $surnom,
-			string $adr,
-			string $ville,
-			string $cp,
-			string $tel,
-			int $vehicule,
-			int $poste) {
+			$id,
+			$nom,
+			$prenom,
+			$surnom,
+			$adr,
+			$ville,
+			$cp,
+			$tel,
+			$vehicule,
+			$poste) {
 		$conn = Outils::connexion_base();
 		
 		// Construction de la commande d'accès à la procédure PL/SQL
@@ -117,9 +117,9 @@ class DAL_Salarie {
 	
 	/**
 	 * Suppression d'un salarié.
-	 * @param int $id Identifiant unique du salarié à supprimer.
+	 * @param $id Identifiant unique du salarié à supprimer.
 	 */
-	public static function suppressionSalarie(int $id) {
+	public static function suppressionSalarie($id) {
 		$conn = Outils::connexion_base();
 		 
 		$stid = oci_parse($conn, 'BEGIN suppressionSalarie(:id); END;');
@@ -133,7 +133,7 @@ class DAL_Salarie {
 	
 	/**
 	 * Récupère et renvoie les informations du salarié via son surnom.
-	 * @param string $surnom Le surnom du salarié recherché.
+	 * @param $surnom Le surnom du salarié recherché.
 	 * @return array Un tableau à une ligne
 	 * 				 contenant les informations du salarié recherché.
 	 */
@@ -160,7 +160,7 @@ class DAL_Salarie {
 	
 	/**
 	 * Liste les élèves d'un salarié.
-	 * @param int $id Identifiant d'un salarié.
+	 * @param $id Identifiant d'un salarié.
 	 * @return array La liste des élèves.
 	 */
 	public static function listeEleves($id) {
@@ -186,7 +186,7 @@ class DAL_Salarie {
 	
 	/**
 	 * Liste les leçons d'un salarié.
-	 * @param int $id Identifiant d'un salarié.
+	 * @param $id Identifiant d'un salarié.
 	 * @return array La liste des leçons.
 	 */
 	public static function listeLecons($id) {
@@ -217,22 +217,12 @@ class DAL_Salarie {
 	public static function listeSalaries() {
 	    $conn = Outils::connexion_base();
 			
-		$stid =
-			oci_parse(
-				$conn,
-				'SELECT * FROM SALARIE');
+		$stid = oci_parse($conn, 'SELECT * FROM SALARIE');
 		oci_execute($stid);
 		
-		$tab = array();
-		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-			$tab[] = $row;
-		}
+		Outils::deconnexion_base($conn);
 		
-		oci_free_statement($stid);
-		
-		Outils::deconnexion_base();
-		
-		return $tab;
+		return $stid;
 	}
 }
 ?>

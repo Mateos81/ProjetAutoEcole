@@ -18,13 +18,26 @@ class Ville {
 	private $ville_cp;
 	
 	/**
-	 * Constructeur.
-	 * @param string $nom Nom de la ville.
-	 * @param string $cp Code postal de la ville.
+	 * Constructeur par défaut.
 	 */
-	public function __construct($nom, $cp) {
-		$this->ville_nom = $nom;
-		$this->ville_cp = $cp;
+	public function __construct() {
+		$this->ville_nom = "";
+		$this->ville_cp = "";
+	}
+	
+	/**
+	 * "Constructeur".
+	 * @param $nom Nom de la ville.
+	 * @param $cp Code postal de la ville.
+	 * @return Une nouvelle instance de Ville.
+	 */
+	public function Ville($nom, $cp) {
+		$instance = new self();
+		
+		$instance->ville_nom = $nom;
+		$instance->ville_cp = $cp;
+		
+		return $instance;
 	}
 	
 	/**
@@ -45,7 +58,7 @@ class Ville {
 	
 	/**
 	 * Modifieur sur le nom de la ville courante.
-	 * @param string $valeur Le nouveau nom de la ville courante.
+	 * @param $valeur Le nouveau nom de la ville courante.
 	 */
 	public function setVille_nom($valeur) {
 		$this->ville_nom = $valeur;
@@ -53,7 +66,7 @@ class Ville {
 	
 	/**
 	 * Modifieur sur le code postal de la ville courante.
-	 * @param string $valeur Le nouveau code postal de la ville courante.
+	 * @param $valeur Le nouveau code postal de la ville courante.
 	 */
 	public function setVille_cp($valeur) {
 		$this->ville_cp = $valeur;

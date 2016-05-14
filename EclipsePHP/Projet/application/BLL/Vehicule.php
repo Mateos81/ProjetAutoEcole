@@ -6,6 +6,8 @@
  * @package BLL
  */
 
+include __DIR__ . "/../DAL/DAL_Vehicule.php";
+
 /**
  * Classe représentant un véhicule.
  */
@@ -30,11 +32,32 @@ class Vehicule {
      * Constructeur par défaut.
      */
     public function __construct() {
-        $this->vehicule_num = 0;
+        $this->vehicule_num = -1;
         $this->vehicule_immatriculation = "";
         $this->vehicule_marque = "";
         $this->vehicule_modele = "";
         $this->vehicule_historique = array();
+    }
+    
+    
+    /**
+     * "Constructeur" basé sur le numéro du véhicule.
+     * @param $num Numéro du véhicule.
+     * @return Une nouvelle instance de véhicule.
+     */
+    public function Vehicule($num) {
+    	$instance = new Vehicule();
+    	
+    	$tabData = DAL_Vehicule::getVehicule($num);
+    	 
+    	$row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS);
+    	$instance->vehicule_num = $row['VEHICULE_NUM'];
+    	$instance->vehicule_immatriculation = $row['VEHICULE_IMMATRICULATION'];
+    	$instance->vehicule_marque = $row['VEHICULE_MARQUE'];
+    	$instance->vehicule_modele = $row['VEHICULE_MODELE'];
+    	// TODO Historique
+    	
+    	return $instance;
     }
     
     /**

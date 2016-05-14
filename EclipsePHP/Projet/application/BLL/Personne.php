@@ -32,6 +32,7 @@ abstract class Personne {
     
     /**
      * Accesseur sur l'identifiant de la personne.
+     * @return L'identifiant de la personne.
      */
     public function getPersonne_id() {
         return $this->personne_id;
@@ -39,20 +40,23 @@ abstract class Personne {
     
     /**
      * Accesseur sur le nom de la personne.
+     * @return Le nom de la personne.
      */
     public function getPersonne_nom() {
-        return $this->$personne_nom;
+        return $this->personne_nom;
     }
     
     /**
      * Accesseur sur le prénom de la personne.
+     * @return Le prénom de la personne.
      */
     public function getPersonne_prenom() {
-        return $this->$personne_prenom;
+        return $this->personne_prenom;
     }
     
     /**
      * Accesseur sur l'adresse de la personne.
+     * @return L'adresse de la personne.
      */
     public function getPersonne_adr() {
         return $this->personne_adr;
@@ -60,6 +64,7 @@ abstract class Personne {
     
     /**
      * Accesseur sur la ville de la personne.
+     * @return Ville La ville de la personne.
      */
     public function getPersonne_ville() {
         return $this->personne_ville;
@@ -67,6 +72,7 @@ abstract class Personne {
     
     /**
      * Accesseur sur le téléphone de la personne.
+     * @return Le numéro de téléphone de la personne.
      */
     public function getPersonne_tel() {
         return $this->personne_tel;
@@ -74,25 +80,25 @@ abstract class Personne {
     
     /**
      * Modifieur sur le nom de la personne.
-     * @param string $valeur Le nouveau nom de la personne.
+     * @param $valeur Le nouveau nom de la personne.
      */
-    public function setPersonne_nom(string $valeur) {
+    public function setPersonne_nom($valeur) {
     	$this->personne_nom = $valeur;
     }
     
     /**
      * Modifieur sur le prénom de la personne.
-     * @param string $valeur Le nouveau prénom de la personne.
+     * @param $valeur Le nouveau prénom de la personne.
      */
-    public function setPersonne_prenom(string $valeur) {
+    public function setPersonne_prenom($valeur) {
     	$this->personne_prenom = $valeur;
     }
     
     /**
      * Modifieur sur l'adresse de la personne.
-     * @param string $valeur La nouvelle adresse de la personne.
+     * @param $valeur La nouvelle adresse de la personne.
      */
-    public function setPersonne_adr(string $valeur) {
+    public function setPersonne_adr($valeur) {
     	$this->personne_adr = $valeur;
     }
     
@@ -106,9 +112,9 @@ abstract class Personne {
     
     /**
      * Modifieur sur le numéro de téléphone de la personne.
-     * @param string $valeur Le nouveau numéro de téléphone de la personne.
+     * @param $valeur Le nouveau numéro de téléphone de la personne.
      */
-    public function setPersonne_tel(string $valeur) {
+    public function setPersonne_tel($valeur) {
     	$this->personne_tel = $valeur;
     }
 }
