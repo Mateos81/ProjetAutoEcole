@@ -26,9 +26,9 @@
 				surnom salarie<input style="color:black;"type="text" name="salarieSurnom">
 				nom salarie <input style="color:black;" type="text" name="salarieNom">
 				prenom salarie <input style="color:black;"type="text" name="salariePrenom">
-				<br><input type="radio" name="typeSalarie" value="all" Checked> All 
-				<input type="radio" name="typeSalarie" value="moniteur"> Moniteur
-				<input type="radio" name="typeSalarie" value="secretaire"> Secretaire
+				<br><input type="radio" name="typeSalarie" value="0" Checked> All 
+				<input type="radio" name="typeSalarie" value="1"> Moniteur
+				<input type="radio" name="typeSalarie" value="2"> Secretaire
 				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
 		</form>
@@ -64,7 +64,7 @@
 				<tbody>
 					<?php
 						include 'BLL/Salarie.php';
-						$Tableau = Salarie::listeSalaries();
+						$Tableau = Salarie::listeSalaries("", "", "", 0);
 						$MaxTab = 10;
 						$TAILLE = count($Tableau);
 						for ($x = 0; $x < $TAILLE; $x++)

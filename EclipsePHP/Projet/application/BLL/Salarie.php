@@ -239,11 +239,16 @@ class Salarie extends Personne {
      * @return La liste des salariés.
      */
     public static function listeSalaries(
-    		/*$nom,
+    		$nom,
     		$prenom,
     		$surnom,
-    		$poste*/) {
-    	$tabData = DAL_Salarie::listeSalaries();
+    		$poste) {
+    	$tabData =
+    		DAL_Salarie::listeSalaries(
+    			$nom,
+    			$prenom,
+    			$surnom,
+    			$poste);
     	$tabSalaries = array();
     	
 		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {

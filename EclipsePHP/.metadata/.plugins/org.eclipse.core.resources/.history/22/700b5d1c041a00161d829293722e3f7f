@@ -225,7 +225,7 @@ class DAL_Salarie {
     		$poste) {
 	    $conn = Outils::connexion_base();
 	    
-	    // Construction de la requête
+	    // TODO Construction de la requête
 	    $req = 'SELECT * FROM SALARIE';
 	    
 	    $tabParts = array();
