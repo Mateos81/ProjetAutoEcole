@@ -26,9 +26,14 @@ exec autoEcole.ajoutLecon('02/04/2016', 1, 1, 1, 2);
 exec autoEcole.ajoutLecon('12/04/2016', 1, 1, 1, 2);
 exec autoEcole.ajoutExamen('12/04/2016', 1);
 exec autoEcole.ajoutPasser(1, '12/04/2016', 1, 0);
+exec autoEcole.ajoutFormule(0, 400.0, 40.0);
+exec autoEcole.ajoutFormule(20, 1100, 35);
+exec autoEcole.ajoutFormule(30, 1300, 35);
+exec autoEcole.ajoutAcheter('12/04/2016', 1, 2, 0, 1100);
+exec autoEcole.ajoutAcheter('12/04/2016', 2, 3, 0, 1300);
 
 SELECT autoecole.sommeLeconEleve(1) FROM dual;
 SELECT autoEcole.dateCodeEleve(1) FROM dual;
-SELECT autoEcole.sommeAchatClient(1, null) from dual; 
+SELECT autoEcole.sommeAchatClient(1, 1) from dual; 
 
 

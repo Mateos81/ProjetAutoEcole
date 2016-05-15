@@ -1,4 +1,5 @@
-CREATE OR REPLACE PACKAGE BODY autoEcole AS
+create or replace 
+PACKAGE BODY autoEcole AS
 
 ----------------------------------- PROCEDURES --------------------------------
 
@@ -8,7 +9,7 @@ CREATE OR REPLACE PACKAGE BODY autoEcole AS
  * Ajout d'un vehicule dans la base de données.
  * @param lImmatriculation Immatriculation du véhicule à ajouter.
  * @param laMarque Marque du véhicule à ajouter.
- * @param leModele Modèle du véhicule à ajouter.
+ * @param leModele Modà¨le du véhicule à ajouter.
  */
 PROCEDURE ajoutVehicule(lImmatriculation IN VEHICULE.vehicule_immatriculation%TYPE,
 						laMarque IN VEHICULE.vehicule_marque%TYPE, leModele IN VEHICULE.vehicule_modele%TYPE)
@@ -29,7 +30,7 @@ PROCEDURE suppressionVehicule(leNum IN VEHICULE.vehicule_num%TYPE)
 IS
 BEGIN 
   DELETE FROM VEHICULE WHERE vehicule_num = leNum;
-  print('Suppression effectuée avec succès');
+  print('Suppression effectuée avec succà¨s');
 
 END suppressionVehicule;
 
@@ -40,7 +41,7 @@ END suppressionVehicule;
  * @param leNum Numéro du véhicule à modifier.
  * @param lImmatriculation Immatriculation du véhicule à ajouter.
  * @param laMarque Marque du véhicule à ajouter.
- * @param leModele Modèle du véhicule à ajouter.
+ * @param leModele Modà¨le du véhicule à ajouter.
  */
 PROCEDURE modifVehicule(leNum IN VEHICULE.vehicule_num%TYPE, lImmatriculation IN VEHICULE.vehicule_immatriculation%TYPE,
 							laMarque IN VEHICULE.vehicule_marque%TYPE, leModele IN VEHICULE.vehicule_modele%TYPE)
@@ -75,7 +76,7 @@ END getCurVehicule;
  * Ajout du kilométrage d'un vehicule dans la base de données.
  * @param leVehicule Véhicule auquel ajouter le kilométrage.
  * @param laMarque Marque du véhicule à ajouter.
- * @param leModele Modèle du véhicule à ajouter.
+ * @param leModele Modà¨le du véhicule à ajouter.
  */
 PROCEDURE ajoutHistoKm(leVehicule IN HISTO_KM.histoKm_numVehicule%TYPE, leKm IN HISTO_KM.HistoKm_nbKm%TYPE)
 IS
@@ -117,7 +118,7 @@ PROCEDURE suppressionLecon(leNum IN LECON.lecon_num%TYPE)
 IS
 BEGIN 
   DELETE FROM LECON WHERE lecon_num = leNum;
-  print('Suppression effectuée avec succès');
+  print('Suppression effectuée avec succà¨s');
 
 END suppressionLecon;
 
@@ -196,7 +197,7 @@ PROCEDURE suppressionSalarie(lId IN SALARIE.salarie_id%TYPE)
 IS
 BEGIN 
   DELETE FROM SALARIE WHERE salarie_id = lId;
-  print('Suppression effectuée avec succès');
+  print('Suppression effectuée avec succà¨s');
 
 END suppressionSalarie;
 
@@ -264,7 +265,7 @@ PROCEDURE suppressionLogin(lId IN LOGIN.login_id%TYPE)
 IS
 BEGIN 
   DELETE FROM LOGIN WHERE login_id = lId;
-  print('Suppression effectuée avec succès');
+  print('Suppression effectuée avec succà¨s');
 
 END suppressionLogin;
 --------------------------------- Eleve ---------------------------------------
@@ -305,7 +306,7 @@ PROCEDURE suppressionEleve(lId IN ELEVE.eleve_id%TYPE)
 IS
 BEGIN 
   DELETE FROM ELEVE WHERE eleve_id = lId;
-  print('Suppression effectuée avec succès');
+  print('Suppression effectuée avec succà¨s');
 
 END suppressionEleve;
 
@@ -421,7 +422,7 @@ PROCEDURE suppressionClient(lId IN CLIENT.client_id%TYPE)
 IS
 BEGIN 
   DELETE FROM CLIENT WHERE client_id = lId;
-  print('Suppression effectuée avec succès');
+  print('Suppression effectuée avec succà¨s');
 
 END suppressionClient;
 
@@ -472,24 +473,22 @@ IS
  
 END getCurClient;
 
-/*   TODO Finir */
 FUNCTION sommeAchatClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT
-IS
-  CURSOR cursorEleve IS SELECT eleve_id from ELEVE WHERE eleve_cli = lId;
-  sommeAchat ACHETER.acheter_prix%TYPE;
-  lstEleve t_lstEleve;   
+IS  
+  sommeAchat ACHETER.acheter_prix%TYPE; 
   
 BEGIN
-  IF (lIdE = null) THEN
-	OPEN cursorEleve;
-	LOOP
-		FETCH cursorEleve BULK COLLECT INTO lstEleve LIMIT 10;
-		EXIT WHEN cursorEleve%NOTFOUND;
-	END LOOP;
-	CLOSE cursorEleve;
+  IF (lIdE IS null) THEN	
+	SELECT SUM(acheter_prix) INTO sommeAchat  
+	FROM ELEVE JOIN CLIENT
+	ON client_id = eleve_cli
+	JOIN ACHETER
+	ON eleve_id = acheter_eleve
+	WHERE client_id =  lId;
+  ELSE
+	SELECT SUM(acheter_prix) INTO sommeAchat FROM ACHETER JOIN ELEVE 
+	ON acheter_eleve = eleve_id WHERE acheter_eleve = lIdE AND eleve_cli = lId;  
   END IF;
-  SELECT SUM(acheter_prix) INTO sommeAchat FROM ACHETER, ELEVE 
-  WHERE acheter_eleve = lIdE AND eleve_cli = lId;
 
 RETURN sommeAchat;
 
@@ -522,7 +521,7 @@ PROCEDURE suppressionExamen(laDate IN EXAMEN.examen_date%TYPE, leType IN EXAMEN.
 IS
 BEGIN 
   DELETE FROM EXAMEN WHERE examen_date = laDate AND examen_type = leType;
-  print('Suppression effectuée avec succès');
+  print('Suppression effectuée avec succà¨s');
 
 END suppressionExamen;
 
@@ -553,7 +552,7 @@ PROCEDURE suppressionFormule(leNum IN FORMULE.formule_num%TYPE)
 IS
 BEGIN 
   DELETE FROM FORMULE WHERE formule_num = leNum;
-  print('Suppression effectuée avec succès');
+  print('Suppression effectuée avec succà¨s');
 
 END suppressionFormule;
 
