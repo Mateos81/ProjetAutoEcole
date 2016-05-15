@@ -238,7 +238,7 @@ class DAL_Salarie {
 	    if ($surnom != "") {
 	    	$tabParts[] = 'salarie_surnom LIKE %' . $surnom . '%';
 	    }
-	    if ($poste != "") {
+	    if ($poste != 0) {
 	    	$tabParts[] = 'salarie_poste = ' . $poste;
 	    }
 	    
