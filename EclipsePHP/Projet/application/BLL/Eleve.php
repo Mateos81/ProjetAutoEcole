@@ -1,0 +1,222 @@
+<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package BLL
+ */
+
+include "Personne.php";
+include "Ville.php";
+
+include __DIR__ . "/../DAL/DAL_Eleve.php";
+ 
+ /**
+  * Classe représentant un salarié.
+  */
+class Eleve extends Personne {
+    
+    /** Date de naissance de l'élève courant. */
+    private $eleve_dateNaiss;
+    
+    /** Client de l'élève courant. */
+    private $eleve_client;
+    
+    /** Salarié responsable de l'élève courant. */
+    private $eleve_salarie;
+    
+    /**
+     * Constructeur vide servant à créer un salarié via les modifieurs.
+     * A utiliser quand toutes les informations ne sont pas disponibles.
+     * Peut aussi être utilisé pour typer les champs.
+     */
+    public function __construct() {
+    	$this->personne_id = -1;
+    	$this->personne_nom = "";
+    	$this->personne_prenom = "";
+    	$this->personne_adr = "";
+    	$this->personne_ville = new Ville();
+    	$this->personne_tel = "";
+    	 
+    	$this->eleve_dateNaiss = "01/01/1990";
+    	$this->eleve_client = -1;
+    	$this->eleve_salarie = -1;
+    }
+
+    /**
+     * Constructeur complet.
+     * @param $id Identifiant de l'élève.
+     * @param $nom Nom de l'élève.
+     * @param $prenom Prénom de l'élève.
+     * @param $adr Adresse de l'élève.
+     * @param Ville $ville Ville de l'élève.
+     * @param $tel Téléphone de l'élève.
+     * @param $dateNaiss Poste de l'élève.
+     * @param $client Surnom de l'élève.
+     * @param $salarie Salarié attitré de l'élève.
+     * @return Une nouvelle instance de Eleve.
+     */
+    public function Eleve(
+    		$id,
+    		$nom,
+    		$prenom,
+    		$adr,
+    		Ville $ville,
+    		$tel,
+    		$dateNaiss,
+    		$client,
+    		$salarie) {
+    	//$instance = new self();
+    	
+    	$this->personne_id = $id;
+    	$this->personne_nom = $nom;
+    	$this->personne_prenom = $prenom;
+    	$this->personne_adr = $adr;
+    	$this->personne_ville = $ville;
+    	$this->personne_tel = $tel;
+    	
+    	$this->eleve_dateNaiss = $dateNaiss;
+    	$this->eleve_client = $client;
+    	$this->eleve_salarie = $salarie;
+    	
+    	//return $instance;
+    }
+    
+    /**
+     * Accesseur sur la date de naissance de l'élève.
+     * @return La date de naissance de l'élève.
+     */
+    public function getEleve_dateNaiss() {
+        return $this->eleve_dateNaiss;
+    }
+    
+    /**
+     * Accesseur sur le client de l'élève.
+     * @return Le client de l'élève.
+     */
+    public function getEleve_client() {
+        return $this->eleve_client;
+    }
+    
+    /**
+     * Accesseur sur le salarié rattaché à l'élève.
+     * @return Le salarié rattaché à l'élève.
+     */
+    public function getEleve_salarie() {
+        return $this->eleve_salarie;
+    }
+    
+    /**
+     * Modifieur sur la date de naissance de l'élève courant.
+     * @param $valeur La nouvelle date de naissance de l'élève.
+     */
+    public function setEleve_dateNaiss($valeur) {
+    	$this->eleve_dateNaiss = $valeur;
+    }
+    
+    /**
+     * Modifieur sur le client de l'élève courant.
+     * @param $valeur Le nouveau client de l'élève.
+     */
+    public function setEleve_client($valeur) {
+    	$this->eleve_client = $valeur;
+    }
+    
+    /**
+     * Modifieur sur le salarié de l'élève courant.
+     * @param $valeur Le nouveau salarié de l'élève.
+     */
+    public function setEleve_salarie($valeur) {
+    	$this->eleve_salarie = $valeur;
+    }
+    
+    /**
+     * Création d'un nouvel élève en base de données.
+     */
+    public function creerEleve() {
+   		DAL_Eleve::creerEleve(
+   			$this->personne_nom,
+   			$this->personne_prenom,
+   			$this->personne_adr,
+   			$this->personne_ville->getVille_nom(),
+   			$this->personne_ville->getVille_cp(),
+   			$this->personne_tel,
+   			$this->eleve_dateNaiss,
+   			$this->eleve_client,
+   			$this->eleve_salarie);
+    }
+    
+    /**
+     * Mise en jour en base d'un élève
+     * suivant les informations de l'objet courant.
+     */
+    public function modifierEleve() {
+    	DAL_Eleve::modifierEleve(
+    		$this->personne_id,
+    		$this->personne_nom,
+    		$this->personne_prenom,
+   			$this->personne_adr,
+   			$this->personne_ville->getVille_nom(),
+   			$this->personne_ville->getVille_cp(),
+   			$this->personne_tel,
+   			$this->eleve_dateNaiss,
+   			$this->eleve_client,
+   			$this->eleve_salarie);
+    }
+    
+    /**
+     * Suppression en base de l'élève courant.
+     */
+    public function supprimerEleve() {
+    	DAL_Eleve::supprimerEleve($this->personne_id);
+    }
+    
+    /**
+     * Récupère et renvoie la liste de toutes les leçons
+     * suivies par l'élève courant.
+     * @return La liste des leçons.
+     */
+    public function listeLecons() {
+        return DAL_Eleve::listeLecons($this->personne_id);
+    }
+    
+    /**
+     * Récupère et renvoie la liste des élèves.
+     * @param $nom Filtre optionnel sur le nom de l'élève recherché.
+     * @param $prenom Filtre optionnel sur le prénom de l'élève recherché.
+     * @param $client Filtre optionnel sur le client de l'élève recherché.
+     * @return array(Eleve) La liste des élèves.
+     */
+    public static function listeEleves(
+    		$nom,
+    		$prenom,
+    		$client) {
+    	$tabData =
+    		DAL_Eleve::listeEleves(
+    			$nom,
+    			$prenom,
+    			$client);
+    	$tabEleves = array();
+    	
+		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$eleve = new Eleve();
+			$ville = new Ville();
+			
+			$eleve->Eleve(
+				intval($row['ELEVE_ID']),
+				$row['ELEVE_NOM'],
+				$row['ELEVE_PRENOM'],
+				$row['ELEVE_ADR'],
+				$ville->Ville($row['ELEVE_VILLE'], $row['ELEVE_CP']),
+				$row['ELEVE_TEL'],
+				$row['ELEVE_DATENAISS'],
+				$row['ELEVE_CLI'],
+				$row['ELEVE_SALARIE']);
+			
+			$tabEleves[] = $eleve;
+		}
+		
+		return $tabEleves;
+    }
+}
+?>

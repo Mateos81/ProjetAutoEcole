@@ -66,7 +66,7 @@ abstract class DAL_Salarie {
 		return $resultat;
 	}
 	
-/**
+	/**
 	 * Mise à jour d'un salarié existant.
 	 * @param $id L'identifiant du salarié.
 	 * @param $nom Le nom du salarié.

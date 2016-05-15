@@ -210,7 +210,7 @@ class Salarie extends Personne {
      * @return La liste des élèves.
      */
     public function listeEleves() {
-        return DAL_Salarie::listeEleves($this->salarie_id);
+        return DAL_Salarie::listeEleves($this->personne_id);
     }
     
     /**
@@ -219,7 +219,7 @@ class Salarie extends Personne {
      * @return La liste des leçons.
      */
     public function listeLecons() {
-        return DAL_Salarie::listeLecons($this->salarie_id);
+        return DAL_Salarie::listeLecons($this->personne_id);
     }
     
     /**
@@ -228,7 +228,7 @@ class Salarie extends Personne {
      * @param $prenom Filtre optionnel sur le prénom du salarié recherché.
      * @param $surnom Filtre optionnel sur le surnom du salarié recherché.
      * @param $poste Filtre optionnel sur le poste du salarié recherché.
-     * @return La liste des salariés.
+     * @return array(Salarie) La liste des salariés.
      */
     public static function listeSalaries(
     		$nom,
