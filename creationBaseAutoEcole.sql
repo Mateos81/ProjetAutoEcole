@@ -1,4 +1,4 @@
-	-- Nettoyage
+-- Nettoyage
 	ALTER TABLE HISTO_KM DROP CONSTRAINT fk_vehiculeHisto;
 	ALTER TABLE LECON DROP CONSTRAINT fk_vehiculeLecon;
 	ALTER TABLE LECON DROP CONSTRAINT fk_eleveLecon;
@@ -47,7 +47,7 @@
 
 	
 	
-	-- CrÃ©ation
+	-- Création
 	
 	
 	CREATE TABLE VEHICULE
@@ -265,7 +265,5 @@
 	START WITH 1
 	INCREMENT BY 1
 	CACHE 10;
-
-
 
 
