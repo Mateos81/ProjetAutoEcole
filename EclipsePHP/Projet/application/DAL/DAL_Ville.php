@@ -11,7 +11,7 @@
  * Classe d'accès aux données pour la classe Ville.
  * DAL pour Data Access Layer.
  */
-class DAL_Ville {
+abstract class DAL_Ville {
 	
 	/**
 	 * Récupère et renvoie la liste des villes sous forme de tableau.
@@ -30,7 +30,7 @@ class DAL_Ville {
 		
 		oci_free_statement($stid);
 		
-		Outils::deconnexion_base();
+		Outils::deconnexion_base($conn);
 		
 		return $tab;
 	}

@@ -12,7 +12,7 @@ include __DIR__ . "/../BLL/Outils.php";
   * Classe d'accès aux données pour la classe Salarie.
   * DAL pour Data Access Layer.
   */
-class DAL_Salarie {
+abstract class DAL_Salarie {
 	
 	/**
 	 * Création d'un nouveau salarié.
@@ -61,7 +61,7 @@ class DAL_Salarie {
 		oci_execute($stid);
 		oci_free_statement($stid);
 		
-		Outils::deconnexion_base();
+		Outils::deconnexion_base($conn);
 		
 		return $resultat;
 	}
@@ -112,14 +112,14 @@ class DAL_Salarie {
 		oci_execute($stid);
 		oci_free_statement($stid);
 		
-		Outils::deconnexion_base();
+		Outils::deconnexion_base($conn);
 	}
 	
 	/**
 	 * Suppression d'un salarié.
 	 * @param $id Identifiant unique du salarié à supprimer.
 	 */
-	public static function suppressionSalarie($id) {
+	public static function supprimerSalarie($id) {
 		$conn = Outils::connexion_base();
 		 
 		$stid = oci_parse($conn, 'BEGIN suppressionSalarie(:id); END;');
@@ -128,7 +128,7 @@ class DAL_Salarie {
 		oci_execute($stid);
 		oci_free_statement($stid);
 		
-		Outils::deconnexion_base();
+		Outils::deconnexion_base($conn);
 	}
 	
 	/**
@@ -153,7 +153,7 @@ class DAL_Salarie {
 		
 		oci_free_statement($stid);
 		
-		Outils::deconnexion_base();
+		Outils::deconnexion_base($conn);
 		
 		return $tab;
 	}
@@ -179,7 +179,7 @@ class DAL_Salarie {
 		
 		oci_free_statement($stid);
 		
-		Outils::deconnexion_base();
+		Outils::deconnexion_base($conn);
 		
 		return $tab;
 	}
@@ -205,7 +205,7 @@ class DAL_Salarie {
 		
 		oci_free_statement($stid);
 		
-		Outils::deconnexion_base();
+		Outils::deconnexion_base($conn);
 		
 		return $tab;
 	}

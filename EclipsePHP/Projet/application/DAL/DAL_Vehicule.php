@@ -12,7 +12,7 @@
   * Classe d'accès aux données pour la classe Vehicule.
   * DAL pour Data Access Layer.
   */
-class DAL_Vehicule {
+abstract class DAL_Vehicule {
 	
 	/**
 	 * Ajout d'une entrée à l'historique d'un véhicule.

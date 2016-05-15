@@ -45,44 +45,6 @@ class Salarie extends Personne {
     }
 
     /**
-     * Static constructor / factory.
-     */
-    public static function create() {
-        $instance = new self();
-        return $instance;
-    }
-    
-    /**
-     * Constructeur basé sur le surnom d'un salarié,
-     * car c'est l'information que l'on connait.
-     * @param Le surnom du salarié.
-     * @return Une nouvelle instance de Salarie.
-     */
-    public function SalarieSurnom($surnom) {
-    	$instance = new self();
-    	
-        // Recherche du salarié dans la base
-        $salarie = array();        
-        $salarie = DAL_Salarie::getSalarieBySurnom($surnom);
-        
-        // Renseignement des champs
-        $instance->personne_id = $salarie[0]['salarie_id'];
-        $instance->personne_nom = $salarie[0]['salarie_nom'];
-        $instance->personne_prenom = $salarie[0]['salarie_prenom'];
-        $instance->salarie_surnom = $salarie[0]['salarie_surnom'];
-        $instance->personne_adr = $salarie[0]['salarie_adr'];
-        $instance->personne_ville =
-        	new Ville(
-        		$salarie[0]['salarie_ville'],
-        		$salarie[0]['salarie_cp']);
-        $instance->salarie_poste = $salarie[0]['salarie_poste'];
-        $instance->salarie_vehicule =
-        	new Vehicule($salarie[0]['salarie_vehicule']);
-        
-        return $instance;
-    }
-    
-    /**
      * Constructeur complet.
      * @param $id Identifiant du salarié.
      * @param $nom Nom du salarié.
@@ -119,6 +81,36 @@ class Salarie extends Personne {
     	$this->salarie_vehicule = $vehicule;
     	
     	//return $instance;
+    }
+    
+    /**
+     * Constructeur basé sur le surnom d'un salarié,
+     * car c'est l'information que l'on connait.
+     * @param Le surnom du salarié.
+     * @return Une nouvelle instance de Salarie.
+     */
+    public function SalarieSurnom($surnom) {
+    	$instance = new self();
+    	
+        // Recherche du salarié dans la base
+        $salarie = array();        
+        $salarie = DAL_Salarie::getSalarieBySurnom($surnom);
+        
+        // Renseignement des champs
+        $instance->personne_id = $salarie[0]['salarie_id'];
+        $instance->personne_nom = $salarie[0]['salarie_nom'];
+        $instance->personne_prenom = $salarie[0]['salarie_prenom'];
+        $instance->salarie_surnom = $salarie[0]['salarie_surnom'];
+        $instance->personne_adr = $salarie[0]['salarie_adr'];
+        $instance->personne_ville =
+        	new Ville(
+        		$salarie[0]['salarie_ville'],
+        		$salarie[0]['salarie_cp']);
+        $instance->salarie_poste = $salarie[0]['salarie_poste'];
+        $instance->salarie_vehicule =
+        	new Vehicule($salarie[0]['salarie_vehicule']);
+        
+        return $instance;
     }
     
     /**
@@ -208,8 +200,8 @@ class Salarie extends Personne {
     /**
      * Suppression en base du salarié courant.
      */
-    public function suppressionSalarie() {
-    	DAL_Salarie::suppressionSalarie($this->personne_id);
+    public function supprimerSalarie() {
+    	DAL_Salarie::supprimerSalarie($this->personne_id);
     }
     
     /**

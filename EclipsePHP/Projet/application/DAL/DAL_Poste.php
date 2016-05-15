@@ -10,7 +10,7 @@
  * Classe d'accès aux données pour la classe Poste.
  * DAL pour Data Access Layer.
  */
-class DAL_Poste {
+abstract class DAL_Poste {
 	
 	/**
 	 * Récupère la liste des postes, et met les données dans un tableau.
@@ -29,7 +29,7 @@ class DAL_Poste {
 		
 		oci_free_statement($stid);
 		
-		Outils::deconnexion_base();
+		Outils::deconnexion_base($conn);
 		
 		return $tab;
 	}

@@ -10,7 +10,7 @@
   * Classe d'accès aux données pour la classe HistoKM.
   * DAL pour Data Access Layer.
   */
-class DAL_HistoKM {
+abstract class DAL_HistoKM {
 	
 	/**
 	 * Ajout d'une entrée à l'historique d'un véhicule.
@@ -28,7 +28,7 @@ class DAL_HistoKM {
 		oci_execute($stid);
 		oci_free_statement($stid);
 		
-    	Outils::deconnexion_base();
+    	Outils::deconnexion_base($conn);
 	}
 }
 ?>
