@@ -165,18 +165,23 @@ class Salarie extends Personne {
      * Création d'un nouveau salarié en base de données.
      */
     public function creerSalarie() {
-    	// TODO Peut changer, voir avec V. ROUX
-    	$this->personne_id = 
-    		DAL_Salarie::creerSalarie(
-    			$this->personne_nom,
-    			$this->personne_prenom,
-    			$this->salarie_surnom,
-    			$this->personne_adr,
-    			$this->personne_ville->getVille_nom(),
-    			$this->personne_ville->getVille_cp(),
-    			$this->personne_tel,
-    			$this->salarie_vehicule->getVehicule_num(),
-    			$this->salarie_poste);
+    	// Création en base
+    	DAL_Salarie::creerSalarie(
+    		$this->personne_nom,
+    		$this->personne_prenom,
+    		$this->salarie_surnom,
+    		$this->personne_adr,
+    		$this->personne_ville->getVille_nom(),
+    		$this->personne_ville->getVille_cp(),
+    		$this->personne_tel,
+    		$this->salarie_vehicule->getVehicule_num(),
+    		$this->salarie_poste);
+    	
+    	// Récupération de l'identifiant unique
+    	// N'est pas retourné par creerSalarie
+    	// car on ne peut faire de RETURN avec un UPDATE
+    	// dans la même fonction...
+    	$this->personne_id = DAL_Salarie::getCurSalarie();
     }
     
     /**

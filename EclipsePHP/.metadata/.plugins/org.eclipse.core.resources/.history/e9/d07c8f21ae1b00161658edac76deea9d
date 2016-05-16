@@ -127,11 +127,6 @@ abstract class DAL_Salarie {
 		Outils::deconnexion_base($conn);
 	}
 	
-	/**
-	 * Récupère et renvoie la valeur courante
-	 * de la séquence du numéro de salarié.
-	 * @return La valeur courante de la séquence.
-	 */
 	public static function getCurSalarie() {
 		$conn = Outils::connexion_base();
 		
