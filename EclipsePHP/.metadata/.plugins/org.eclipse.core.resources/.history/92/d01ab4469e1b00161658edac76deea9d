@@ -6,7 +6,7 @@
  * @package DAL
  */
 
-include_once __DIR__ . "/../BLL/Outils.php";
+include __DIR__ . "/../BLL/Outils.php";
  
  /**
   * Classe d'accès aux données pour la classe Eleve.
@@ -181,7 +181,7 @@ abstract class DAL_Eleve {
 	    if ($prenom != "") {
 	    	$tabParts[] = 'eleve_prenom LIKE %' . $prenom . '%';
 	    }
-	    if ($client != "") {
+	    if ($client != -1) {
 	    	$tabParts[] = 'eleve_cli LIKE %' . $client . '%';
 	    }
 	    

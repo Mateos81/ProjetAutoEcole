@@ -8,7 +8,7 @@
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
-?> 
+?>
 <!DOCTYPE html>
 <html>
 <body>
@@ -17,13 +17,13 @@
 		</header>
 	<?php include('head.php');?>
 	<?php include('menu.php');?>
-	<section>		
+	<section>
 	<!-- Filter -->
-	<div Class="filter">		
+	<div Class="filter">
 		<form  style="color:white;" action="action_clients.php">
 			<fieldset>
 				<legend>Filtres clients :</legend>
-				Nom client <input style="color:black;" type="text" name="clientNom"> 
+				Nom client <input style="color:black;" type="text" name="clientNom">
 				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
 		</form>
@@ -38,35 +38,34 @@
 				}
 		}
 	</script>
-	
+
 			<div class="table-container">
 			<table>
 				<thead>
 					<tr>
 						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
-						<th>Id Salarie</th>
-						<th>Nom</th>		
+						<th>Id Client</th>
+						<th>Nom</th>
 						<th>Prénom</th>
 						<th>Adresse</th>
 						<th>Ville</th>
 						<th>Code Postal</th>
-						<th>telephone</th>
+						<th>Telephone</th>
 						<th>Date Naissance</th>
 						<th>Eleve</th>
-
 					</tr>
 				</thead>
 				<tbody>
 					<?php
 						include 'BLL/Client.php';
-						//$Tableau = Eleve::listeEleve("", "", "", 0);
+						$Tableau = Client::listeClients("");
 						$MaxTab = 10;
 						$TAILLE = count($Tableau);
-						for ($x = 0; $x <= $TAILLE; $x++) {
+						for ($x = 0; $x < $TAILLE; $x++) {
 						  echo "<tr>
                                     <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Client' value='" . serialize($Tableau[$x]) . "'>
+                                        <input type='checkbox' name='check'/>
+                                        <input type='hidden' name='Client' value='" . serialize($Tableau[$x]) . "'/>
                                     </td>
                                     <td style=\"width:30px;\">" . $Tableau[$x]->getPersonne_id() . "</td>
                                     <td>" . $Tableau[$x]->getPersonne_nom() . "</td>
@@ -79,15 +78,14 @@
 									<td>" . $Tableau[$x]->getClient_eleves() . "</td>
                                 </tr>";
 						}
-						
-						if($TAILLE <= $MaxTab)
+
+						if ($TAILLE <= $MaxTab)
                         {
 							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
                             {
 								 echo "<tr>
                                     <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Client' value='" . serialize($Tableau[$x]) . "'>
+                                        <input type='checkbox' name='check'/>
                                     </td>
                                     <td style=\"width:30px;\"></td>
                                     <td></td>
@@ -101,10 +99,10 @@
                                 </tr>";
 							}
 						}
-					?>  
+					?>
 				</tbody>
 			</table>
-			
+
 		</div>
 		<div style="margin-top:10px;">
 		<form style="display: inline;" action="action_consulter_lecon.php">

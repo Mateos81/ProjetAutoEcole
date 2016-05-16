@@ -7,8 +7,8 @@
  */
 
 include_once "Personne.php";
-include_once "Ville.php";
 include "Eleve.php";
+include_once "Ville.php";
 
 include __DIR__ . "/../DAL/DAL_Client.php";
  

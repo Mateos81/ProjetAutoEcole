@@ -6,9 +6,9 @@
  * @package BLL
  */
 
-include_once "Personne.php";
-include_once "Ville.php";
+include "Personne.php";
 include "Eleve.php";
+include "Ville.php";
 
 include __DIR__ . "/../DAL/DAL_Client.php";
  

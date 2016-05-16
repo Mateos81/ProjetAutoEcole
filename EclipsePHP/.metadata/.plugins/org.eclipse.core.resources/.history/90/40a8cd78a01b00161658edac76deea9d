@@ -6,7 +6,7 @@
  * @package DAL
  */
 
-include_once __DIR__ . "/../BLL/Outils.php";
+include __DIR__ . "/../BLL/Outils.php";
  
  /**
   * Classe d'accès aux données pour la classe Eleve.
