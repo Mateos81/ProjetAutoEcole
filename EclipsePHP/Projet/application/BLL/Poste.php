@@ -6,6 +6,8 @@
  * @package BLL
  */
 
+include __DIR__ . "/../DAL/DAL_Poste.php";
+
 /**
  * Classe représentant les divers postes.
  */
@@ -24,11 +26,15 @@ class Poste {
 	 * Constructeur par défaut (singleton).
 	 */
 	private function __construct() {
-		$this->$tabPostes = array();
-
+		$this->tabPostes = array();
+		
 		// Récupération en base des postes
+		$tabData = DAL_Poste::listePostes();
+
 		// Remplissage du tableau à la façon d'un dictionnaire
-		$this->$tabPostes = DAL_Poste::listePostes();
+		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$this->tabPostes[$row['POSTE_NUM']] = $row['POSTE_NOM'];
+		}
 	}
 
 	/**
@@ -36,11 +42,11 @@ class Poste {
 	 * @return Poste L'instance unique de Poste.
 	 */
 	public static function getInstance() {
-		if ($instance == NULL) {
-			$instance = new Poste();
+		if (self::$instance == NULL) {
+			self::$instance = new Poste();
 		}
 
-		return $instance;
+		return self::$instance;
 	}
 
 	/**

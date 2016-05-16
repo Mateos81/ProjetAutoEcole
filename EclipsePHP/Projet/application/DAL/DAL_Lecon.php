@@ -94,7 +94,7 @@ abstract class DAL_Lecon {
 	 * Suppression d'une leçon en base.
 	 * @param $num Numéro de la leçon.
 	 */
-	public static function modifierLecon($num) {
+	public static function supprimerLecon($num) {
 		$conn = Outils::connexion_base();
 
 		// Construction de la commande d'accès à la procédure PL/SQL

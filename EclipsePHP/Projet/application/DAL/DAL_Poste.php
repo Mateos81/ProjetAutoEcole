@@ -13,8 +13,8 @@
 abstract class DAL_Poste {
 	
 	/**
-	 * Récupère la liste des postes, et met les données dans un tableau.
-	 * @return La liste des postes sous forme d'un tableau indicé.
+	 * Récupère et renvoie la liste des postes.
+	 * @return La liste des postes.
 	 */
 	public static function listePostes() {
 		$conn = Outils::connexion_base();
@@ -22,16 +22,9 @@ abstract class DAL_Poste {
 		$stid = oci_parse($conn, 'SELECT * FROM POSTE');
 		oci_execute($stid);
 		
-		$tab = array();
-		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-			$tab[] = $row;
-		}
-		
-		oci_free_statement($stid);
-		
 		Outils::deconnexion_base($conn);
 		
-		return $tab;
+		return $stid;
 	}
 }
 ?>
