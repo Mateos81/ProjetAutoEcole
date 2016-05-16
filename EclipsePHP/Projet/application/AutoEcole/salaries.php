@@ -49,16 +49,16 @@
 				<thead>
 					<tr>
 						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
-						<th style="width:30px;">Id</th>
-						<th>Nom</th>
-						<th>Prénom</th>
-						<th>Surnom</th>
+						<th style="width:100px;">Id</th>
+						<th style="width:100px;">Nom</th>
+						<th style="width:100px;">Prénom</th>
+						<th style="width:100px;">Surnom</th>
 						<th style="width:200px;">Adresse</th>
-						<th>Ville</th>
-						<th>Code Postal</th>
-						<th>Poste</th>
+						<th style="width:100px;">Ville</th>
+						<th style="width:100px;">Code Postal</th>
+						<th style="width:100px;">Poste</th>
 						<th style="width:100px;">Telephone</th>
-						<th>Vehicule</th>
+						<th style="width:100px;">Vehicule</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -74,16 +74,16 @@
                                         <input type='checkbox' name='check'/>
                                         <input type='hidden' name='Salarie' value='" . serialize($Tableau[$x]) . "'/>
                                     </td>
-                                    <td style=\"width:30px;\">" . $Tableau[$x]->getPersonne_id() . "</td>
-                                    <td>" . $Tableau[$x]->getPersonne_nom() . "</td>
-                                    <td>" . $Tableau[$x]->getPersonne_prenom() . "</td>
-                                    <td>" . $Tableau[$x]->getSalarie_surnom() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_id() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_nom() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_prenom() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getSalarie_surnom() . "</td>
                                     <td style=\"width:200px;\">" . $Tableau[$x]->getPersonne_adr() . "</td>
-                                    <td>" . $Tableau[$x]->getPersonne_ville()->getVille_nom() . "</td>
-                                    <td>" . $Tableau[$x]->getPersonne_ville()->getVille_cp() . "</td>
-                                    <td>" . $Tableau[$x]->getSalarie_poste() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_ville()->getVille_nom() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_ville()->getVille_cp() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getSalarie_poste() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_tel() . "</td>
-                                    <td>" . $Tableau[$x]->getSalarie_vehicule()->getVehicule_num() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getSalarie_vehicule()->getVehicule_num() . "</td>
                                 </tr>";
 						}
 
@@ -95,16 +95,16 @@
                                     <td style=\"width:30px;\">
                                         <input type='checkbox' name='check'/>
                                     </td>
-                                    <td style=\"width:30px;\"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td style=\"width:200px;\"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                     <td style=\"width:100px;\"></td>
-                                    <td></td>
+                                    <td style=\"width:100px;\"></td>
+                                    <td style=\"width:100px;\"></td>
+                                    <td style=\"width:100px;\"></td>
+                                    <td style=\"width:200px;\"></td>
+                                    <td style=\"width:100px;\"></td>
+                                    <td style=\"width:100px;\"></td>
+                                    <td style=\"width:100px;\"></td>
+                                    <td style=\"width:100px;\"></td>
+                                    <td style=\"width:100px;\"></td>
                                 </tr>";
 							}
 						}
@@ -114,7 +114,7 @@
 
 		</div>
 		<div style="margin-top:10px;">
-		<form style="display: inline;" action="consulterSalarie.php">
+		<form style="display: inline;" action="consulterSalarie.php" method="get">
 			<input style="color:black;" type="submit" value="Consulter">
 		</form>
 		<form style="display: inline;" action="ajouterSalarie.php">
