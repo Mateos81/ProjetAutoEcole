@@ -147,10 +147,32 @@ class Client extends Personne {
     }
     
     /**
-     * TODO Récupère la listes des élèves du client courant.
+     * Récupère la liste des élèves du client courant.
      */
     public function listeEleves() {
+    	// Reset du champ à remplir
+    	$this->client_tabEleves = array();
     	
+    	$tabData =
+    		DAL_Client::listeEleves($this->personne_id);
+    	 
+    	while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    		$eleve = new Client();
+    		$ville = new Ville();
+    			
+    		$eleve->Eleve(
+				intval($row['ELEVE_ID']),
+				$row['ELEVE_NOM'],
+				$row['ELEVE_PRENOM'],
+				$row['ELEVE_ADR'],
+				$ville->Ville($row['ELEVE_VILLE'], $row['ELEVE_CP']),
+				$row['ELEVE_TEL'],
+				$row['ELEVE_DATENAISS'],
+				$row['ELEVE_CLI'],
+				$row['ELEVE_SALARIE']);
+    			
+    		$this->client_tabEleves[] = $eleve;
+    	}
     }
     
     /**
@@ -181,5 +203,13 @@ class Client extends Personne {
 		
 		return $tabClients;
     }
+    
+    // TODO verifPaiement
+    
+    // TODO listeFactureClient
+    
+    // TODO sommeAPayer
+    
+    // TODO sommeAchat -> Appel équivalent côté Eleve
 }
 ?>
