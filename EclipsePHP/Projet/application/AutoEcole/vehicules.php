@@ -53,15 +53,38 @@
 				</thead>
 				<tbody>
 					<?php
-						$TAILLE = 20;
+						include 'BLL/Vehicule.php';
+						//$Tableau = Vehicule::listeVehicule("", "", "", 0);
+						$MaxTab = 10;
+						$TAILLE = count($Tableau);
 						for ($x = 0; $x <= $TAILLE; $x++) {
 						echo "<tr>
-								<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-								<td> </td>		
-								<td> </td>
-								<td> </td>
-								<td> </td>		
-							</tr>";
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Vehicule' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td style=\"width:30px;\">" . $Tableau[$x]->getVehicule_num() . "</td>
+                                    <td>" . $Tableau[$x]->getVehicule_immatriculation() . "</td>
+                                    <td>" . $Tableau[$x]->getVehicule_marque() . "</td>
+                                    <td>" . $Tableau[$x]->getVehicule_modele() . "</td>
+                                </tr>";
+						}
+						
+						if($TAILLE <= $MaxTab)
+                        {
+							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
+                            {
+								echo "<tr>
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Vehicule' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td style=\"width:30px;\"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>";
+							}
 						}
 					?>  
 				</tbody>

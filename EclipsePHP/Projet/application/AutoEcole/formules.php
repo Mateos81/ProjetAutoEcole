@@ -55,15 +55,38 @@
 				</thead>
 				<tbody>
 					<?php
-						$TAILLE = 20;
+						include 'BLL/Formule.php';
+						//$Tableau = Formule::listeFormule("", "", "", 0);
+						$MaxTab = 10;
+						$TAILLE = count($Tableau);
 						for ($x = 0; $x <= $TAILLE; $x++) {
 						echo "<tr>
-								<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-								<td> </td>		
-								<td> </td>
-								<td> </td>
-								<td> </td>		
-							</tr>";
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Formule' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td style=\"width:30px;\">" . $Tableau[$x]->formule_num() . "</td>
+                                    <td>" . $Tableau[$x]->formule_nbLeconConduite() . "</td>
+                                    <td>" . $Tableau[$x]->formule_prix() . "</td>
+                                    <td>" . $Tableau[$x]->formule_ticketPrix() . "</td>
+                                </tr>";
+						}
+						
+						if($TAILLE <= $MaxTab)
+                        {
+							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
+                            {
+							echo "<tr>
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Formule' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td style=\"width:30px;\"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>";
+							}
 						}
 					?>  
 				</tbody>

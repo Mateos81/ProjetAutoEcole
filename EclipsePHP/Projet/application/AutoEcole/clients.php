@@ -53,24 +53,53 @@
 						<th>telephone</th>
 						<th>Date Naissance</th>
 						<th>Eleve</th>
+
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-						$TAILLE = 20;
+						include 'BLL/Client.php';
+						//$Tableau = Eleve::listeEleve("", "", "", 0);
+						$MaxTab = 10;
+						$TAILLE = count($Tableau);
 						for ($x = 0; $x <= $TAILLE; $x++) {
-						echo "<tr>
-								<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-								<td> </td>		
-								<td> </td>
-								<td> </td>
-								<td> </td>		
-								<td> </td>
-								<td> </td>
-								<td> </td>
-								<td> </td>	
-								<td> </td>
-							</tr>";
+						  echo "<tr>
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Client' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td style=\"width:30px;\">" . $Tableau[$x]->getPersonne_id() . "</td>
+                                    <td>" . $Tableau[$x]->getPersonne_nom() . "</td>
+                                    <td>" . $Tableau[$x]->getPersonne_prenom() . "</td>
+                                    <td style=\"width:200px;\">" . $Tableau[$x]->getPersonne_adr() . "</td>
+                                    <td>" . $Tableau[$x]->getPersonne_ville()->getVille_nom() . "</td>
+                                    <td>" . $Tableau[$x]->getPersonne_ville()->getVille_cp() . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_tel() . "</td>
+									<td>" . $Tableau[$x]->getClient_dateNaiss() . "</td>
+									<td>" . $Tableau[$x]->getClient_eleves() . "</td>
+                                </tr>";
+						}
+						
+						if($TAILLE <= $MaxTab)
+                        {
+							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
+                            {
+								 echo "<tr>
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Client' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td style=\"width:30px;\"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style=\"width:200px;\"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style=\"width:100px;\"></td>
+									<td></td>
+									<td></td>
+                                </tr>";
+							}
 						}
 					?>  
 				</tbody>

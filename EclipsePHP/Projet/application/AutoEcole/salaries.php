@@ -92,33 +92,23 @@
 							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
                             {
 								echo "<tr>
-										<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-										<td style=\"width:30px;\"></td>	
-										<td></td>
-										<td></td>
-										<td></td>
-										<td style=\"width:200px;\"></td>		
-										<td></td>
-										<td></td>
-										<td></td>
-										<td style=\"width:100px;\"></td>
-										<td></td>
-									</tr>";
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Salarie' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td style=\"width:30px;\"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style=\"width:200px;\"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style=\"width:100px;\"></td>
+                                    <td></td>
+                                </tr>";
 							}
 						}
-						/*echo "<tr>
-										<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-										<td style=\"width:30px;\">1</td>
-										<td>Roux</td>									
-										<td>victor</td>
-										<td>Rourou</td>
-										<td style=\"width:200px;\">12 rue de je me la pète</td>		
-										<td>Rutardi</td>
-										<td>12000</td>
-										<td>Chieur</td>
-										<td style=\"width:100px;\">0620541564</td>	
-										<td>Citroën C5</td>
-									</tr>";*/
 					?>
 				</tbody>
 			</table>

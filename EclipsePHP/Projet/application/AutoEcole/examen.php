@@ -54,15 +54,38 @@
 				</thead>
 				<tbody>
 					<?php
-						$TAILLE = 20;
+						include 'BLL/Examen.php';
+						//$Tableau = Examen::listeExamen("", "", "", 0);
+						$MaxTab = 10;
+						$TAILLE = count($Tableau);
 						for ($x = 0; $x <= $TAILLE; $x++) {
 						echo "<tr>
-								<td style=\"width:30px;\"><input type='checkbox' name='check'</td>
-								<td> </td>		
-								<td> </td>
-								<td> </td>
-								<td> </td>		
-							</tr>";
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Examen' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td>" . $Tableau[$x]->getExamen_date() . "</td>
+                                    <td>" . $Tableau[$x]->getExamen_type() . "</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>";
+						}
+						
+						if($TAILLE <= $MaxTab)
+                        {
+							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
+                            {
+								echo "<tr>
+                                    <td style=\"width:30px;\">
+                                        <input type='checkbox' name='check'
+                                        <input type='hidden' name='Examen' value='" . serialize($Tableau[$x]) . "'>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>";
+							}
 						}
 					?>  
 				</tbody>
