@@ -26,7 +26,7 @@
 				surnom salarie<input style="color:black;"type="text" name="salarieSurnom">
 				nom salarie <input style="color:black;" type="text" name="salarieNom">
 				prenom salarie <input style="color:black;"type="text" name="salariePrenom">
-				<br><input type="radio" name="typeSalarie" value="0" Checked> All 
+				<br><input type="radio" name="typeSalarie" value="0" Checked> All
 				<input type="radio" name="typeSalarie" value="1"> Moniteur
 				<input type="radio" name="typeSalarie" value="2"> Secretaire
 				<br><input style="color:black;" type="submit" value="Rechercher">
@@ -71,8 +71,8 @@
                         {
                             echo "<tr>
                                     <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Salarie' value='" . serialize($Tableau[$x]) . "'>
+                                        <input type='checkbox' name='check'/>
+                                        <input type='hidden' name='Salarie' value='" . serialize($Tableau[$x]) . "'/>
                                     </td>
                                     <td style=\"width:30px;\">" . $Tableau[$x]->getPersonne_id() . "</td>
                                     <td>" . $Tableau[$x]->getPersonne_nom() . "</td>
@@ -93,8 +93,7 @@
                             {
 								echo "<tr>
                                     <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Salarie' value='" . serialize($Tableau[$x]) . "'>
+                                        <input type='checkbox' name='check'/>
                                     </td>
                                     <td style=\"width:30px;\"></td>
                                     <td></td>

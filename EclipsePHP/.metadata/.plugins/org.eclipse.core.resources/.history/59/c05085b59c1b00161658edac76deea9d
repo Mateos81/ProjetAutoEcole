@@ -185,7 +185,7 @@ class Eleve extends Personne {
     }
     
     /**
-     * Liste les achats de l'élève courant.
+     * TODO Liste les achats de l'élève courant.
      */
     public function listeAchats() {
     	// Reset du champ à remplir
