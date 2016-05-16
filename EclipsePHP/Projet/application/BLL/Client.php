@@ -1,0 +1,185 @@
+<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package BLL
+ */
+
+include "Personne.php";
+include "Eleve";
+include "Ville.php";
+
+include __DIR__ . "/../DAL/DAL_Client.php";
+ 
+ /**
+  * Classe représentant un client.
+  */
+class Client extends Personne {
+    
+    /** Date de naissance du client courant. */
+    private $client_dateNaiss;
+    
+    /** Elèves du client courant. */
+    private $client_tabEleves;
+    
+    /**
+     * Constructeur vide servant à créer un client via les modifieurs.
+     * A utiliser quand toutes les informations ne sont pas disponibles.
+     * Peut aussi être utilisé pour typer les champs.
+     */
+    public function __construct() {
+    	$this->personne_id = -1;
+    	$this->personne_nom = "";
+    	$this->personne_prenom = "";
+    	$this->personne_adr = "";
+    	$this->personne_ville = new Ville();
+    	$this->personne_tel = "";
+    	 
+    	$this->client_dateNaiss = "01/01/1990";
+    	$this->client_tabEleves = array();
+    }
+
+    /**
+     * Constructeur complet.
+     * @param $id Identifiant du client.
+     * @param $nom Nom du client.
+     * @param $prenom Prénom du client.
+     * @param $adr Adresse du client.
+     * @param Ville $ville Ville du client.
+     * @param $tel Téléphone du client.
+     * @param $dateNaiss Poste du client.
+     * @param $tabEleves Liste des élèves du client.
+     * @return Une nouvelle instance de Client.
+     */
+    public function Client(
+    		$id,
+    		$nom,
+    		$prenom,
+    		$adr,
+    		Ville $ville,
+    		$tel,
+    		$dateNaiss,
+    		$tabEleves) {
+    	//$instance = new self();
+    	
+    	$this->personne_id = $id;
+    	$this->personne_nom = $nom;
+    	$this->personne_prenom = $prenom;
+    	$this->personne_adr = $adr;
+    	$this->personne_ville = $ville;
+    	$this->personne_tel = $tel;
+    	
+    	$this->client_dateNaiss = $dateNaiss;
+    	$this->client_tabEleves = $tabEleves;
+    	
+    	//return $instance;
+    }
+    
+    /**
+     * Accesseur sur la date de naissance du client.
+     * @return La date de naissance du client.
+     */
+    public function getClient_dateNaiss() {
+        return $this->client_dateNaiss;
+    }
+    
+    /**
+     * Accesseur sur la liste des élèves du client.
+     * @return array(Eleve) La liste des élèves du client.
+     */
+    public function getClient_eleves() {
+        return $this->client_tabEleves;
+    }
+    
+    /**
+     * Modifieur sur la date de naissance du client courant.
+     * @param $valeur La nouvelle date de naissance du client.
+     */
+    public function setClient_dateNaiss($valeur) {
+    	$this->client_dateNaiss = $valeur;
+    }
+    
+    /**
+     * TODO ?
+     * Modifieur sur le client du client courant.
+     * @param array $valeur Le nouveau client du client.
+     */
+    public function setClient_eleves(array $valeur) {
+    	$this->client_tabEleves = $valeur;
+    }
+    
+    /**
+     * Création d'un nouveau client en base de données.
+     */
+    public function creerClient() {
+   		DAL_Client::creerClient(
+   			$this->personne_nom,
+   			$this->personne_prenom,
+   			$this->personne_adr,
+   			$this->personne_ville->getVille_nom(),
+   			$this->personne_ville->getVille_cp(),
+   			$this->personne_tel,
+   			$this->client_dateNaiss);
+    }
+    
+    /**
+     * Mise en jour en base d'un client
+     * suivant les informations de l'objet courant.
+     */
+    public function modifierClient() {
+    	DAL_Client::modifierClient(
+    		$this->personne_id,
+    		$this->personne_nom,
+    		$this->personne_prenom,
+   			$this->personne_adr,
+   			$this->personne_ville->getVille_nom(),
+   			$this->personne_ville->getVille_cp(),
+   			$this->personne_tel,
+   			$this->client_dateNaiss);
+    }
+    
+    /**
+     * Suppression en base du client courant.
+     */
+    public function supprimerClient() {
+    	DAL_Client::supprimerClient($this->personne_id);
+    }
+    
+    /**
+     * TODO Récupère la listes des élèves du client courant.
+     */
+    public function listeEleves() {
+    	
+    }
+    
+    /**
+     * Récupère et renvoie la liste des clients.
+     * @param $nom Filtre optionnel sur le nom du client recherché.
+     * @return array(Client) La liste des clients.
+     */
+    public static function listeClients($nom) {
+    	$tabData =
+    		DAL_Client::listeClients($nom);
+    	$tabClients = array();
+    	
+		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$client = new Client();
+			$ville = new Ville();
+			
+			$client->Client(
+				intval($row['CLIENT_ID']),
+				$row['CLIENT_NOM'],
+				$row['CLIENT_PRENOM'],
+				$row['CLIENT_ADR'],
+				$ville->Ville($row['CLIENT_VILLE'], $row['CLIENT_CP']),
+				$row['CLIENT_TEL'],
+				$row['CLIENT_DATENAISS']);
+			
+			$tabClients[] = $client;
+		}
+		
+		return $tabClients;
+    }
+}
+?>

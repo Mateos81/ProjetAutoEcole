@@ -12,7 +12,7 @@ include "Ville.php";
 include __DIR__ . "/../DAL/DAL_Eleve.php";
  
  /**
-  * Classe représentant un salarié.
+  * Classe représentant un élève.
   */
 class Eleve extends Personne {
     
