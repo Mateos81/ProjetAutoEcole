@@ -8,7 +8,6 @@
  
  /**
   * Classe représentant les divers types d'examen et de leçon.
-  * TODO Faire de même pour la classe Ville et Poste
   */
 class TypeL {
     
@@ -21,13 +20,19 @@ class TypeL {
      */
     private $tabTypeL;
     
-    /** Constructeur par défaut (singleton). */
+    /** 
+     * Constructeur par défaut (singleton).
+     */
     private function __construct() {
         $this->$tabTypeL = array();
-        
-        // TODO Récupération en base des types d'examen/leçon
-        
-        // TODO Remplissage du tableau à la façon d'un dictionnaire
+		
+		// Récupération en base des types
+		$tabData = DAL_TypeL::listeTypes();
+
+		// Remplissage du tableau à la façon d'un dictionnaire
+		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$this->tabPostes[$row['TYPEL_NUM']] = $row['TYPEL_NOM'];
+		}
     }
     
     /**
@@ -35,11 +40,11 @@ class TypeL {
      * @return L'instance unique de TypeL.
      */
     public static function getInstance() {
-        if ($instance == NULL) {
-            $instance = new TypeL();
+        if (self::$instance == NULL) {
+            self::$instance = new TypeL();
         }
         
-        return $instance;
+        return self::$instance;
     }
     
     /**
@@ -48,7 +53,21 @@ class TypeL {
     public function getTypeL() {
         return $this->tabTypeL;
     }
-    
-    // TODO Fonction qui renvoie le type d'examen/leçon depuis le numéro
+	
+	/**
+	 * Fonction qui renvoie le type depuis le numéro unique.
+	 * @param $id Le numéro identifiant le type.
+	 * @return La valeur du type d'examen/leçon.
+	 * @throws Exception Si le paramètre est invalide.
+	 */
+	public function getExamenType($id) {
+		foreach ($this->tabTypeL as $key => $value) {
+			if ($key == $id) {
+				return $value;
+			}
+		}
+		
+		throw new Exception("Identifiant de type invalide.");
+	}
 }
 ?>
