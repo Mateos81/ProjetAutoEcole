@@ -43,12 +43,17 @@ class Formule {
      * @param $nbLeconConduite Nombre de leçons de conduite de la formule.
      * @param $prix Prix de la formule.
      * @param $ticketPrix Prix d'un ticket supplémentaire.
+     * @return Une nouvelle instance de Formule.
      */
     public function Formule($num, $nbLeconConduite, $prix, $ticketPrix) {
-    	$this->formule_num = $num;
-    	$this->formule_nbLeconConduite = $nbLeconConduite;
-    	$this->formule_prix = $prix;
-    	$this->formule_ticketPrix = $ticketPrix;
+    	$instance = new self();
+    	
+    	$instance->formule_num = $num;
+    	$instance->formule_nbLeconConduite = $nbLeconConduite;
+    	$instance->formule_prix = $prix;
+    	$instance->formule_ticketPrix = $ticketPrix;
+    	
+    	return $instance;
     }
     
     /**
@@ -148,18 +153,17 @@ class Formule {
      * @return La liste des formules.
      */
     public static function listeFormules() {
-        $tabData = DAL_Formule::listeFormules();
-    	$listeFormules = array();
+        $listeFormules = DAL_Formule::listeFormules();
     	
 		while ($row = 
-				oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+				oci_fetch_array($listeFormules, OCI_ASSOC+OCI_RETURN_NULLS)) {
 			$formule = new Formule();
 			
 			$formule->Formule(
 				intval($row['FORMULE_NUM']),
 				$row['FORMULE_NBLECONCONDUITE'],
 				$row['FORMULE_PRIX'],
-				$row['FORMULE_TICKETPRIX']);
+				intval($row['FORMULE_TICKETPRIX']));
 			
 			$listeFormules[] = $formule;
 		}

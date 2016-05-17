@@ -8,7 +8,7 @@
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
-?> 
+?>
 <!DOCTYPE html>
 <html>
 <body>
@@ -19,12 +19,12 @@
 	<?php include('menu.php');?>
 	<section>
 	<!-- Filter -->
-	<div Class="filter">		
+	<div Class="filter">
 		<form  style="color:white;" action="action_formules.php">
 			<fieldset>
 				<legend>Filtres formules :</legend>
-				<input type="radio" name="typeExamen" value="all" checked> All 
-				<input type="radio" name="typeExamen" value="formuleA"> Formule A 
+				<input type="radio" name="typeExamen" value="all" checked> All
+				<input type="radio" name="typeExamen" value="formuleA"> Formule A
 				<input type="radio" name="typeExamen" value="formuleB"> Formule B
 				<input type="radio" name="typeExamen" value="formuleC"> Formule C
 				<br><input style="color:black;" type="submit" value="Rechercher">
@@ -32,7 +32,7 @@
 		</form>
 	<br>
 	<!-- /Filter -->
-²	<!-- Fiche -->
+    <!-- Fiche -->
 	<script language="JavaScript">
 		function toggle(source) {
 			checkboxes = document.getElementsByName('check');
@@ -41,14 +41,14 @@
 				}
 		}
 	</script>
-	
+
 			<div class="table-container">
 			<table>
 				<thead>
 					<tr>
 						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
 						<th>Id Leçon</th>
-						<th>Nombre leçon</th>		
+						<th>Nombre leçon</th>
 						<th>Prix</th>
 						<th>Ticket prix</th>
 					</tr>
@@ -56,42 +56,42 @@
 				<tbody>
 					<?php
 						include 'BLL/Formule.php';
-						//$Tableau = Formule::listeFormule("", "", "", 0);
+						$Tableau = Formule::listeFormules();
 						$MaxTab = 10;
 						$TAILLE = count($Tableau);
-						for ($x = 0; $x <= $TAILLE; $x++) {
-						echo "<tr>
-                                    <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Formule' value='" . serialize($Tableau[$x]) . "'>
-                                    </td>
-                                    <td style=\"width:30px;\">" . $Tableau[$x]->formule_num() . "</td>
-                                    <td>" . $Tableau[$x]->formule_nbLeconConduite() . "</td>
-                                    <td>" . $Tableau[$x]->formule_prix() . "</td>
-                                    <td>" . $Tableau[$x]->formule_ticketPrix() . "</td>
-                                </tr>";
+						for ($x = 0; $x < $TAILLE; $x++)
+                        {
+                            echo    "<tr>
+                                        <td style=\"width:30px;\">
+                                            <input type='checkbox' name='check'/>
+                                            <input type='hidden' name='Formule' value='" . serialize($Tableau[$x]) . "'/>
+                                        </td>
+                                        <td style=\"width:30px;\">" . $Tableau[$x]->getFormule_num() . "</td>
+                                        <td>" . $Tableau[$x]->getFormule_nbLeconConduite() . "</td>
+                                        <td>" . $Tableau[$x]->getFormule_prix() . "</td>
+                                        <td>" . $Tableau[$x]->getFormule_ticketPrix() . "</td>
+                                    </tr>";
 						}
-						
-						if($TAILLE <= $MaxTab)
+
+						if ($TAILLE <= $MaxTab)
                         {
 							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
                             {
-							echo "<tr>
-                                    <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Formule' value='" . serialize($Tableau[$x]) . "'>
-                                    </td>
-                                    <td style=\"width:30px;\"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>";
+                                echo "<tr>
+                                        <td style=\"width:30px;\">
+                                            <input type='checkbox' name='check'/>
+                                        </td>
+                                        <td style=\"width:30px;\"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>";
 							}
 						}
-					?>  
+					?>
 				</tbody>
 			</table>
-			
+
 		</div>
 		<div style="margin-top:10px;">
 		<form style="display: inline;" action="action_consulter_lecon.php">

@@ -149,7 +149,7 @@ class Formule {
      */
     public static function listeFormules() {
         $tabData = DAL_Formule::listeFormules();
-    	$listeFormules = array();
+    	$listeFormules = array()
     	
 		while ($row = 
 				oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {

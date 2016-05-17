@@ -67,6 +67,8 @@ class Salarie extends Personne {
     		$poste,
     		$surnom,
     		Vehicule $vehicule) {
+    	//$instance = new self();
+    	
     	$this->personne_id = $id;
     	$this->personne_nom = $nom;
     	$this->personne_prenom = $prenom;
@@ -77,6 +79,8 @@ class Salarie extends Personne {
     	$this->salarie_poste = $poste;
     	$this->salarie_surnom = $surnom;
     	$this->salarie_vehicule = $vehicule;
+    	
+    	//return $instance;
     }
     
     /**

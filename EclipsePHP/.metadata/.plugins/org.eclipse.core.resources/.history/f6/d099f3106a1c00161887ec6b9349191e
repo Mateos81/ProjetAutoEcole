@@ -148,18 +148,17 @@ class Formule {
      * @return La liste des formules.
      */
     public static function listeFormules() {
-        $tabData = DAL_Formule::listeFormules();
-    	$listeFormules = array();
+        $listeFormules = DAL_Formule::listeFormules();
     	
 		while ($row = 
-				oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+				oci_fetch_array($listeFormules, OCI_ASSOC+OCI_RETURN_NULLS)) {
 			$formule = new Formule();
 			
 			$formule->Formule(
 				intval($row['FORMULE_NUM']),
 				$row['FORMULE_NBLECONCONDUITE'],
 				$row['FORMULE_PRIX'],
-				$row['FORMULE_TICKETPRIX']);
+				intval($row['FORMULE_TICKETPRIX']));
 			
 			$listeFormules[] = $formule;
 		}
