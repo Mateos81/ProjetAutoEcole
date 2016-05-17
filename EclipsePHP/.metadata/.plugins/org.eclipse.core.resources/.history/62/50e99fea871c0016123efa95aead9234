@@ -90,12 +90,11 @@ abstract class DAL_Salarie {
 		
 		// Construction de la commande d'accès à la procédure PL/SQL
 		$cmd = 'BEGIN modifSalarie(';
-		$cmd .= ':id, :nom, :prenom, :surnom, :adr, :ville, :cp, ';
+		$cmd .= ':nom, :prenom, :surnom, :adr, :ville, :cp, ';
 		$cmd .= ':tel, :vehicule, :poste); END;';
 		 
 		$stid = oci_parse($conn, $cmd);
 		
-		oci_bind_by_name($stid, ':id', $id);
 		oci_bind_by_name($stid, ':nom', $nom);
 		oci_bind_by_name($stid, ':prenom', $prenom);
 		oci_bind_by_name($stid, ':surnom', $surnom);
