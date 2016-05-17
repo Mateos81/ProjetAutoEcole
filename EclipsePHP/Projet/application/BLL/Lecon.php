@@ -186,7 +186,7 @@ class Lecon {
 		DAL_Lecon::supprimerLecon($this->lecon_num);
 	}
 	
-	// TODO Liste avec filtres
+	// TODO Liste avec filtres : Synchroniser l'écran avec la fonction.
     
     /**
      * Récupère et renvoie la liste des salariés.

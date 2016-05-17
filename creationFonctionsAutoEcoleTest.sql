@@ -4,7 +4,7 @@
 
 CREATE OR REPLACE PACKAGE autoEcole IS
 
-    TYPE t_lstEleve IS VARRAY(10) OF ACHETER.acheter_eleve%TYPE;
+  TYPE t_lstEleve IS VARRAY(10) OF ELEVE.eleve_id%TYPE;
 	-- Vehicule 
 	PROCEDURE ajoutVehicule(lImmatriculation IN VEHICULE.vehicule_immatriculation%TYPE,
 							laMarque IN VEHICULE.vehicule_marque%TYPE, leModele IN VEHICULE.vehicule_modele%TYPE);

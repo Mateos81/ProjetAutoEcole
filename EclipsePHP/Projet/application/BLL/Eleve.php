@@ -17,17 +17,20 @@ include __DIR__ . "/../DAL/DAL_Eleve.php";
   */
 class Eleve extends Personne {
     
-    /** Date de naissance de l'élève courant. */
+    /** Date de naissance de l'élève. */
     private $eleve_dateNaiss;
     
-    /** Client de l'élève courant. */
+    /** Client de l'élève. */
     private $eleve_client;
     
-    /** Salarié responsable de l'élève courant. */
+    /** Salarié responsable de l'élève. */
     private $eleve_salarie;
     
-    /** Liste des achats d'un élève. */
+    /** Liste des achats de élève. */
     private $eleve_tabAchats;
+    
+    /** Liste des examens passés ou à passer de l'élève.  */
+    private $eleve_tabPasserExamen;
     
     /**
      * Constructeur vide servant à créer un salarié via les modifieurs.
@@ -46,10 +49,12 @@ class Eleve extends Personne {
     	$this->eleve_client = -1;
     	$this->eleve_salarie = -1;
     	$this->eleve_tabAchats = array();
+    	$this->eleve_tabPasserExamen = array();
     }
 
     /**
-     * Constructeur quasi-complet (sans les achats).
+     * Constructeur quasi-complet
+     * (sans les achats ni les examens).
      * @param $id Identifiant de l'élève.
      * @param $nom Nom de l'élève.
      * @param $prenom Prénom de l'élève.
@@ -59,7 +64,6 @@ class Eleve extends Personne {
      * @param $dateNaiss Poste de l'élève.
      * @param $client Surnom de l'élève.
      * @param $salarie Salarié attitré de l'élève.
-     * @return Une nouvelle instance de Eleve.
      */
     public function Eleve(
     		$id,
@@ -71,8 +75,6 @@ class Eleve extends Personne {
     		$dateNaiss,
     		$client,
     		$salarie) {
-    	//$instance = new self();
-    	
     	$this->personne_id = $id;
     	$this->personne_nom = $nom;
     	$this->personne_prenom = $prenom;
@@ -83,8 +85,6 @@ class Eleve extends Personne {
     	$this->eleve_dateNaiss = $dateNaiss;
     	$this->eleve_client = $client;
     	$this->eleve_salarie = $salarie;
-    	
-    	//return $instance;
     }
     
     /**
@@ -117,6 +117,14 @@ class Eleve extends Personne {
      */
     public function getEleve_achats() {
         return $this->eleve_tabAchats;
+    }
+    
+    /**
+     * Accesseur sur la liste des examens de l'élève.
+     * @return array(PasserExamen) La liste des examens de l'élève l'élève.
+     */
+    public function getEleve_examens() {
+        return $this->eleve_tabPasserExamen;
     }
     
     /**
@@ -216,10 +224,38 @@ class Eleve extends Personne {
     /**
      * Récupère et renvoie la liste de toutes les leçons
      * suivies par l'élève courant.
+     * Cette liste n'est pas stockée dans l'élève courant à cause de la taille
+     * en mémoire que cela risque de prendre.
      * @return La liste des leçons.
      */
     public function listeLecons() {
         return DAL_Eleve::listeLecons($this->personne_id);
+    }
+    
+    /**
+     * Liste les examens de l'élève courant.
+     */
+    public function listeExamens() {
+    	// Reset du champ à remplir
+    	$this->eleve_tabPasserExamen = array();
+    	 
+    	$tabData =
+    		DAL_Eleve::listeExamens($this->personne_id);
+    	
+    	while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    		$passerExamen = new PasserExamen();
+    		$examen = new Examen();
+    		 
+    		$passerExamen->PasserExamen(
+    				$row['PASSER_NUM'],
+    				$examen->Examen(
+    					$row['PASSEREXAMEN_DATE'],
+    					$row['PASSEREXAMEN_TYPE']),
+    				$row['PASSER_ELEVE'],
+    				$row['PASSER_RESULTAT']);
+    		 
+    		$this->eleve_tabPasserExamen[] = $passerExamen;
+    	}
     }
     
     /**

@@ -133,29 +133,38 @@ abstract class DAL_Eleve {
 	}
 	
 	/**
-	 * Liste les leçons d'un élève.
+	 * Récupère et renvoie la liste des examens
+	 * qu'a passé ou doit passer un élève.
 	 * @param $id Identifiant d'un élève.
-	 * @return array La liste des leçons.
+	 * @return resource La liste des examens.
 	 */
-	public static function listeLecons($id) {
-	    $conn = Outils::connexion_base();
-			
-		$stid =
-			oci_parse(
-				$conn,
-				'SELECT * FROM LECON WHERE lecon_eleve = ' . $id);
+	public static function listeAchats($id) {
+		$conn = Outils::connexion_base();
+		
+		$req = 'SELECT * FROM PASSER WHERE passer_eleve = ' . $id;
+		$stid =	oci_parse($conn, $req);
 		oci_execute($stid);
-		
-		$tab = array();
-		while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-			$tab[] = $row;
-		}
-		
-		oci_free_statement($stid);
 		
 		Outils::deconnexion_base($conn);
 		
-		return $tab;
+		return $stid;
+	}
+	
+	/**
+	 * Liste les leçons d'un élève.
+	 * @param $id Identifiant d'un élève.
+	 * @return resource La liste des leçons.
+	 */
+	public static function listeLecons($id) {
+	    $conn = Outils::connexion_base();
+
+	    $req = 'SELECT * FROM LECON WHERE lecon_eleve = ' . $id;
+		$stid =	oci_parse($conn, $req);
+		oci_execute($stid);
+		
+		Outils::deconnexion_base($conn);
+		
+		return $stid;
 	}
 	
 	/**
