@@ -258,7 +258,7 @@ class Salarie extends Personne {
 				$row['SALARIE_TEL'],
 				$row['SALARIE_POSTE'],
 				$row['SALARIE_SURNOM'],
-				$vehicule->Vehicule(
+				$vehicule->VehiculeNum(
 					intval(
 						$row['SALARIE_VEHICULE'])));
 			
