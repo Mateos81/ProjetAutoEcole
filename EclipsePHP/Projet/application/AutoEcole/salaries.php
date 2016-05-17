@@ -35,15 +35,6 @@ session_start();
 	<br>
 	<!-- /Filter -->
 	<!-- Fiche -->
-	<script language="JavaScript">
-		function toggle(source) {
-			checkboxes = document.getElementsByName('check');
-				for(var i=0, n=checkboxes.length;i<n;i++) {
-				checkboxes[i].checked = source.checked;
-				}
-		}
-	</script>
-
 			<div class="table-container">
 			<table>
 				<thead>
@@ -75,7 +66,7 @@ session_start();
                     return false;
                 }
             }
-
+             
             function clickCheck(elmt)
             {
                 if( (nbCheck < 1) || (isChecked(elmt) == false) )
@@ -95,15 +86,14 @@ session_start();
                 }
             }
         </script>
-
-
+				
+				
 					<?php
 						include 'BLL/Salarie.php';
-                        include 'BLL/Poste.php';
 						$Tableau = Salarie::listeSalaries("", "", "", 0);
 						$MaxTab = 10;
 						$TAILLE = count($Tableau);
-
+						
 						echo "<form action=\"consulterSalarie.php\" method=\"post\">";
 						for ($x = 0; $x < $TAILLE; $x++)
                         {
@@ -119,7 +109,7 @@ session_start();
                                     <td style=\"width:200px;\">" . $Tableau[$x]->getPersonne_adr() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_ville()->getVille_nom() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_ville()->getVille_cp() . "</td>
-                                    <td style=\"width:100px;\">" . Poste::getInstance()->getPosteType($Tableau[$x]->getSalarie_poste()) . "</td>
+                                    <td style=\"width:100px;\">" . $Tableau[$x]->getSalarie_poste() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_tel() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getSalarie_vehicule()->getVehicule_num() . "</td>
                                 </tr>";

@@ -52,7 +52,12 @@ session_start();
 	
 	echo "<section>
 	     <h3>Consultation</h3>  
-		<form action=\"\">		           
+		<form action=\"modifierSalarie.php\" method=\"GET\">
+			<tr>               
+               <td><label for=\"Id\"><strong>Id</strong></label></td>
+               <td><input type=\"text\" name=\"Id\" id=\"id\" value=\"".$id."\" disabled/></td>               
+            </tr>	
+			<br>
             <tr>               
                <td><label for=\"Nom\"><strong>Nom</strong></label></td>
                <td><input type=\"text\" name=\"Nom\" id=\"nom\" value=\"".$nom."\" /></td>               
@@ -65,7 +70,7 @@ session_start();
 			<br>
 			<tr>               
                <td><label for=\"Surnom\"><strong>Surnom</strong></label></td>
-               <td><input type=\"text\" name=\"Auteur\" id=\"auteur\" value=\"".$surnom."\" /></td>         
+               <td><input type=\"text\" name=\"Surnom\" id=\"surnom\" value=\"".$surnom."\" /></td>         
             </tr>
 			<br>
 			<tr>               
