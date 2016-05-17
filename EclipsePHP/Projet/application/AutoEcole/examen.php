@@ -65,7 +65,7 @@
                                         <input type='hidden' name='Examen' value='" . serialize($Tableau[$x]) . "'/>
                                     </td>
                                     <td>" . $Tableau[$x]->getExamen_date() . "</td>
-                                    <td>" . $Tableau[$x]->getExamen_type() . "</td>
+                                    <td>" . $Tableau[$x]->getExamenTypeToString() . "</td>
                                     <td></td>
                                     <td></td>
                                 </tr>";

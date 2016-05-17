@@ -91,6 +91,19 @@ class Examen {
 	}
 	
 	/**
+	 * Fonction qui renvoie le type d'examen depuis le numéro unique.
+	 * @param $id Le numéro identifiant le type d'examen.
+	 * @return La valeur du type de Examen.
+	 */
+	public function getExamenTypeToString() {
+		$tabData = DAL_Examen::getExamenType($this->examen_type);
+		
+		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			return $row['TYPEL_NOM'];
+		}
+	}
+	
+	/**
 	 * Récupère et renvoie la liste des examens suivant un filtre.
 	 * @param $type Filtre optionnel sur le type des examens recherchés.
 	 * @return Examen[] La liste des examens.

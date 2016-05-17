@@ -54,6 +54,25 @@ abstract class DAL_Examen {
 		Outils::deconnexion_base($conn);
 	}
 	
+	/**
+	 * Récupère et renvoie le type d'examen à partir de son identifiant.
+	 * @param $type Type d'examen.
+	 * @return resource Type d'examen.
+	 */
+	public static function getExamenType($type) {
+		$conn = Outils::connexion_base();
+		
+		$req = 'SELECT * FROM EXAMEN, TYPEL WHERE examen_type = typel_num ';
+		$req .= 'AND examen_type = ' . $type;
+		$stid = oci_parse($conn, $req);
+		
+		oci_execute($stid);
+		
+		Outils::deconnexion_base($conn);
+		
+		return $stid;
+	}
+	
 	public static function listeExamens($type) {
 		$conn = Outils::connexion_base();
 		 
