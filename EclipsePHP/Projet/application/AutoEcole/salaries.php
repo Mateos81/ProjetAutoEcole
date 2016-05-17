@@ -1,5 +1,5 @@
 ﻿<?php
-// session_start();
+session_start();
 // if((ISSET($_SESSION['USER']))){
 	// if(( ISSET($_POST['Deco']))||
 		// (time() - $_SESSION['LAST_ACTIVITY'] > 1200)){
@@ -48,8 +48,8 @@
 			<table>
 				<thead>
 					<tr>
-						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
-						<th style="width:100px;">Id</th>
+						<th style="width:30px;"></th>
+						<th style="width:30px;">Id</th>
 						<th style="width:100px;">Nom</th>
 						<th style="width:100px;">Prénom</th>
 						<th style="width:100px;">Surnom</th>
@@ -62,19 +62,56 @@
 					</tr>
 				</thead>
 				<tbody>
+				<script language="JavaScript">
+            var nbCheck = 0;
+            function isChecked(elmt)
+            {
+                if( elmt.checked )
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+             
+            function clickCheck(elmt)
+            {
+                if( (nbCheck < 1) || (isChecked(elmt) == false) )
+                {
+                    if( isChecked(elmt) == true )
+                    {
+                        nbCheck += 1;
+                    }
+                    else
+                    {
+                        nbCheck -= 1;
+                    }
+                }
+                else
+                {
+                    elmt.checked = '';
+                }
+            }
+        </script>
+				
+				
 					<?php
 						include 'BLL/Salarie.php';
 						$Tableau = Salarie::listeSalaries("", "", "", 0);
 						$MaxTab = 10;
 						$TAILLE = count($Tableau);
+						
+						echo "<form action=\"consulterSalarie.php\" method=\"post\">";
 						for ($x = 0; $x < $TAILLE; $x++)
                         {
+							$_SESSION['Tableau'.$x] = serialize($Tableau[$x]);
                             echo "<tr>
                                     <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'/>
-                                        <input type='hidden' name='Salarie' value='" . serialize($Tableau[$x]) . "'/>
+                                        <input type=\"checkbox\" name=\"salarie[]\" id=\"salarie\" value=\"" . $x . "\" onclick=\"clickCheck(this);\" />
                                     </td>
-                                    <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_id() . "</td>
+                                    <td style=\"width:30px;\">" . $Tableau[$x]->getPersonne_id() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_nom() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_prenom() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getSalarie_surnom() . "</td>
@@ -93,9 +130,9 @@
                             {
 								echo "<tr>
                                     <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'/>
+                                        <input type='checkbox' name='check' disabled/>
                                     </td>
-                                    <td style=\"width:100px;\"></td>
+                                    <td style=\"width:30px;\"></td>
                                     <td style=\"width:100px;\"></td>
                                     <td style=\"width:100px;\"></td>
                                     <td style=\"width:100px;\"></td>
@@ -109,23 +146,10 @@
 							}
 						}
 					?>
+					    <input type="submit" value="Modifier">
+					</form>
 				</tbody>
 			</table>
-
-		</div>
-		<div style="margin-top:10px;">
-		<form style="display: inline;" action="consulterSalarie.php" method="get">
-			<input style="color:black;" type="submit" value="Consulter">
-		</form>
-		<form style="display: inline;" action="ajouterSalarie.php">
-			<input style="color:black;" type="submit" value="Ajouter">
-		</form>
-		<form style="display: inline;" action="modifierSalarie.php">
-			<input style="color:black;" type="submit" value="Modifier">
-		</form>
-		<form style="display: inline;" action="supprimerSalarie.php">
-			<input style="color:black;" type="submit" value="Supprimer">
-		</form>
 		</div>
 	<!-- Fiche -->
 	</div>
