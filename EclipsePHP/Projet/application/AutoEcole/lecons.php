@@ -8,7 +8,7 @@
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
-?> 
+?>
 <!DOCTYPE html>
 <html>
 <body>
@@ -19,14 +19,14 @@
 	<?php include('menu.php');?>
 	<section>
 	<!-- Filter -->
-	<div Class="filter">		
+	<div Class="filter">
 		<form  style="color:white;" action="action_lecon.php">
 			<fieldset>
 				<legend>Filtres leçons :</legend>
-				Eleve <input style="color:black;" type="text" name="eleve"> 
+				Eleve <input style="color:black;" type="text" name="eleve">
 				Salarié <input style="color:black;"type="text" name="salarie">
-				<br><input type="radio" name="typeLecon" value="all" checked> All 
-				<input type="radio" name="typeLecon" value="conduite"> Conduite 
+				<br><input type="radio" name="typeLecon" value="all" checked> All
+				<input type="radio" name="typeLecon" value="conduite"> Conduite
 				<input type="radio" name="typeLecon" value="code"> Code
 				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
@@ -42,14 +42,14 @@
 				}
 		}
 	</script>
-	
+
 			<div class="table-container">
 			<table>
 				<thead>
 					<tr>
 						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
 						<th>Id Leçon</th>
-						<th>Date</th>		
+						<th>Date</th>
 						<th>Vehicule</th>
 						<th>Salarie</th>
 						<th>Eleve</th>
@@ -58,15 +58,15 @@
 				</thead>
 				<tbody>
 					<?php
-						include 'BLL/Vehicule.php';
-						//$Tableau = Vehicule::listeVehicule("", "", "", 0);
+						include 'BLL/Lecon.php';
+						$Tableau = Lecon::listeLecons("", -1, -1, -1, -1);
 						$MaxTab = 10;
 						$TAILLE = count($Tableau);
-						for ($x = 0; $x <= $TAILLE; $x++) {
+						for ($x = 0; $x < $TAILLE; $x++) {
 						echo "<tr>
                                     <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Lecon' value='" . serialize($Tableau[$x]) . "'>
+                                        <input type='checkbox' name='check'/>
+                                        <input type='hidden' name='Lecon' value='" . serialize($Tableau[$x]) . "'/>
                                     </td>
                                     <td style=\"width:30px;\">" . $Tableau[$x]->getLecon_num() . "</td>
                                     <td>" . $Tableau[$x]->getLecon_date() . "</td>
@@ -76,29 +76,28 @@
 									<td>" . $Tableau[$x]->getLecon_type() . "</td>
                                 </tr>";
 						}
-						
-						if($TAILLE <= $MaxTab)
+
+						if ($TAILLE <= $MaxTab)
                         {
 							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
                             {
-							echo "<tr>
-										<td style=\"width:30px;\">
-											<input type='checkbox' name='check'
-											<input type='hidden' name='Lecon' value='" . serialize($Tableau[$x]) . "'>
-										</td>
-										<td style=\"width:30px;\"></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-									</tr>";
+                                echo "<tr>
+                                            <td style=\"width:30px;\">
+                                                <input type='checkbox' name='check'/>
+                                            </td>
+                                            <td style=\"width:30px;\"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>";
 							}
 						}
-					?>  
+					?>
 				</tbody>
 			</table>
-			
+
 		</div>
 		<div style="margin-top:10px;">
 		<form style="display: inline;" action="action_consulter_lecon.php">
