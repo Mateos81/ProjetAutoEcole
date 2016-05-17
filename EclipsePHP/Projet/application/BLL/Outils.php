@@ -33,6 +33,31 @@ abstract class Outils {
 	}
 	
 	/**
+	 * Test de connexion d'une utilisateur.
+	 * @param $login Identifiant.
+	 * @param $password Mot de passe.
+	 * @return boolean Vrai si la combinaison existe, faux sinon.
+	 */
+	public static function connexion_user($login, $password) {
+		$conn = self::connexion_base();
+		
+		// Construction de la requête
+		$req = 'SELECT COUNT(*) AS Nb FROM LOGIN WHERE ';
+		$req .= 'login_id = ' . $login . ' AND ';
+		$req .= 'login_password = ' . $password;
+		
+		$stid = oci_parse($conn, $req);
+		
+		oci_execute($stid);
+		
+		Outils::deconnexion_base($conn);
+		
+		$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+		
+		return intval($row['Nb']) == 1;
+	}
+	
+	/**
 	 * Déconnexion de la base de données.
 	 * @param unknown Objet de connexion.
 	 */
