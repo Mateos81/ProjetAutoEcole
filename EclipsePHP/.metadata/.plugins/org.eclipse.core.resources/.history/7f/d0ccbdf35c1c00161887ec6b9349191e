@@ -1,0 +1,26 @@
+<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package DAL
+ */
+
+include __DIR__ . "/../BLL/Outils.php";
+
+/**
+ * Classe d'accès aux données pour la classe Examen.
+ * DAL pour Data Access Layer.
+ */
+abstract class DAL_Examen {
+	
+	/**
+	 * Création d'un examen en base de données.
+	 * @param $date Date de l'examen.
+	 * @param $type Type de l'examen (voir TypeL);
+	 */
+	public static function creerExamen($date, $type) {
+		
+	}
+}
+?>
