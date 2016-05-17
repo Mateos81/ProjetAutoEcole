@@ -39,13 +39,26 @@ class Vehicule {
         $this->vehicule_historique = array();
     }
     
+    /**
+     * "Constructeur" complet.
+     * @param $num Numéro unique identifiant le véhicule, servant d'index.
+     * @param $immatriculation Numéro d'immatriculation du véhicule.
+     * @param $marque Marque du véhicule.
+     * @param $modele Modèle du véhicule.
+     */
+    public function Vehicule($num, $immatriculation, $marque, $modele) {
+    	$this->vehicule_num = $num;
+    	$this->vehicule_immatriculation = $immatriculation;
+    	$this->vehicule_marque = $marque;
+    	$this->vehicule_modele = $modele;
+    }    
     
     /**
      * "Constructeur" basé sur le numéro du véhicule.
      * @param $num Numéro du véhicule.
      * @return Une nouvelle instance de véhicule.
      */
-    public function Vehicule($num) {
+    public function VehiculeNum($num) {
     	$instance = new Vehicule();
     	
     	$tabData = DAL_Vehicule::getVehicule($num);
@@ -107,6 +120,31 @@ class Vehicule {
     	// Mise à jour de l'objet
     	$this->vehicule_historique[count($this->vehicule_historique.count)]
     	    = $histo;
+    }
+    
+    /**
+     * Récupère et renvoie la liste des véhicules.
+     * @param $modele Filtre optionnel sur le modèle du véhicule.
+     * @param $marque Filtre optionnel sur la marque du véhicule.
+     * @return Vehicule[] Liste des véhicules correspondant aux filtres.
+     */
+    public static function listeVehicules($modele, $marque) {
+    	$tabData = DAL_Vehicule::listeVehicules($modele, $marque);
+    	$tabVehicules = array();
+    	
+		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$vehicule = new Vehicule();
+			
+			$vehicule->Vehicule(
+				intval($row['VEHICULE_NUM']),
+				$row['VEHICULE_IMMATRICULATION'],
+				$row['VEHICULE_MARQUE'],
+				$row['VEHICULE_MODELE']);
+			
+			$tabVehicules[] = $vehicule;
+		}
+		
+		return $tabVehicules;
     }
 }
 ?>

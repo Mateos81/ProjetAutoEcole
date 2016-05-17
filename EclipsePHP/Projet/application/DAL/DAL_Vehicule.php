@@ -6,7 +6,7 @@
  * @package DAL
  */
 
-//include __DIR__ . "/../BLL/Outils.php";
+include_once __DIR__ . "/../BLL/Outils.php";
  
  /**
   * Classe d'accès aux données pour la classe Vehicule.
@@ -30,6 +30,46 @@ abstract class DAL_Vehicule {
     	Outils::deconnexion_base($conn);
     	
     	return $stid;
+	}
+	
+	/**
+	 * Récupère et renvoie une liste de véhicules.
+	 * @param $modele Modèle d'une véhicule.
+	 * @param $marque Marque d'une véhicule.
+	 * @return resource Données brutes représentant des véhicules.
+	 */
+	public static function listeVehicules($modele, $marque) {
+		$conn = Outils::connexion_base();
+		 
+		// Construction de la requête
+		$req = 'SELECT * FROM VEHICULE';
+		 
+		$tabParts = array();
+		if ($modele != "") {
+			$tabParts[] = 'vehicule_modele LIKE %' . $modele . '%';
+		}
+		if ($marque != "") {
+			$tabParts[] = 'vehicule_marque LIKE %' . $marque . '%';
+		}
+		 
+		for ($i = 0; $i < count($tabParts); $i++) {
+			if ($i == 0) {
+				// Premier élément : WHERE
+				$req .= ' WHERE ';
+			} else if ($i != count($tabParts)) {
+				// Si ce n'est ni le premier ni le dernier : AND
+				$req .= ' AND ';
+			}
+		
+			$req .= $tabParts[$i];
+		}
+			
+		$stid = oci_parse($conn, $req);
+		oci_execute($stid);
+		
+		Outils::deconnexion_base($conn);
+		
+		return $stid;
 	}
 }
 ?>
