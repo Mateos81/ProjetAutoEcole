@@ -4,7 +4,7 @@
 
 CREATE OR REPLACE PACKAGE autoEcole IS
 
-  TYPE t_lstEleve IS VARRAY(10) OF ELEVE.eleve_id%TYPE;
+    TYPE t_lstEleve IS VARRAY(10) OF ACHETER.acheter_eleve%TYPE;
 	-- Vehicule 
 	PROCEDURE ajoutVehicule(lImmatriculation IN VEHICULE.vehicule_immatriculation%TYPE,
 							laMarque IN VEHICULE.vehicule_marque%TYPE, leModele IN VEHICULE.vehicule_modele%TYPE);
@@ -120,7 +120,8 @@ CREATE OR REPLACE PACKAGE autoEcole IS
 		
 	-- Eleve
 	FUNCTION getCurEleve RETURN ELEVE.eleve_id%TYPE;
-	FUNCTION sommeLeconEleve(lId IN ELEVE.eleve_id%TYPE) RETURN FLOAT;
+	FUNCTION sommeLeconAcheteEleve(lId IN ELEVE.eleve_id%TYPE) RETURN INT;
+	FUNCTION sommeLeconEleve(lId IN ELEVE.eleve_id%TYPE) RETURN INT;
 	FUNCTION dateCodeEleve(lId IN ELEVE.eleve_id%TYPE) RETURN DATE;
 	
 	-- Client

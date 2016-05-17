@@ -365,7 +365,18 @@ IS
  
 END getCurEleve;
 
-FUNCTION sommeLeconEleve(lId IN ELEVE.eleve_id%TYPE) RETURN FLOAT
+FUNCTION sommeLeconAcheteEleve(lId IN ELEVE.eleve_id%TYPE) RETURN INT
+IS
+   sommeLecon INT;
+BEGIN
+	SELECT SUM(nb_ticket) INTO sommeLecon FROM ACHETER 
+	WHERE acheter_num = lId;
+
+RETURN sommeLecon;
+
+END sommeLeconAcheteEleve;
+
+FUNCTION sommeLeconEleve(lId IN ELEVE.eleve_id%TYPE) RETURN INT
 IS
    sommeLecon INT;
 BEGIN
