@@ -45,7 +45,7 @@ class Salarie extends Personne {
     }
 
     /**
-     * Constructeur complet.
+     * "Constructeur" complet.
      * @param $id Identifiant du salarié.
      * @param $nom Nom du salarié.
      * @param $prenom Prénom du salarié.

@@ -5,6 +5,8 @@
  * @version 1.0
  * @package BLL
  */
+
+include __DIR__ . "/../DAL/DAL_Formule.php";
  
  /**
   * Classe représentant une formule.
@@ -24,15 +26,30 @@ class Formule {
     private $formule_ticketPrix;
     
     /**
-     * 
+     * Constructeur vide servant à créer une formule via les modifieurs.
+     * A utiliser quand toutes les informations ne sont pas disponibles.
+     * Peut aussi être utilisé pour typer les champs.
      */
-    public function __construct($id) {
-        // TODO Recherche de la formule dans la base
-        
-        // TODO Renseignement des champs
+    public function __construct() {
+        $this->formule_num = -1;
+        $this->formule_nbLeconConduite = -1;
+        $this->formule_prix = 0.0;
+        $this->formule_ticketPrix = 0.0;
     }
     
-    // TODO Constructeur pour nouvelle formule + BDD
+    /**
+     * "Constructeur" complet.
+     * @param $num Numéro de la formule.
+     * @param $nbLeconConduite Nombre de leçons de conduite de la formule.
+     * @param $prix Prix de la formule.
+     * @param $ticketPrix Prix d'un ticket supplémentaire.
+     */
+    public function Formule($num, $nbLeconConduite, $prix, $ticketPrix) {
+    	$this->formule_num = $num;
+    	$this->formule_nbLeconConduite = $nbLeconConduite;
+    	$this->formule_prix = $prix;
+    	$this->formule_ticketPrix = $ticketPrix;
+    }
     
     /**
      * Accesseur sur le numéro de la formule courante.
@@ -90,18 +107,61 @@ class Formule {
         $this->formule_ticketPrix = $valeur;
     }
     
-    // TODO Ajouter/Modifier/Supprimer
+    /**
+     * Création d'une nouvelle formule en base de données.
+     */
+    public function creerFormule() {
+    	// Création en base
+    	DAL_Formule::creerFormule(
+    		$this->formule_nbLeconConduite,
+	        $this->formule_prix,
+	        $this->formule_ticketPrix);
+    	 
+    	// Récupération de l'identifiant unique
+    	// N'est pas retourné par creerFormule
+    	// car on ne peut faire de RETURN avec un UPDATE
+    	// dans la même fonction...
+    	$this->formule_num = DAL_Formule::getCurFormule();
+    }
+    
+    /**
+     * Mise en jour en base d'une formule
+     * suivant les informations de l'objet courant.
+     */
+    public function modifierFormule() {
+    	DAL_Formule::modifierFormule(
+    		$this->formule_num,
+    		$this->formule_nbLeconConduite,
+	        $this->formule_prix,
+	        $this->formule_ticketPrix);
+    }
+    
+    /**
+     * Suppression en base de la formule courante.
+     */
+    public function supprimerFormule() {
+    	DAL_Formule::supprimerFormule($this->formule_num);
+    }
     
     /**
      * Récupère et renvoie la liste de toutes les formules
      * @return La liste des formules.
      */
-    public static function listeFormule() {
-        $listeFormules = array();
-        
-        // TODO Appel au DAL pour récupérer les données
-        
-        // TODO Retraiter les données et remplir la liste
+    public static function listeFormules() {
+        $listeFormules = DAL_Formule::listeFormules();
+    	
+		while ($row = 
+				oci_fetch_array($listeFormules, OCI_ASSOC+OCI_RETURN_NULLS)) {
+			$formule = new Formule();
+			
+			$formule->Formule(
+				intval($row['FORMULE_NUM']),
+				$row['FORMULE_NBLECONCONDUITE'],
+				$row['FORMULE_PRIX'],
+				intval($row['FORMULE_TICKETPRIX']));
+			
+			$listeFormules[] = $formule;
+		}
         
         return $listeFormules;
     }
