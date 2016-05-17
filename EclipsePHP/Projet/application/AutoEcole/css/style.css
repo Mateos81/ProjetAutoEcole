@@ -6384,6 +6384,7 @@ table {
     flex-flow: column;
     height: 100%;
     width: 100%;
+	overflow: scroll;
 }
 table thead {
     /* head takes the height it requires, 
@@ -6395,7 +6396,7 @@ table tbody {
     /* body takes all the remaining available space */
     flex: 1 1 auto;
     display: block;
-    overflow-y: scroll;
+	
 }
 table tbody tr {
     width: 100%;
@@ -6404,11 +6405,12 @@ table thead,
 table tbody tr {
     display: table;
     table-layout: fixed;
+
 }
 /* decorations */
 .table-container {
     border: 1px solid black;
-    padding: 0.3em;
+    padding: 0.1em;
 }
 table {
     border: 1px solid lightgrey;
@@ -6429,6 +6431,8 @@ table tr:nth-child(even) {
 table tr:nth-child(odd) {
    background-color:#fff;
 }
+
+
 
   
 /*# sourceMappingURL=bootstrap.css.map */
