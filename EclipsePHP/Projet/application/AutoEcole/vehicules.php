@@ -8,7 +8,7 @@
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
-?> 
+?>
 <!DOCTYPE html>
 <html>
 <body>
@@ -19,11 +19,11 @@
 	<?php include('menu.php');?>
 	<section>
 		<!-- Filter -->
-	<div Class="filter">		
+	<div Class="filter">
 		<form  style="color:white;" action="action_vehicules.php">
 			<fieldset>
 				<legend>Filtres vehicules :</legend>
-				Modèle <input style="color:black;" type="text" name="model"> 
+				Modèle <input style="color:black;" type="text" name="model">
 				Marque<input style="color:black;"type="text" name="marque">
 				<br><input style="color:black;" type="submit" value="Rechercher">
 			</fieldset>
@@ -39,14 +39,14 @@
 				}
 		}
 	</script>
-	
+
 			<div class="table-container">
 			<table>
 				<thead>
 					<tr>
 						<th style="width:30px;"><input type="checkbox"  onClick="toggle(this)"></th>
 						<th>Id Voiture</th>
-						<th>Immatriculation</th>		
+						<th>Immatriculation</th>
 						<th>Marque</th>
 						<th>Model</th>
 					</tr>
@@ -54,30 +54,30 @@
 				<tbody>
 					<?php
 						include 'BLL/Vehicule.php';
-						//$Tableau = Vehicule::listeVehicule("", "", "", 0);
+						$Tableau = Vehicule::listeVehicules("", "");
 						$MaxTab = 10;
 						$TAILLE = count($Tableau);
-						for ($x = 0; $x <= $TAILLE; $x++) {
-						echo "<tr>
-                                    <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Vehicule' value='" . serialize($Tableau[$x]) . "'>
-                                    </td>
-                                    <td style=\"width:30px;\">" . $Tableau[$x]->getVehicule_num() . "</td>
-                                    <td>" . $Tableau[$x]->getVehicule_immatriculation() . "</td>
-                                    <td>" . $Tableau[$x]->getVehicule_marque() . "</td>
-                                    <td>" . $Tableau[$x]->getVehicule_modele() . "</td>
-                                </tr>";
+						for ($x = 0; $x < $TAILLE; $x++)
+                        {
+                            echo "<tr>
+                                        <td style=\"width:30px;\">
+                                            <input type='checkbox' name='check'/>
+                                            <input type='hidden' name='Vehicule' value='" . serialize($Tableau[$x]) . "'/>
+                                        </td>
+                                        <td style=\"width:30px;\">" . $Tableau[$x]->getVehicule_num() . "</td>
+                                        <td>" . $Tableau[$x]->getVehicule_immatriculation() . "</td>
+                                        <td>" . $Tableau[$x]->getVehicule_marque() . "</td>
+                                        <td>" . $Tableau[$x]->getVehicule_modele() . "</td>
+                                    </tr>";
 						}
-						
-						if($TAILLE <= $MaxTab)
+
+						if ($TAILLE < $MaxTab)
                         {
 							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
                             {
 								echo "<tr>
                                     <td style=\"width:30px;\">
-                                        <input type='checkbox' name='check'
-                                        <input type='hidden' name='Vehicule' value='" . serialize($Tableau[$x]) . "'>
+                                        <input type='checkbox' name='check'/>
                                     </td>
                                     <td style=\"width:30px;\"></td>
                                     <td></td>
@@ -86,10 +86,9 @@
                                 </tr>";
 							}
 						}
-					?>  
+					?>
 				</tbody>
 			</table>
-			
 		</div>
 		<div style="margin-top:10px;">
 		<form style="display: inline;" action="action_consulter_lecon.php">
