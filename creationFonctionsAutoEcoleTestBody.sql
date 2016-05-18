@@ -369,8 +369,8 @@ FUNCTION sommeLeconAcheteEleve(lId IN ELEVE.eleve_id%TYPE) RETURN INT
 IS
    sommeLecon INT;
 BEGIN
-	SELECT SUM(nb_ticket) INTO sommeLecon FROM ACHETER 
-	WHERE acheter_num = lId;
+	SELECT SUM(acheter_nbTicket) INTO sommeLecon FROM ACHETER 
+	WHERE acheter_eleve = lId;
 
 RETURN sommeLecon;
 
@@ -488,26 +488,27 @@ IS
  
 END getCurClient;
 
-/*   TODO Finir */
 FUNCTION sommeAchatClient(lId IN CLIENT.client_id%TYPE, lIdE IN ELEVE.eleve_id%TYPE) RETURN FLOAT
 IS
-  CURSOR cursorEleve IS SELECT eleve_id from ELEVE WHERE eleve_cli = lId;
   sommeAchat ACHETER.acheter_prix%TYPE;
   lstEleve t_lstEleve;   
-  
-BEGIN
-  IF (lIdE = null) THEN
-	OPEN cursorEleve;
-	LOOP
-		FETCH cursorEleve BULK COLLECT INTO lstEleve LIMIT 10;
-		EXIT WHEN cursorEleve%NOTFOUND;
-	END LOOP;
-	CLOSE cursorEleve;
+   
+ BEGIN
+  IF (lIdE IS null) THEN	
+	SELECT SUM(acheter_prix) INTO sommeAchat  
+	FROM ELEVE JOIN CLIENT
+	ON client_id = eleve_cli
+	JOIN ACHETER
+	ON eleve_id = acheter_eleve
+	WHERE client_id =  lId;
+  ELSE
+	SELECT SUM(acheter_prix) INTO sommeAchat FROM ACHETER 
+	JOIN ELEVE ON eleve_id = acheter_eleve
+	WHERE acheter_eleve = lIdE AND eleve_cli = lId;
   END IF;
-  SELECT SUM(acheter_prix) INTO sommeAchat FROM ACHETER, ELEVE 
-  WHERE acheter_eleve = lIdE AND eleve_cli = lId;
-
-RETURN sommeAchat;
+  
+ 
+ RETURN sommeAchat;
 
 END sommeAchatClient;
 
