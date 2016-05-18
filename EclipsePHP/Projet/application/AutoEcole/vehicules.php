@@ -105,7 +105,7 @@
                                         <td style=\"width:100px;\">" . $Tableau[$x]->getVehicule_immatriculation() . "</td>
                                         <td style=\"width:100px;\">" . $Tableau[$x]->getVehicule_marque() . "</td>
                                         <td style=\"width:100px;\">" . $Tableau[$x]->getVehicule_modele() . "</td>
-										<td style=\"width:100px;\">" . $Tableau[$x]->getVehicule_historique() . "</td>                                 
+										<td style=\"width:100px;\">" . end($Tableau[$x]->getVehicule_historique()) . "</td>                                 
 									</tr>";
 						}
 						/* Boucle d'affichage de ligne vide pour beauté graphique si peu d'enregistrement*/
