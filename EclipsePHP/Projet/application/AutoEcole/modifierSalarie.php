@@ -8,7 +8,7 @@
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
-	
+	include 'BLL/Salarie.php';
 	if(!ISSET($_GET["Id"])){
 	//cas ou l'id choisis est invalide, un cas censée être impossible.
 	echo "<script type=\"text/javascript\">
@@ -58,4 +58,28 @@
 	if(ISSET($_GET["Vehicule"])){
 	$vehicule = $_GET["Vehicule"];
 	}
+	$ville = new Ville();
+	$ville->Ville($ville,$cp);
+	$vehicule2 = new Vehicule();
+	$vehicule2->Vehicule($vehicule);
+	$salarie = new Salarie();
+	$salarie->Salarie(
+    		$id,
+    		$nom,
+    		$prenom,
+    		$adresse,
+    		$ville,
+    		$tel,
+    		$poste,
+    		$surnom,
+			$vehicule2
+    		);
+	$salarie->modifierSalarie();
 ?>
+
+<script type=\"text/javascript\">
+	alert(\"Salarié modifié.\");
+	document.location.href=\"salaries.php\";
+</script>
+
+

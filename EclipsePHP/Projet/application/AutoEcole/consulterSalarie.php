@@ -55,7 +55,7 @@ session_start();
 		<form action=\"modifierSalarie.php\" method=\"GET\">
 			<tr>               
                <td><label for=\"Id\"><strong>Id</strong></label></td>
-               <td><input type=\"text\" name=\"Id\" id=\"id\" value=\"".$id."\" disabled/></td>               
+               <td><input type=\"text\" name=\"Id\" id=\"id\" value=\"".$id."\" readonly/></td>               
             </tr>	
 			<br>
             <tr>               
@@ -98,6 +98,7 @@ session_start();
                <td><input type=\"text\" name=\"Vehicule\" id=\"Vehicule\" value=\"".$vehicule."\" /></td>         
             </tr>
 		 </br>
+		 <input type=\"submit\" value=\"Valider\">
       </form>
 	</section>"
 	?>
