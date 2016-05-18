@@ -23,6 +23,14 @@ abstract class DAL_Vehicule {
 		$conn = Outils::connexion_base();
 		
 		$req = 'SELECT * FROM VEHICULE WHERE vehicule_num = ' . $vehicule_num;
+		
+		/*
+		$req = 'SELECT VEHICULE.*, histoKm_date, histoKm_nbKm ';
+		$req .= 'FROM VEHICULE RIGHT JOIN HISTO_KM Histo ';
+		$req .= 'ON Histo.HISTOKM_DATE = ';
+		$req .= '(SELECT MAX(histoKm_date) FROM HISTO_KM WHERE vehicule_num = histokm_numvehicule)';
+		$req .= 'WHERE vehicule_num = ' . $vehicule_num;
+		*/
     	
 		$stid = oci_parse($conn, $req);		
 		oci_execute($stid);
@@ -43,13 +51,20 @@ abstract class DAL_Vehicule {
 		 
 		// Construction de la requête
 		$req = 'SELECT * FROM VEHICULE';
-		 
+		
+		/*
+		$req = 'SELECT VEHICULE.*, histoKm_date, histoKm_nbKm ';
+		$req .= 'FROM VEHICULE RIGHT JOIN HISTO_KM Histo ';
+		$req .= 'ON Histo.HISTOKM_DATE = ';
+		$req .= '(SELECT MAX(histoKm_date) FROM HISTO_KM WHERE vehicule_num = histokm_numvehicule)';
+		*/
+		
 		$tabParts = array();
 		if ($modele != "") {
-			$tabParts[] = 'vehicule_modele LIKE %' . $modele . '%';
+			$tabParts[] = 'vehicule_modele LIKE \'%' . $modele . '\'%';
 		}
 		if ($marque != "") {
-			$tabParts[] = 'vehicule_marque LIKE %' . $marque . '%';
+			$tabParts[] = 'vehicule_marque LIKE \'%' . $marque . '\'%';
 		}
 		 
 		for ($i = 0; $i < count($tabParts); $i++) {

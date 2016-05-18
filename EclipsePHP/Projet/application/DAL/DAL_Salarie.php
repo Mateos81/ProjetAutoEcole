@@ -40,7 +40,7 @@ abstract class DAL_Salarie {
 		$conn = Outils::connexion_base();
 		
 		// Construction de la commande d'accès à la procédure PL/SQL
-		$cmd = 'BEGIN ajoutSalarie(';
+		$cmd = 'BEGIN autoecole.ajoutSalarie(';
 		$cmd .= ':nom, :prenom, :surnom, :adr, :ville, :cp, ';
 		$cmd .= ':tel, :vehicule, :poste); END;';
 		 
@@ -89,7 +89,7 @@ abstract class DAL_Salarie {
 		$conn = Outils::connexion_base();
 		
 		// Construction de la commande d'accès à la procédure PL/SQL
-		$cmd = 'BEGIN modifSalarie(';
+		$cmd = 'BEGIN autoecole.modifSalarie(';
 		$cmd .= ':id, :nom, :prenom, :surnom, :adr, :ville, :cp, ';
 		$cmd .= ':tel, :vehicule, :poste); END;';
 		 
@@ -119,7 +119,9 @@ abstract class DAL_Salarie {
 	public static function supprimerSalarie($id) {
 		$conn = Outils::connexion_base();
 		 
-		$stid = oci_parse($conn, 'BEGIN suppressionSalarie(:id); END;');
+		$stid = oci_parse(
+				$conn,
+				'BEGIN autoecole.suppressionSalarie(:id); END;');
 		oci_bind_by_name($stid, ':id', $id);
 		
 		oci_execute($stid);
@@ -158,7 +160,7 @@ abstract class DAL_Salarie {
 		$conn = Outils::connexion_base();
 		
 		$req = 'SELECT * FROM SALARIE ';
-		$req .= 'WHERE salarie_surnom LIKE %' . $surnom . '%';
+		$req .= 'WHERE salarie_surnom LIKE \'%' . $surnom . '\'%';
 			
 		$stid =	oci_parse($conn, $req);
 		oci_execute($stid);
@@ -247,31 +249,31 @@ abstract class DAL_Salarie {
 	    
 	    $tabParts = array();
 	    if ($nom != "") {
-	    	$tabParts[] = 'salarie_nom LIKE %' . $nom . '%';
+	    	$tabParts[] = 'salarie_nom LIKE \'%' . $nom . '%\'';
 	    }
 	    if ($prenom != "") {
-	    	$tabParts[] = 'salarie_prenom LIKE %' . $prenom . '%';
+	    	$tabParts[] = 'salarie_prenom LIKE \'%' . $prenom . '%\'';
 	    }
 	    if ($surnom != "") {
-	    	$tabParts[] = 'salarie_surnom LIKE %' . $surnom . '%';
+	    	$tabParts[] = 'salarie_surnom LIKE \'%' . $surnom . '%\'';
 	    }
 	    if ($poste != 0) {
-	    	$tabParts[] = 'salarie_poste = ' . $poste;
+	    	$tabParts[] = 'salarie_poste = \'' . $poste . '\'';
 	    }
 	    
 	    for ($i = 0; $i < count($tabParts); $i++) {
 	    	if ($i == 0) {
 	    		// Premier élément : WHERE
 	    		$req .= ' WHERE ';
-	    	} else if ($i != count($tabParts)) {
+	    	} else if ($i != count($tabParts) - 1) {
 	    		// Si ce n'est ni le premier ni le dernier : AND
 	    		$req .= ' AND ';
 	    	}
 	    	
 	    	$req .= $tabParts[$i];
 	    }
-			
-		$stid = oci_parse($conn, $req);
+		
+	    $stid = oci_parse($conn, $req);
 		oci_execute($stid);
 		
 		Outils::deconnexion_base($conn);

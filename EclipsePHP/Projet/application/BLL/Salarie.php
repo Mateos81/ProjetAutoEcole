@@ -248,6 +248,7 @@ class Salarie extends Personne {
 			$salarie = new Salarie();
 			$ville = new Ville();
 			$vehicule = new Vehicule();
+			$vehicule->VehiculeNum(intval($row['SALARIE_VEHICULE']));
 			
 			$salarie->Salarie(
 				intval($row['SALARIE_ID']),
@@ -258,9 +259,7 @@ class Salarie extends Personne {
 				$row['SALARIE_TEL'],
 				$row['SALARIE_POSTE'],
 				$row['SALARIE_SURNOM'],
-				$vehicule->VehiculeNum(
-					intval(
-						$row['SALARIE_VEHICULE'])));
+				$vehicule);
 			
 			$tabSalaries[] = $salarie;
 		}

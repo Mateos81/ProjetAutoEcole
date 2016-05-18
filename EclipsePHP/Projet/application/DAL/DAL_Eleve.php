@@ -185,13 +185,13 @@ abstract class DAL_Eleve {
 	    
 	    $tabParts = array();
 	    if ($nom != "") {
-	    	$tabParts[] = 'eleve_nom LIKE %' . $nom . '%';
+	    	$tabParts[] = 'eleve_nom LIKE \'%' . $nom . '\'%';
 	    }
 	    if ($prenom != "") {
-	    	$tabParts[] = 'eleve_prenom LIKE %' . $prenom . '%';
+	    	$tabParts[] = 'eleve_prenom LIKE \'%' . $prenom . '\'%';
 	    }
 	    if ($client != "") {
-	    	$tabParts[] = 'eleve_cli LIKE %' . $client . '%';
+	    	$tabParts[] = 'eleve_cli LIKE \'%' . $client . '\'%';
 	    }
 	    
 	    for ($i = 0; $i < count($tabParts); $i++) {

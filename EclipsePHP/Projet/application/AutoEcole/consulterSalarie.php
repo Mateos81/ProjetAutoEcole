@@ -39,45 +39,54 @@ session_start();
 			$poste = "";
 			$vehicule = "";
 			
-			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
-			foreach($_POST['salarie'] as $salarie){
-				$Tab = unserialize($_SESSION['Tableau'.$salarie]);
-				$id = $Tab->getPersonne_id();
-				$nom = $Tab->getPersonne_nom();
-				$prenom = $Tab->getPersonne_prenom();
-				$surnom = $Tab->getSalarie_surnom();
-				$ville = $Tab->getPersonne_ville()->getVille_nom();
-				$cp = $Tab->getPersonne_ville()->getVille_cp();
-				$adresse = $Tab->getPersonne_adr();
-				$tel = $Tab->getPersonne_tel();
-				$poste = $Tab->getSalarie_poste();
-				$vehicule = $Tab->getSalarie_vehicule()->getVehicule_num();
-			}
-			IF(ISSET($_POST["Ajouter"])) 
+			/* Récupération des rubriques en fonctions de l'enregistrement selectionné */
+            IF(ISSET($_POST["Ajouter"])) {    
 				$button = $_POST["Ajouter"];
-			IF(ISSET($_POST["Supprimer"])) 
-				$button = $_POST["Supprimer"];
-			IF(ISSET($_POST["Modifier"])) 
+                $id = "";
+            }
+			else IF(ISSET($_POST["Modifier"])) 
 				$button = $_POST["Modifier"];
+			else IF(ISSET($_POST["Supprimer"])) 
+				$button = $_POST["Supprimer"];
+            
+            if (!ISSET($_POST["Ajouter"]))
+            {
+                foreach ($_POST['salarie'] as $salarie){
+                    $Tab = unserialize($_SESSION['Tableau'.$salarie]);
+                    $id = $Tab->getPersonne_id();
+                    $nom = $Tab->getPersonne_nom();
+                    $prenom = $Tab->getPersonne_prenom();
+                    $surnom = $Tab->getSalarie_surnom();
+                    $ville = $Tab->getPersonne_ville()->getVille_nom();
+                    $cp = $Tab->getPersonne_ville()->getVille_cp();
+                    $adresse = $Tab->getPersonne_adr();
+                    $tel = $Tab->getPersonne_tel();
+                    $poste = $Tab->getSalarie_poste();
+                    $vehicule = $Tab->getSalarie_vehicule()->getVehicule_num();
+                }
+			}
 			
 			echo "<section><h3>Consultation</h3>";
 				/* Gestion button Ajouter/Supprimer/Modifier des formulaires */
-				if($button="Modifier"){
+				if($button=="Modifier"){
 					echo "<form action=\"modifierSalarie.php\" method=\"GET\">";
-				}Else if($button="Ajouter"){
+				}Else if($button=="Ajouter"){
 					echo "<form action=\"ajouterSalarie.php\" method=\"GET\">";	
 				}
-				Else if($button="Ajouter"){
+				Else if($button=="Supprimer"){
 					echo "<form action=\"supprimerSalarie.php\" method=\"GET\">";
 				}Else{
 					echo "<script type=\"text/javascript\">alert(\"Salarié inexistant.\");document.location.href=\"salaries.php\";</script>";
 				}	
-			/* Rubrique */	
+			/* Rubrique */
+            if(!ISSET($_POST["Ajouter"])) {
 			echo "<tr>               
                <td><label for=\"Id\"><strong>Id</strong></label></td>
                <td><input type=\"text\" name=\"Id\" id=\"id\" value=\"".$id."\" readonly/></td>               
-            </tr>	
-			<br>
+            </tr>";
+            }
+            
+			echo "<br>
             <tr>               
                <td><label for=\"Nom\"><strong>Nom</strong></label></td>
                <td><input type=\"text\" name=\"Nom\" id=\"nom\" value=\"".$nom."\" /></td>               

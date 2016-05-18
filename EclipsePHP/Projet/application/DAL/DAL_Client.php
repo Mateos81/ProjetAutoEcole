@@ -159,7 +159,7 @@ abstract class DAL_Client {
 	    
 	    $tabParts = array();
 	    if ($nom != "") {
-	    	$tabParts[] = 'client_nom LIKE %' . $nom . '%';
+	    	$tabParts[] = 'client_nom LIKE \'%' . $nom . '\'%';
 	    }
 	    
 	    for ($i = 0; $i < count($tabParts); $i++) {
