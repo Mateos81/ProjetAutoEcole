@@ -15,6 +15,7 @@ PROCEDURE ajoutVehicule(lImmatriculation IN VEHICULE.vehicule_immatriculation%TY
 IS
 BEGIN
   INSERT INTO VEHICULE VALUES(seq_vehicule.NextVal, lImmatriculation, laMarque, leModele);
+  COMMIT;
   print('Le véhicule a bien été rajouté');
 
 -- EXCEPTION
@@ -29,6 +30,7 @@ PROCEDURE suppressionVehicule(leNum IN VEHICULE.vehicule_num%TYPE)
 IS
 BEGIN 
   DELETE FROM VEHICULE WHERE vehicule_num = leNum;
+  COMMIT;
   print('Suppression effectuée avec succès');
 
 END suppressionVehicule;
@@ -52,6 +54,7 @@ BEGIN
   vehicule_marque = laMarque,
   vehicule_modele = lemodele
   WHERE vehicule_num = leNum;
+  COMMIT;
   print('Le véhicule a bien été modifié');
 
 -- EXCEPTION
@@ -82,6 +85,7 @@ PROCEDURE ajoutHistoKm(leVehicule IN HISTO_KM.histoKm_numVehicule%TYPE, leKm IN 
 IS
 BEGIN
   INSERT INTO HISTO_KM VALUES(SYSDATE(), leVehicule, leKm);
+  COMMIT;
   print('Le kilométrage a bien été rajouté');
 
 -- EXCEPTION
@@ -104,6 +108,7 @@ PROCEDURE ajoutLecon(laDate IN LECON.lecon_date%TYPE, leVehicule IN LECON.lecon_
 IS
 BEGIN
   INSERT INTO LECON VALUES(seq_lecon.NextVal, laDate, leVehicule, leSalarie, lEleve, leType);
+  COMMIT;
   print('La leçon a bien été rajoutée');
 
 -- EXCEPTION
@@ -118,6 +123,7 @@ PROCEDURE suppressionLecon(leNum IN LECON.lecon_num%TYPE)
 IS
 BEGIN 
   DELETE FROM LECON WHERE lecon_num = leNum;
+  COMMIT;
   print('Suppression effectuée avec succès');
 
 END suppressionLecon;
@@ -145,6 +151,7 @@ BEGIN
   lecon_eleve = lEleve,
   lecon_type = leType
   WHERE lecon_num = leNum;
+  COMMIT;
   print('La leçon a bien été modifié');
 
 -- EXCEPTION
@@ -184,6 +191,7 @@ PROCEDURE ajoutSalarie(leNom IN SALARIE.salarie_nom%TYPE, lePrenom IN SALARIE.sa
 IS
 BEGIN
   INSERT INTO SALARIE VALUES(seq_salarie.NextVal, leNom, lePrenom, leSurnom, lAdr, laVille, leCp, leTel, lePoste, leVehicule);
+  COMMIT;
   print('Le salarié a bien été rajouté');
 
 -- EXCEPTION
@@ -198,6 +206,7 @@ PROCEDURE suppressionSalarie(lId IN SALARIE.salarie_id%TYPE)
 IS
 BEGIN 
   DELETE FROM SALARIE WHERE salarie_id = lId;
+  COMMIT;
   print('Suppression effectuée avec succès');
 
 END suppressionSalarie;
@@ -236,7 +245,7 @@ BEGIN
   salarie_vehicule = leVehicule,
   salarie_poste = lePoste
   WHERE salarie_id = lId;
-  
+  COMMIT;
   print('Salarié modifié');
   
 END modifSalarie;
@@ -258,6 +267,7 @@ PROCEDURE ajoutLogin(lId IN LOGIN.login_id%TYPE, lePassword IN LOGIN.login_passw
 IS
 BEGIN
   INSERT INTO LOGIN VALUES(lId, lePassword);
+  COMMIT;
   print('Le login a bien été rajouté');
 
 END ajoutLogin;
@@ -267,6 +277,7 @@ PROCEDURE suppressionLogin(lId IN LOGIN.login_id%TYPE)
 IS
 BEGIN 
   DELETE FROM LOGIN WHERE login_id = lId;
+  COMMIT;
   print('Suppression effectuée avec succès');
 
 END suppressionLogin;
@@ -294,6 +305,7 @@ PROCEDURE ajoutEleve(leNom IN ELEVE.eleve_nom%TYPE, lePrenom IN ELEVE.eleve_pren
 IS
 BEGIN
   INSERT INTO ELEVE VALUES(seq_eleve.NextVal, leNom, lePrenom, lAdr, laVille, leCp, leTel, laDateNaiss, leSalarie, leCli);
+  COMMIT;
   print('L''eleve a bien été rajouté');
 
 -- EXCEPTION
@@ -308,6 +320,7 @@ PROCEDURE suppressionEleve(lId IN ELEVE.eleve_id%TYPE)
 IS
 BEGIN 
   DELETE FROM ELEVE WHERE eleve_id = lId;
+  COMMIT;
   print('Suppression effectuée avec succès');
 
 END suppressionEleve;
@@ -348,6 +361,7 @@ BEGIN
   eleve_salarie = leSalarie,
   eleve_cli = leCli
   WHERE eleve_id = lId;
+  COMMIT;
   print('L''eleve a bien été modifié');
 
 -- EXCEPTION
@@ -422,6 +436,7 @@ PROCEDURE ajoutClient(leNom IN CLIENT.client_nom%TYPE, lePrenom IN CLIENT.client
 IS
 BEGIN
   INSERT INTO CLIENT VALUES(seq_client.NextVal, leNom, lePrenom, lAdr, laVille, leCp, leTel, laDateNaiss);
+  COMMIT;
   print('Le client a bien été rajouté');
 
 -- EXCEPTION
@@ -436,6 +451,7 @@ PROCEDURE suppressionClient(lId IN CLIENT.client_id%TYPE)
 IS
 BEGIN 
   DELETE FROM CLIENT WHERE client_id = lId;
+  COMMIT;
   print('Suppression effectuée avec succès');
 
 END suppressionClient;
@@ -471,6 +487,7 @@ BEGIN
   client_tel = leTel,
   client_dateNaiss = laDateNaiss
   WHERE client_id = lId;
+  COMMIT;
   print('Le client a bien été modifié');
 
 -- EXCEPTION
@@ -524,6 +541,7 @@ PROCEDURE ajoutExamen(laDate IN EXAMEN.examen_date%TYPE, leType IN EXAMEN.examen
 IS
 BEGIN
   INSERT INTO EXAMEN VALUES(laDate, leType);
+  COMMIT;
   print('L''examen a bien été rajouté');
 
 -- EXCEPTION
@@ -539,6 +557,7 @@ PROCEDURE suppressionExamen(laDate IN EXAMEN.examen_date%TYPE, leType IN EXAMEN.
 IS
 BEGIN 
   DELETE FROM EXAMEN WHERE examen_date = laDate AND examen_type = leType;
+  COMMIT;
   print('Suppression effectuée avec succès');
 
 END suppressionExamen;
@@ -556,6 +575,7 @@ PROCEDURE ajoutFormule(leNbLecon IN FORMULE.formule_nbLeconConduite%TYPE, lePrix
 IS
 BEGIN
   INSERT INTO FORMULE VALUES(seq_formule.NextVal, leNbLecon, lePrix, lePrixTicket);
+  COMMIT;
   print('La formule a bien été rajoutée');
 
 -- EXCEPTION
@@ -570,6 +590,7 @@ PROCEDURE suppressionFormule(leNum IN FORMULE.formule_num%TYPE)
 IS
 BEGIN 
   DELETE FROM FORMULE WHERE formule_num = leNum;
+  COMMIT;
   print('Suppression effectuée avec succès');
 
 END suppressionFormule;
@@ -592,6 +613,7 @@ BEGIN
   formule_prix = lePrix,
   formule_ticketPrix = lePrixTicket
   WHERE formule_num = leNum;
+  COMMIT;
   print('La formule a bien été modifiée');
 
 -- EXCEPTION
@@ -615,7 +637,7 @@ PROCEDURE ajoutVille(laVille IN VILLE.ville_nom%TYPE, leCp IN VILLE.ville_cp%TYP
  IS 
  BEGIN
    INSERT INTO VILLE VALUES(laVille, leCp);
-   
+   COMMIT;
    print('ville ajoutée');
    
  END ajoutVille;
@@ -624,7 +646,7 @@ PROCEDURE ajoutVille(laVille IN VILLE.ville_nom%TYPE, leCp IN VILLE.ville_cp%TYP
  IS
  BEGIN
    DELETE FROM VILLE WHERE ville_nom = laVille AND ville_cp = leCp;
-   
+   COMMIT;
    print('ville supprimée');
    
  END suppressionVille;
@@ -635,7 +657,7 @@ PROCEDURE ajoutPoste(leNom IN POSTE.poste_nom%TYPE)
  IS 
  BEGIN
    INSERT INTO POSTE VALUES(seq_poste.nextval, leNom);
-   
+   COMMIT;
    print('poste ajouté');
    
  END ajoutPoste;
@@ -644,7 +666,7 @@ PROCEDURE ajoutPoste(leNom IN POSTE.poste_nom%TYPE)
  IS
  BEGIN
    DELETE FROM POSTE WHERE poste_num = leNum;
-   
+   COMMIT;
    print('poste supprimé');
    
  END suppressionPoste;
@@ -666,7 +688,7 @@ PROCEDURE ajoutType(leNom IN TYPEL.typel_nom%TYPE)
  IS 
  BEGIN
    INSERT INTO TYPEL VALUES(seq_type.nextval, leNom);
-   
+   COMMIT;
    print('type ajouté');
    
  END ajoutType;
@@ -675,7 +697,7 @@ PROCEDURE suppressionType(leNum IN TYPEL.typel_num%TYPE)
  IS
  BEGIN
    DELETE FROM TYPEL WHERE typel_num = leNum;
-   
+   COMMIT;
    print('type supprimé');
    
  END suppressionType;	
@@ -702,6 +724,7 @@ PROCEDURE ajoutPasser(leType IN PASSER.passer_examenType%TYPE,
 IS
 BEGIN
 	INSERT INTO PASSER VALUES(seq_passer.nextval, leType, laDate, lEleve, leResultat);
+	COMMIT;
 	print('résultat ajouté');
 	
 END ajoutPasser;
@@ -728,6 +751,7 @@ BEGIN
   passer_eleve = lEleve,
   passer_resultat = leResultat
   WHERE passer_num = leNum;
+  COMMIT;
   print('Le résultat a bien été modifié');
 
 END modifPasser;
@@ -754,6 +778,7 @@ PROCEDURE ajoutAcheter(laDate IN ACHETER.acheter_date%TYPE,
 IS
 BEGIN
 	INSERT INTO ACHETER VALUES(seq_acheter.nextval, laDate, lEleve, laFormule, leNbTicket, lePrix);
+	COMMIT;
 	print('facture ajoutée');
 	
 END ajoutAcheter;
@@ -762,6 +787,7 @@ PROCEDURE suppressionAcheter(leNum IN ACHETER.acheter_num%TYPE)
 IS
 BEGIN
 	DELETE FROM ACHETER WHERE acheter_num = leNum;
+	COMMIT;
 	print('facture supprimée');
 	
 END suppressionAcheter;	
@@ -782,6 +808,7 @@ BEGIN
   acheter_nbTicket = leNbTicket,
   acheter_prix = lePrix
   WHERE acheter_num = leNum;
+  COMMIT;
   print('La facture a bien été modifiée');
 
 END modifAcheter;		
