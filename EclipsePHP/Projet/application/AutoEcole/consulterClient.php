@@ -3,7 +3,7 @@
  * Projet 2ème Année 3iL
  * @author CIULLI - MATEOS - ROUX
  * @version 1.0
- * @package page consulter salarie 
+ * @package page consulter client 
  */
 session_start();
 // if((ISSET($_SESSION['USER']))){
@@ -24,34 +24,32 @@ session_start();
 	<?php include('head.php');?>
 	<?php include('menu.php');?>
 	<section>
-	<!-- page de consulation de la page salarie-->
+	<!-- page de consulation de la page client-->
 	<div Class="filter">
 	<div style="color:black;" class="table-container">
 	<?php
-			include 'BLL/Salarie.php';
+			include 'BLL/Client.php';
 			$nom = "";
 			$prenom = "";
-			$surnom = "";
 			$adresse = "";
 			$ville = "";
 			$cp = "";
 			$tel = "";
-			$poste = "";
-			$vehicule = "";
+			$dateNaissance = "";
+			$eleve = "";
 			
 			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
-			foreach($_POST['salarie'] as $salarie){
-				$Tab = unserialize($_SESSION['Tableau'.$salarie]);
+			foreach($_POST['client'] as $client){
+				$Tab = unserialize($_SESSION['Tableau'.$client]);
 				$id = $Tab->getPersonne_id();
 				$nom = $Tab->getPersonne_nom();
 				$prenom = $Tab->getPersonne_prenom();
-				$surnom = $Tab->getSalarie_surnom();
 				$ville = $Tab->getPersonne_ville()->getVille_nom();
 				$cp = $Tab->getPersonne_ville()->getVille_cp();
 				$adresse = $Tab->getPersonne_adr();
 				$tel = $Tab->getPersonne_tel();
-				$poste = $Tab->getSalarie_poste();
-				$vehicule = $Tab->getSalarie_vehicule()->getVehicule_num();
+				$dateNaissance = $Tab->getClient_dateNaiss();
+				$eleve = $Tab->getClient_eleves();
 			}
 			IF(ISSET($_POST["Ajouter"])) 
 				$button = $_POST["Ajouter"];
@@ -70,9 +68,9 @@ session_start();
 				Else if($button="Ajouter"){
 					echo "<form action=\"supprimerSalarie.php\" method=\"GET\">";
 				}Else{
-					echo "<script type=\"text/javascript\">alert(\"Salarié inexistant.\");document.location.href=\"salaries.php\";</script>";
-				}	
-			/* Rubrique */	
+					echo "<script type=\"text/javascript\">alert(\"client inexistant.\");document.location.href=\"clients.php\";</script>";
+				}
+			/* Rubrique */
 			echo "<tr>               
                <td><label for=\"Id\"><strong>Id</strong></label></td>
                <td><input type=\"text\" name=\"Id\" id=\"id\" value=\"".$id."\" readonly/></td>               
@@ -89,8 +87,8 @@ session_start();
             </tr>
 			<br>
 			<tr>               
-               <td><label for=\"Surnom\"><strong>Surnom</strong></label></td>
-               <td><input type=\"text\" name=\"Surnom\" id=\"surnom\" value=\"".$surnom."\" /></td>         
+               <td><label for=\"DateNaissance\"><strong>DateNaissance</strong></label></td>
+               <td><input type=\"text\" name=\"DateNaissance\" id=\"dateNaissance\" value=\"".$dateNaissance."\" /></td>         
             </tr>
 			<br>
 			<tr>               
@@ -114,13 +112,8 @@ session_start();
             </tr>
 			<br>
 			<tr>               
-               <td><label for=\"Poste\"><strong>Poste</strong></label></td>
-               <td><input type=\"text\" name=\"Poste\" id=\"Poste\" value=\"".$poste."\" /></td>         
-            </tr>
-			<br>
-			<tr>               
-               <td><label for=\"Vehicule\"><strong>Vehicule</strong></label></td>
-               <td><input type=\"text\" name=\"Vehicule\" id=\"Vehicule\" value=\"".$vehicule."\" /></td>         
+               <td><label for=\"Eleve\"><strong>Eleve</strong></label></td>
+               <td><input type=\"text\" name=\"Eleve\" id=\"eleve\" value=\"".$eleve."\" /></td>         
             </tr>
 		 </br>
 		 <input type=\"submit\" value=\"Valider\">

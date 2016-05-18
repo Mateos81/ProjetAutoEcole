@@ -19,8 +19,8 @@
 	<?php include('menu.php');?>
 	<section>
 	<div Class="Filter">		
-	<p style="border-style: solid;border-color: white;color:white;">Filter</p>
-	<p style="border-style: solid;border-color: white;margin-top:1%;color:white;">Result</p>
+	SUJET : Réalisation d'un site pour une auto école
+	By CIULLI Axel, ROUX Victor & MATEOS Christophe
 	</div>
 	</section>
 	<?php include('footer.php');?>

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package page modification salarie 
+ */
 // session_start();
 // if((ISSET($_SESSION['USER']))){
 	// if(( ISSET($_POST['Deco']))||
@@ -36,15 +42,19 @@
 	}
 	
 	if(ISSET($_GET["Surnom"])){
-	$adresse = $_GET["Surnom"];
+	$surnom = $_GET["Surnom"];
 	}
 	
 	if(ISSET($_GET["Adresse"])){
-	$ville = $_GET["Adresse"];
+	$adresse = $_GET["Adresse"];
 	}
 	
 	if(ISSET($_GET["CodePostal"])){
 	$cp = $_GET["CodePostal"];
+	}
+	
+	if(ISSET($_GET["Ville"])){
+	$ville = $_GET["Ville"];
 	}
 	
 	if(ISSET($_GET["Poste"])){
@@ -58,17 +68,19 @@
 	if(ISSET($_GET["Vehicule"])){
 	$vehicule = $_GET["Vehicule"];
 	}
-	$ville = new Ville();
-	$ville->Ville($ville,$cp);
+	$ville2 = new Ville();
+	$ville2->Ville($ville,$cp);
+	$ville2->setVille_nom($ville);
+	$ville2->setVille_cp($cp);
 	$vehicule2 = new Vehicule();
-	$vehicule2->Vehicule($vehicule);
+	$vehicule2->VehiculeNum($vehicule);
 	$salarie = new Salarie();
 	$salarie->Salarie(
     		$id,
     		$nom,
     		$prenom,
     		$adresse,
-    		$ville,
+    		$ville2,
     		$tel,
     		$poste,
     		$surnom,

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package page modification eleve 
+ */
 // session_start();
 // if((ISSET($_SESSION['USER']))){
 	// if(( ISSET($_POST['Deco']))||
@@ -8,12 +14,12 @@
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
-	include 'BLL/Salarie.php';
+	include 'BLL/Eleve.php';
 	if(!ISSET($_GET["Id"])){
 	//cas ou l'id choisis est invalide, un cas censée être impossible.
 	echo "<script type=\"text/javascript\">
-	alert(\"Salarié inexistant.\");
-	document.location.href=\"salaries.php\";
+	alert(\"eleve inexistant.\");
+	document.location.href=\"eleves.php\";
 	</script>";
 	}
 	$id = $_GET["Id"];
@@ -24,8 +30,9 @@
 	$ville = "";
 	$cp = "";
 	$tel = "";
-	$poste = "";
-	$vehicule = "";
+	$dateNaissance = "";
+	$salarie = "";
+	$client = "";
 	
 	if(ISSET($_GET["Nom"])){
 	$nom = $_GET["Nom"];
@@ -35,8 +42,8 @@
 	$prenom = $_GET["Prenom"];
 	}
 	
-	if(ISSET($_GET["Surnom"])){
-	$surnom = $_GET["Surnom"];
+	if(ISSET($_GET["DateNaissance"])){
+	$dateNaissance = $_GET["DateNaissance"];
 	}
 	
 	if(ISSET($_GET["Adresse"])){
@@ -51,24 +58,26 @@
 	$ville = $_GET["Ville"];
 	}
 	
-	if(ISSET($_GET["Poste"])){
-	$poste = $_GET["Poste"];
+	if(ISSET($_GET["Salarie"])){
+	$salarie = $_GET["Salarie"];
 	}
 	
 	if(ISSET($_GET["Telephone"])){
 	$tel = $_GET["Telephone"];
 	}
 	
-	if(ISSET($_GET["Vehicule"])){
-	$vehicule = $_GET["Vehicule"];
+	if(ISSET($_GET["Client"])){
+	$client = $_GET["Client"];
 	}
+	
 	$ville2 = new Ville();
 	$ville2->Ville($ville,$cp);
 	$ville2->setVille_nom($ville);
 	$ville2->setVille_cp($cp);
 	$vehicule2 = new Vehicule();
 	$vehicule2->VehiculeNum($vehicule);
-	$salarie = new Salarie();
+	
+	/*$salarie = new Salarie();
 	$salarie->Salarie(
     		$id,
     		$nom,
@@ -80,12 +89,12 @@
     		$surnom,
 			$vehicule2
     		);
-	$salarie->creerSalarie();
+	$salarie->modifierSalarie();*/
 ?>
 
 <script type=\"text/javascript\">
-	alert(\"Salarié modifié.\");
-	document.location.href=\"salaries.php\";
+	alert(\"Eleve modifié.\");
+	document.location.href=\"eleves.php\";
 </script>
 
 

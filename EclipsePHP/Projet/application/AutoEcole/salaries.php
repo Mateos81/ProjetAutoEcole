@@ -1,4 +1,10 @@
 ﻿<?php
+/**
+ * Projet 2ème Année 3iL
+ * @author CIULLI - MATEOS - ROUX
+ * @version 1.0
+ * @package page salaries 
+ */
 session_start();
 // if((ISSET($_SESSION['USER']))){
 	// if(( ISSET($_POST['Deco']))||
@@ -37,6 +43,7 @@ session_start();
 	<!-- Fiche -->
 			<div class="table-container">
 			<table>
+			<!-- Entête première ligne du tableau de recherche de la page-->
 				<thead>
 					<tr>
 						<th style="width:30px;"></th>
@@ -52,49 +59,50 @@ session_start();
 						<th style="width:100px;">Vehicule</th>
 					</tr>
 				</thead>
+				<!-- Corp du tableau de recherche de la page-->
 				<tbody>
+				<!-- Fonction de gestion de la checkBox pour ne pouvoir qu'en sélectionner qu'un seul-->
 				<script language="JavaScript">
-            var nbCheck = 0;
-            function isChecked(elmt)
-            {
-                if( elmt.checked )
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-             
-            function clickCheck(elmt)
-            {
-                if( (nbCheck < 1) || (isChecked(elmt) == false) )
-                {
-                    if( isChecked(elmt) == true )
-                    {
-                        nbCheck += 1;
-                    }
-                    else
-                    {
-                        nbCheck -= 1;
-                    }
-                }
-                else
-                {
-                    elmt.checked = '';
-                }
-            }
-        </script>
-				
-				
+					var nbCheck = 0;
+					function isChecked(elmt)
+					{
+						if( elmt.checked )
+						{
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+					 
+					function clickCheck(elmt)
+					{
+						if( (nbCheck < 1) || (isChecked(elmt) == false) )
+						{
+							if( isChecked(elmt) == true )
+							{
+								nbCheck += 1;
+							}
+							else
+							{
+								nbCheck -= 1;
+							}
+						}
+						else
+						{
+							elmt.checked = '';
+						}
+					}
+				</script>
 					<?php
+						/* include du BLL correspondant à la page*/
 						include 'BLL/Salarie.php';
 						$Tableau = Salarie::listeSalaries("", "", "", 0);
 						$MaxTab = 10;
 						$TAILLE = count($Tableau);
-						
 						echo "<form action=\"consulterSalarie.php\" method=\"post\">";
+						/* Boucle affichage du tableau de la page*/
 						for ($x = 0; $x < $TAILLE; $x++)
                         {
 							$_SESSION['Tableau'.$x] = serialize($Tableau[$x]);
@@ -114,7 +122,7 @@ session_start();
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getSalarie_vehicule()->getVehicule_num() . "</td>
                                 </tr>";
 						}
-
+						/* Boucle d'affichage de ligne vide pour beauté graphique si peu d'enregistrement*/
 						if($TAILLE <= $MaxTab)
                         {
 							for ($x = 0; $x <= ($MaxTab - $TAILLE); $x++)
@@ -137,7 +145,9 @@ session_start();
 							}
 						}
 					?>
-					    <input type="submit" value="Modifier">
+					    <input type="submit" name="Modifier" value="Modifier"> 
+						<input type="submit" name="Ajouter" value="Ajouter"> 
+						<input type="submit" name="Supprimer" value="Supprimer">
 					</form>
 				</tbody>
 			</table>
