@@ -3,7 +3,7 @@
  * Projet 2ème Année 3iL
  * @author CIULLI - MATEOS - ROUX
  * @version 1.0
- * @package page clients 
+ * @package page clients
  */
 // session_start();
 // if((ISSET($_SESSION['USER']))){
@@ -50,7 +50,6 @@
 						<th style="width:100px;">Code Postal</th>
 						<th style="width:100px;">Telephone</th>
 						<th style="width:100px;">Date Naissance</th>
-						<th style="width:100px;">Eleve</th>
 					</tr>
 				</thead>
 				<!-- Corp du tableau de recherche de la page-->
@@ -65,11 +64,11 @@
 							return true;
 						}
 						else
-						{		
+						{
 							return false;
 						}
 					}
-					 
+
 					function clickCheck(elmt)
 					{
 						if( (nbCheck < 1) || (isChecked(elmt) == false) )
@@ -111,7 +110,6 @@
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_ville()->getVille_cp() . "</td>
                                     <td style=\"width:100px;\">" . $Tableau[$x]->getPersonne_tel() . "</td>
 									<td style=\"width:100px;\">" . $Tableau[$x]->getClient_dateNaiss() . "</td>
-									<td style=\"width:100px;\">" . $Tableau[$x]->getClient_eleves() . "</td>
                                 </tr>";
 						}
 						/* Boucle d'affichage de ligne vide pour beauté graphique si peu d'enregistrement*/
@@ -136,8 +134,8 @@
 							}
 						}
 					?>
-						<input type="submit" name="Modifier" value="Modifier"> 
-						<input type="submit" name="Ajouter" value="Ajouter"> 
+						<input type="submit" name="Modifier" value="Modifier">
+						<input type="submit" name="Ajouter" value="Ajouter">
 						<input type="submit" name="Supprimer" value="Supprimer">
 					</form>
 				</tbody>

@@ -22,7 +22,11 @@ abstract class DAL_Vehicule {
 	public static function getVehicule($vehicule_num) {
 		$conn = Outils::connexion_base();
 		
-		$req = 'SELECT * FROM VEHICULE WHERE vehicule_num = ' . $vehicule_num;
+		//$req = 'SELECT * FROM VEHICULE WHERE vehicule_num = ' . $vehicule_num;
+		
+		$req = 'SELECT * FROM VEHICULE, HISTO_KM ';
+		$req .= 'WHERE vehicule_num = histokm_numvehicule AND ';
+		$req .= 'vehicule_num = ' . $vehicule_num;
 		
 		/*
 		$req = 'SELECT VEHICULE.*, histoKm_date, histoKm_nbKm ';
@@ -50,7 +54,10 @@ abstract class DAL_Vehicule {
 		$conn = Outils::connexion_base();
 		 
 		// Construction de la requête
-		$req = 'SELECT * FROM VEHICULE';
+		//$req = 'SELECT * FROM VEHICULE';
+		
+		$req = 'SELECT * FROM VEHICULE, HISTO_KM ';
+		$req .= 'WHERE vehicule_num = histokm_numvehicule';
 		
 		/*
 		$req = 'SELECT VEHICULE.*, histoKm_date, histoKm_nbKm ';

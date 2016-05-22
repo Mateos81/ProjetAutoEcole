@@ -196,7 +196,8 @@ class Client extends Personne {
 				$row['CLIENT_ADR'],
 				$ville->Ville($row['CLIENT_VILLE'], $row['CLIENT_CP']),
 				$row['CLIENT_TEL'],
-				$row['CLIENT_DATENAISS']);
+				$row['CLIENT_DATENAISS'],
+				array());
 			
 			$tabClients[] = $client;
 		}

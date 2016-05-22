@@ -3,7 +3,7 @@
  * Projet 2ème Année 3iL
  * @author CIULLI - MATEOS - ROUX
  * @version 1.0
- * @package page vehicules 
+ * @package page vehicules
  */
 // session_start();
 // if((ISSET($_SESSION['USER']))){
@@ -66,7 +66,7 @@
 							return false;
 						}
 					}
-					 
+
 					function clickCheck(elmt)
 					{
 						if( (nbCheck < 1) || (isChecked(elmt) == false) )
@@ -105,7 +105,7 @@
                                         <td style=\"width:100px;\">" . $Tableau[$x]->getVehicule_immatriculation() . "</td>
                                         <td style=\"width:100px;\">" . $Tableau[$x]->getVehicule_marque() . "</td>
                                         <td style=\"width:100px;\">" . $Tableau[$x]->getVehicule_modele() . "</td>
-										<td style=\"width:100px;\">" . end($Tableau[$x]->getVehicule_dernierHistorique()) . "</td>                                 
+										<td style=\"width:100px;\">" . /*end(*/$Tableau[$x]->getVehicule_dernierHistorique()->getHistoKm_nbKm()/*)*/ . "</td>
 									</tr>";
 						}
 						/* Boucle d'affichage de ligne vide pour beauté graphique si peu d'enregistrement*/
@@ -126,8 +126,8 @@
 							}
 						}
 					?>
-						<input type="submit" name="Modifier" value="Modifier"> 
-						<input type="submit" name="Ajouter" value="Ajouter"> 
+						<input type="submit" name="Modifier" value="Modifier">
+						<input type="submit" name="Ajouter" value="Ajouter">
 						<input type="submit" name="Supprimer" value="Supprimer">
 					</form>
 				</tbody>

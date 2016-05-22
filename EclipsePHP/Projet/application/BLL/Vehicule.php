@@ -27,8 +27,8 @@ class Vehicule {
     /** Modèle du véhicule. */
     private $vehicule_modele;
     
-    /** Dernière entrée de l'historique des kilométrages du véhicule. */
-    //private $vehicule_dernierHistorique;
+    /** Historique des kilométrages du véhicule. */
+    private $vehicule_historique;
     
     // TODO Remonter le dernier historique pour l'écran
     
@@ -40,7 +40,7 @@ class Vehicule {
         $this->vehicule_immatriculation = "";
         $this->vehicule_marque = "";
         $this->vehicule_modele = "";
-        //$this->vehicule_dernierHistorique = new HistoKm();
+        $this->vehicule_dernierHistorique = array();
     }
     
     /**
@@ -49,20 +49,20 @@ class Vehicule {
      * @param $immatriculation Numéro d'immatriculation du véhicule.
      * @param $marque Marque du véhicule.
      * @param $modele Modèle du véhicule.
-     * @param HistoKm $histoKm
-     *        Dernière entrée de l'historique du kilométrage du véhicule
+     * @param array(HistoKm) $histoKm
+     *        Historique du kilométrage du véhicule.
      */
     public function Vehicule(
     		$num,
     		$immatriculation,
     		$marque,
-    		$modele/*,
-    		HistoKm $histoKm*/) {
+    		$modele,
+    		HistoKm $histoKm) {
     	$this->vehicule_num = $num;
     	$this->vehicule_immatriculation = $immatriculation;
     	$this->vehicule_marque = $marque;
     	$this->vehicule_modele = $modele;
-    	//$this->vehicule_dernierHistorique = $histoKm;
+    	$this->vehicule_historique = $histoKm;
     }    
     
     /**
@@ -70,20 +70,23 @@ class Vehicule {
      * @param $num Numéro du véhicule.
      * @return Une nouvelle instance de Vehicule.
      */
-    public function VehiculeNum($num) {
-    	//$instance = new Vehicule();
-    	
+    public function VehiculeNum($num) {    	
     	$tabData = DAL_Vehicule::getVehicule($num);
-    	 
+    	
+    	// Récupérer une fois les infos
     	$row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS);
     	$this->vehicule_num = $row['VEHICULE_NUM'];
     	$this->vehicule_immatriculation = $row['VEHICULE_IMMATRICULATION'];
     	$this->vehicule_marque = $row['VEHICULE_MARQUE'];
     	$this->vehicule_modele = $row['VEHICULE_MODELE'];
-    	/*$instance->vehicule_dernierHistorique =
-    		new HistoKm($row['HISTOKM_DATE'], $row['HISTOKM_NBKM']);*/
+    	$this->vehicule_historique[] =
+    		new HistoKm($row['HISTOKM_DATE'], $row['HISTOKM_NBKM']);
     	
-    	//return $instance;
+    	// Boucler pour l'historique
+    	while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    		$this->vehicule_historique[] =
+    			new HistoKm($row['HISTOKM_DATE'], $row['HISTOKM_NBKM']);
+    	}
     }
     
     /**
@@ -119,7 +122,8 @@ class Vehicule {
      * de l'historique du kilométrage du véhicule courant.
      */
     public function getVehicule_dernierHistorique() {
-    	return $this->vehicule_dernierHistorique;
+    	return
+    		$this->vehicule_historique;//[count($this->vehicule_historique) - 1];
     }
     
     /**
@@ -154,8 +158,8 @@ class Vehicule {
 				intval($row['VEHICULE_NUM']),
 				$row['VEHICULE_IMMATRICULATION'],
 				$row['VEHICULE_MARQUE'],
-				$row['VEHICULE_MODELE']/*,
-				$histoKm->HistoKm($row['HISTOKM_DATE'], $row['HISTOKM_NBKM'])*/);
+				$row['VEHICULE_MODELE'],
+				$histoKm->HistoKm($row['HISTOKM_DATE'], $row['HISTOKM_NBKM']));
 			
 			$tabVehicules[] = $vehicule;
 		}
