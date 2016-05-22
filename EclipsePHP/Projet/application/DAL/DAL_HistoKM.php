@@ -10,7 +10,7 @@
   * Classe d'accès aux données pour la classe HistoKM.
   * DAL pour Data Access Layer.
   */
-abstract class DAL_HistoKM {
+abstract class DAL_HistoKm {
 	
 	/**
 	 * Ajout d'une entrée à l'historique d'un véhicule.
@@ -29,6 +29,25 @@ abstract class DAL_HistoKM {
 		oci_free_statement($stid);
 		
     	Outils::deconnexion_base($conn);
+	}
+	
+	/**
+	 * Récupère et renvoie l'historique du véhicule passé en paramètre.
+	 * @param number $vehicule_num Numéro du véhicule.
+	 * @return resource Objet contenant les données à exploiter.
+	 */
+	public static function getHisto_Km($vehicule_num) {
+		$conn = Outils::connexion_base();
+		
+		$req = 'SELECT * FROM HISTO_KM ';
+		$req .= 'WHERE histoKm_numVehicule = ' . $vehicule_num;
+		
+		$stid = oci_parse($conn, $req);
+		oci_execute($stid);
+		
+		Outils::deconnexion_base($conn);
+		
+		return $stid;
 	}
 }
 ?>

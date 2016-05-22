@@ -57,7 +57,7 @@ class Vehicule {
     		$immatriculation,
     		$marque,
     		$modele,
-    		HistoKm $histoKm) {
+    		$histoKm) {
     	$this->vehicule_num = $num;
     	$this->vehicule_immatriculation = $immatriculation;
     	$this->vehicule_marque = $marque;
@@ -118,12 +118,20 @@ class Vehicule {
     }
     
     /**
+     * Accesseur sur l'historique du kilométrage du véhicule courant.
+     */
+    public function getVehicule_historique() {
+    	return $this->vehicule_historique;
+    }
+    
+    /**
      * Accesseur sur la dernière entrée
      * de l'historique du kilométrage du véhicule courant.
      */
     public function getVehicule_dernierHistorique() {
-    	return
-    		$this->vehicule_historique;//[count($this->vehicule_historique) - 1];
+    	return count($this->vehicule_historique) != 0 ?
+    		$this->vehicule_historique[count($this->vehicule_historique) - 1] :
+    		new HistoKm();
     }
     
     /**
@@ -132,12 +140,18 @@ class Vehicule {
      *        du véhicule courant.
      */
     public function addHisto_Km(HistoKm $histo) {
-    	// Ajout en base
-    	DAL.addHisto_Km($this->vehicule_num, $histo);
+        // Ajout en base
+        DAL_HistoKm::addHisto_Km($this->vehicule_num, $histo);
     	
-    	// Mise à jour de l'objet
-    	$this->vehicule_historique[count($this->vehicule_historique.count)]
-    	    = $histo;
+        // Mise à jour de l'objet
+        $this->vehicule_historique[] = $histo;
+    }
+    
+    /**
+     * Récupère l'historique du kilométrage du véhicule courant.
+     */
+    public function getHisto_Km() {
+        $this->vehicule_historique = HistoKm::getHistoKm($this->vehicule_num);
     }
     
     /**
@@ -152,14 +166,16 @@ class Vehicule {
     	
 		while ($row = oci_fetch_array($tabData, OCI_ASSOC+OCI_RETURN_NULLS)) {
 			$vehicule = new Vehicule();
-			$histoKm = new HistoKm();
+			//$histoKm = new HistoKm();
 			
 			$vehicule->Vehicule(
 				intval($row['VEHICULE_NUM']),
 				$row['VEHICULE_IMMATRICULATION'],
 				$row['VEHICULE_MARQUE'],
 				$row['VEHICULE_MODELE'],
-				$histoKm->HistoKm($row['HISTOKM_DATE'], $row['HISTOKM_NBKM']));
+				array());
+			
+			$vehicule->getHisto_Km();
 			
 			$tabVehicules[] = $vehicule;
 		}
