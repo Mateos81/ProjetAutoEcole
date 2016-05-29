@@ -14,6 +14,15 @@ session_start();
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
+
+if(!ISSET($_POST['client']) && !ISSET($_POST["Ajouter"])){
+	//cas ou l'id choisis est invalide, un cas censée être impossible.
+	echo "<script type=\"text/javascript\">
+	alert(\"aucune selection.\");
+	document.location.href=\"clients.php\";
+	</script>";
+}
+
 ?> 
 <!DOCTYPE html>
 <html>
@@ -29,6 +38,7 @@ session_start();
 	<div style="color:black;" class="table-container">
 	<?php
 			include 'BLL/Client.php';
+			$id = "";
 			$nom = "";
 			$prenom = "";
 			$adresse = "";
@@ -38,25 +48,29 @@ session_start();
 			$dateNaissance = "";
 			$eleve = "";
 			
-			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
-			foreach($_POST['client'] as $client){
-				$Tab = unserialize($_SESSION['Tableau'.$client]);
-				$id = $Tab->getPersonne_id();
-				$nom = $Tab->getPersonne_nom();
-				$prenom = $Tab->getPersonne_prenom();
-				$ville = $Tab->getPersonne_ville()->getVille_nom();
-				$cp = $Tab->getPersonne_ville()->getVille_cp();
-				$adresse = $Tab->getPersonne_adr();
-				$tel = $Tab->getPersonne_tel();
-				$dateNaissance = $Tab->getClient_dateNaiss();
-				$eleve = $Tab->getClient_eleves();
-			}
 			IF(ISSET($_POST["Ajouter"])) 
 				$button = $_POST["Ajouter"];
 			IF(ISSET($_POST["Supprimer"])) 
 				$button = $_POST["Supprimer"];
 			IF(ISSET($_POST["Modifier"])) 
 				$button = $_POST["Modifier"];
+			
+			if (!ISSET($_POST["Ajouter"])){
+			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
+				foreach($_POST['client'] as $client){
+					$Tab = unserialize($_SESSION['Tableau'.$client]);
+					$id = $Tab->getPersonne_id();
+					$nom = $Tab->getPersonne_nom();
+					$prenom = $Tab->getPersonne_prenom();
+					$ville = $Tab->getPersonne_ville()->getVille_nom();
+					$cp = $Tab->getPersonne_ville()->getVille_cp();
+					$adresse = $Tab->getPersonne_adr();
+					$tel = $Tab->getPersonne_tel();
+					$dateNaissance = $Tab->getClient_dateNaiss();
+					$eleve = $Tab->getClient_eleves();
+				}
+			}
+			
 			
 			echo "<section><h3>Consultation</h3>";
 				/* Gestion button Ajouter/Supprimer/Modifier des formulaires */

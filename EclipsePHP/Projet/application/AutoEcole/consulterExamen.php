@@ -14,6 +14,16 @@ session_start();
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
+
+
+if(!ISSET($_POST['examen']) && !ISSET($_POST["Ajouter"])){
+	//cas ou l'id choisis est invalide, un cas censée être impossible.
+	echo "<script type=\"text/javascript\">
+	alert(\"aucune selection.\");
+	document.location.href=\"examen.php\";
+	</script>";
+}
+
 ?> 
 <!DOCTYPE html>
 <html>
@@ -31,19 +41,21 @@ session_start();
 			include 'BLL/Examen.php';
 			$date = "";
 			$type = "";
-			
-			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
-			foreach($_POST['examen'] as $examen){
-				$Tab = unserialize($_SESSION['Tableau'.$examen]);
-				$date = $Tab->getExamen_date();
-				$type = $Tab->getExamen_type();
-			}
 			IF(ISSET($_POST["Ajouter"])) 
 				$button = $_POST["Ajouter"];
 			IF(ISSET($_POST["Supprimer"])) 
 				$button = $_POST["Supprimer"];
 			IF(ISSET($_POST["Modifier"])) 
 				$button = $_POST["Modifier"];
+			if (!ISSET($_POST["Ajouter"])){
+			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
+			foreach($_POST['examen'] as $examen){
+				$Tab = unserialize($_SESSION['Tableau'.$examen]);
+				$date = $Tab->getExamen_date();
+				$type = $Tab->getExamen_type();
+			}
+			}
+			
 			
 			echo "<section><h3>Consultation</h3>";
 				/* Gestion button Ajouter/Supprimer/Modifier des formulaires */

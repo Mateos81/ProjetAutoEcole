@@ -14,6 +14,16 @@ session_start();
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
+
+
+if(!ISSET($_POST['lecon']) && !ISSET($_POST["Ajouter"])){
+	//cas ou l'id choisis est invalide, un cas censée être impossible.
+	echo "<script type=\"text/javascript\">
+	alert(\"aucune selection.\");
+	document.location.href=\"lecons.php\";
+	</script>";
+}
+
 ?> 
 <!DOCTYPE html>
 <html>
@@ -35,7 +45,13 @@ session_start();
 			$salarie = "";
 			$vehicule = "";
 			$type = "";
-			
+			IF(ISSET($_POST["Ajouter"])) 
+				$button = $_POST["Ajouter"];
+			IF(ISSET($_POST["Supprimer"])) 
+				$button = $_POST["Supprimer"];
+			IF(ISSET($_POST["Modifier"])) 
+				$button = $_POST["Modifier"];
+			if (!ISSET($_POST["Ajouter"])){
 			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
 			foreach($_POST['lecon'] as $lecon){
 				$Tab = unserialize($_SESSION['Tableau'.$lecon]);
@@ -46,12 +62,8 @@ session_start();
 				$eleve = $Tab->getLecon_eleve();
 				$type = $Tab->getLecon_type();
 			}
-			IF(ISSET($_POST["Ajouter"])) 
-				$button = $_POST["Ajouter"];
-			IF(ISSET($_POST["Supprimer"])) 
-				$button = $_POST["Supprimer"];
-			IF(ISSET($_POST["Modifier"])) 
-				$button = $_POST["Modifier"];
+			}
+		
 			
 			echo "<section><h3>Consultation</h3>";
 				/* Gestion button Ajouter/Supprimer/Modifier des formulaires */

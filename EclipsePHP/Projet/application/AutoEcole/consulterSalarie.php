@@ -14,6 +14,16 @@ session_start();
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
+
+
+if(!ISSET($_POST['salarie']) && !ISSET($_POST["Ajouter"])){
+	//cas ou l'id choisis est invalide, un cas censée être impossible.
+	echo "<script type=\"text/javascript\">
+	alert(\"aucune selection.\");
+	document.location.href=\"salaries.php\";
+	</script>";
+}
+
 ?> 
 <!DOCTYPE html>
 <html>
@@ -38,7 +48,6 @@ session_start();
 			$tel = "";
 			$poste = "";
 			$vehicule = "";
-			
 			/* Récupération des rubriques en fonctions de l'enregistrement selectionné */
             IF(ISSET($_POST["Ajouter"])) {    
 				$button = $_POST["Ajouter"];

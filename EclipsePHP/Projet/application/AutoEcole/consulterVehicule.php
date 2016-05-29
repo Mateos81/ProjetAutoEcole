@@ -14,6 +14,15 @@ session_start();
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
+
+if(!ISSET($_POST['vehicule']) && !ISSET($_POST["Ajouter"])){
+	//cas ou l'id choisis est invalide, un cas censée être impossible.
+	echo "<script type=\"text/javascript\">
+	alert(\"aucune selection.\");
+	document.location.href=\"vehicules.php\";
+	</script>";
+}
+
 ?> 
 <!DOCTYPE html>
 <html>
@@ -29,11 +38,19 @@ session_start();
 	<div style="color:black;" class="table-container">
 	<?php
 			include 'BLL/Vehicule.php';
+			$id = "";
 			$immatriculation = "";
 			$marque = "";
 			$model = "";
 			$histo = "";
+			IF(ISSET($_POST["Ajouter"])) 
+				$button = $_POST["Ajouter"];
+			IF(ISSET($_POST["Supprimer"])) 
+				$button = $_POST["Supprimer"];
+			IF(ISSET($_POST["Modifier"])) 
+				$button = $_POST["Modifier"];
 			
+			if (!ISSET($_POST["Ajouter"])){
 			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
 			foreach($_POST['vehicule'] as $vehicule){
 				$Tab = unserialize($_SESSION['Tableau'.$vehicule]);
@@ -43,12 +60,7 @@ session_start();
 				$model = $Tab->getVehicule_modele();
 				$histo = $Tab->getVehicule_historique();
 			}
-			IF(ISSET($_POST["Ajouter"])) 
-				$button = $_POST["Ajouter"];
-			IF(ISSET($_POST["Supprimer"])) 
-				$button = $_POST["Supprimer"];
-			IF(ISSET($_POST["Modifier"])) 
-				$button = $_POST["Modifier"];
+			}
 			
 			echo "<section><h3>Consultation</h3>";
 				/* Gestion button Ajouter/Supprimer/Modifier des formulaires */

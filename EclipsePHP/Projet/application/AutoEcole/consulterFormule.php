@@ -14,6 +14,16 @@ session_start();
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
+
+
+if(!ISSET($_POST['formule']) && !ISSET($_POST["Ajouter"])){
+	//cas ou l'id choisis est invalide, un cas censée être impossible.
+	echo "<script type=\"text/javascript\">
+	alert(\"aucune selection.\");
+	document.location.href=\"formules.php\";
+	</script>";
+}
+
 ?> 
 <!DOCTYPE html>
 <html>
@@ -29,10 +39,18 @@ session_start();
 	<div style="color:black;" class="table-container">
 	<?php
 			include 'BLL/Formule.php';
+			$id = "";
 			$nbLecon = "";
 			$prix = "";
 			$ticketPrix = "";
+			IF(ISSET($_POST["Ajouter"])) 
+				$button = $_POST["Ajouter"];
+			IF(ISSET($_POST["Supprimer"])) 
+				$button = $_POST["Supprimer"];
+			IF(ISSET($_POST["Modifier"])) 
+				$button = $_POST["Modifier"];
 			
+			if (!ISSET($_POST["Ajouter"])){
 			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
 			foreach($_POST['formule'] as $formule){
 				$Tab = unserialize($_SESSION['Tableau'.$formule]);
@@ -41,13 +59,8 @@ session_start();
 				$prix = $Tab->getFormule_prix();
 				$ticketPrix = $Tab->getFormule_ticketPrix();
 			}
-			IF(ISSET($_POST["Ajouter"])) 
-				$button = $_POST["Ajouter"];
-			IF(ISSET($_POST["Supprimer"])) 
-				$button = $_POST["Supprimer"];
-			IF(ISSET($_POST["Modifier"])) 
-				$button = $_POST["Modifier"];
-			
+			}
+		
 			echo "<section><h3>Consultation</h3>";
 				/* Gestion button Ajouter/Supprimer/Modifier des formulaires */
 				if($button="Modifier"){

@@ -14,6 +14,16 @@ session_start();
 		// $_SESSION['LAST_ACTIVITY']=time();
 	// }
 // }
+
+
+if(!ISSET($_POST['eleve']) && !ISSET($_POST["Ajouter"])){
+	//cas ou l'id choisis est invalide, un cas censée être impossible.
+	echo "<script type=\"text/javascript\">
+	alert(\"aucune selection.\");
+	document.location.href=\"eleves.php\";
+	</script>";
+}
+
 ?> 
 <!DOCTYPE html>
 <html>
@@ -29,6 +39,7 @@ session_start();
 	<div style="color:black;" class="table-container">
 	<?php
 			include 'BLL/Eleve.php';
+			$id = "";
 			$nom = "";
 			$prenom = "";
 			$surnom = "";
@@ -39,7 +50,14 @@ session_start();
 			$dateNaissance = "";
 			$salarie = "";
 			$client = "";
+			IF(ISSET($_POST["Ajouter"])) 
+				$button = $_POST["Ajouter"];
+			IF(ISSET($_POST["Supprimer"])) 
+				$button = $_POST["Supprimer"];
+			IF(ISSET($_POST["Modifier"])) 
+				$button = $_POST["Modifier"];
 			
+			if (!ISSET($_POST["Ajouter"])){
 			/* Récupération des rubriques en fonctions de l'enregistrement selectioné */
 			foreach($_POST['eleve'] as $eleve){
 				$Tab = unserialize($_SESSION['Tableau'.$eleve]);
@@ -54,13 +72,8 @@ session_start();
 				$salarie = $Tab->getSalarie_poste();
 				$client = $Tab->getSalarie_vehicule();
 			}
-			IF(ISSET($_POST["Ajouter"])) 
-				$button = $_POST["Ajouter"];
-			IF(ISSET($_POST["Supprimer"])) 
-				$button = $_POST["Supprimer"];
-			IF(ISSET($_POST["Modifier"])) 
-				$button = $_POST["Modifier"];
-			
+			}
+		
 			echo "<section><h3>Consultation</h3>";
 				/* Gestion button Ajouter/Supprimer/Modifier des formulaires */
 				if($button="Modifier"){
